@@ -4,7 +4,7 @@ import { DataTypes } from "sequelize";
 
 
 
-const TicketModel= db.define("Usuaria",{
+const TicketModel= db.define("Ticket",{
    
     Usuaria:{
         type:DataTypes.INTEGER,
@@ -16,7 +16,14 @@ const TicketModel= db.define("Usuaria",{
     Semaforo_id:{
         type:DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 1
+        defaultValue: 1,
+        validate:{
+            isInt: true,
+            isIn:{
+                   args:[[1,2,3,4,5,6,7,8,9,10]],
+                   msg:"El semaforo no es valido "
+               }
+        }
       },
       
     
@@ -24,15 +31,15 @@ const TicketModel= db.define("Usuaria",{
         type:DataTypes.STRING,
         allowNull: true,
         validate:{
-            isAlphanumeric:{
-                   args:true,
-                   msg:"La descripcion solo acepta valores alfanumercos"
+            len:{
+                   args:[15,300],
+                   msg:"La descripcion  tiene que estar entre 15 y 300 catacteres"
                }
         }
       
     }, 
 
    
-}, { timestamps: false });
+}, { timestamps: false,  freezeTableName: true});
 
 export default TicketModel;
