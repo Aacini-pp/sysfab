@@ -65,8 +65,8 @@ const UsuarioModel= db.define("Usuaria",{
     
     FechaIngreso:{
       type:DataTypes.DATE,
-     /* defaultValue: Sequelize.NOW, */
-        allowNull: false,
+      defaultValue: db.NOW, 
+      
     },
 
                         /***************************CATALOGOS********************/
