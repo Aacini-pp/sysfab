@@ -35,9 +35,10 @@ AsignacionCasoControler.obtener=async(req,res)=>{
 
 AsignacionCasoControler.crear=async(req,res)=>{
   console.log("AsignacionCasoControler.crear ");
+  console.log(req.body);
     try {
         await AsignacionCasoModel.create(req.body);
-        res.json(  {  message :"Registro creado Correctamente" }   );
+        res.json(  {  message :"Registro AsignacionCaso creado Correctamente" }   );
 
     } catch (error) {
         res.json(  {  message :error.message }   );

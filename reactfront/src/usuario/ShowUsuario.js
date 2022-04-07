@@ -32,8 +32,8 @@ const CompShowUsuarios=  ()=>{
         <div className="container">
         <div className="row">
             <div className="col">
-            <h1>USUARIAS</h1>
-            <Link to={'/create'} className='btn btn-primary m-2'><i className="fas fa-plus"></i> Registrar Usuaria</Link>
+            <h1>  <i class="fa-solid fa-child-dress"></i> USUARIAS</h1>
+            <Link to={'create'} className='btn btn-primary m-2'><i className="fas fa-plus"></i> Registrar Usuaria</Link>
 
 
             <table className="table table-dark">
@@ -55,7 +55,7 @@ const CompShowUsuarios=  ()=>{
                                 <td> {usuario.NickName}  </td>
     
                                 <td>  
-                                    <Link to={`/edit/${usuario.id}`} className='btn btn-info'><i className="fas fa-edit"></i></Link>
+                                    <Link to={`edit/${usuario.id}`} className='btn btn-info'><i className="fas fa-edit"></i></Link>
                                     <button  onClick={ ()=>deleteUsuario( usuario.id)   } className='btn btn-danger'><i className="fas fa-trash-alt"></i></button>
                                 </td>
                         </tr>   

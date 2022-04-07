@@ -33,7 +33,7 @@ const CompEditUsuario=()=>{
 
         }).then((response) => {
             console.log(response.data);
-            navigate("/")
+            navigate("/Usuarios/")
         });
        
 

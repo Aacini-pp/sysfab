@@ -48,7 +48,7 @@ const navigate=useNavigate();
 
         } ).then((response) => {
             console.log(response.data);
-            navigate("/")
+            navigate("/Usuarios/")
         });
       
     }
