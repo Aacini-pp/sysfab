@@ -33,7 +33,7 @@ const CompShowUsuarios=  ()=>{
         <div className="row">
             <div className="col">
             <h1>USUARIAS</h1>
-            <Link to={'/create'} className='btn btn-primary m-2'><i className="fas fa-plus"></i></Link>
+            <Link to={'/create'} className='btn btn-primary m-2'><i className="fas fa-plus"></i> Registrar Usuaria</Link>
 
 
             <table className="table table-dark">
