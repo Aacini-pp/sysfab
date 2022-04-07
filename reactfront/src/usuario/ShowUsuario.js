@@ -21,8 +21,11 @@ const CompShowUsuarios=  ()=>{
 
     //procedimiento para eliminar un usuario
     const deleteUsuario= async (id) =>{
-           await axios.delete(`${URI}${id} `)
+           await axios.delete(`${URI}${id} `).then((response) => {
+            console.log(response.data);
             getUsuario()
+            });
+            
     }
 
     return(

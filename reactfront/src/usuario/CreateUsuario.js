@@ -30,7 +30,7 @@ const navigate=useNavigate();
             PrimerMedioContacto:PrimerMedioContacto,
             ApellidoPaterno:ApellidoPaterno,
             ApellidoMaterno:ApellidoMaterno,
-            FechaNacimiento,FechaNacimiento,
+            FechaNacimiento:FechaNacimiento,
             Ciudad:Ciudad
 
         })
@@ -41,13 +41,16 @@ const navigate=useNavigate();
             NickName:NickName,
             Pass:Pass,
             PrimerMedioContacto:PrimerMedioContacto,
-             ApellidoPaterno:ApellidoPaterno,
-          /*  ApellidoMaterno:ApellidoMaterno,
-           FechaNacimiento,FechaNacimiento,
-            Ciudad:Ciudad*/
+            ApellidoPaterno:ApellidoPaterno,
+            ApellidoMaterno:ApellidoMaterno,
+            FechaNacimiento:FechaNacimiento,
+            Ciudad:Ciudad
 
-        } )
-        navigate("/")
+        } ).then((response) => {
+            console.log(response.data);
+            navigate("/")
+        });
+      
     }
 
 

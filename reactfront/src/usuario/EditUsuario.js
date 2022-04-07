@@ -25,9 +25,17 @@ const CompEditUsuario=()=>{
             Nombre:Nombre,
             NickName:NickName,
             Pass:Pass,
-            PrimerMedioContacto:PrimerMedioContacto  
-        })
-        navigate("/")
+            PrimerMedioContacto:PrimerMedioContacto,
+            ApellidoPaterno:ApellidoPaterno,
+            ApellidoMaterno:ApellidoMaterno,
+            FechaNacimiento:FechaNacimiento,
+            Ciudad:Ciudad
+
+        }).then((response) => {
+            console.log(response.data);
+            navigate("/")
+        });
+       
 
     }
 
