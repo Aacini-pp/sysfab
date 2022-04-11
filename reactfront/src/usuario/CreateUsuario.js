@@ -178,7 +178,7 @@ const navigate=useNavigate();
 
            
 
-            <button type="submit" className="btn btn-primary" > <i class="fa-solid fa-floppy-disk"></i> Registrar Usuaria </button>
+            <button type="submit" className="btn btn-primary" > <i className="fa-solid fa-floppy-disk"></i> Registrar Usuaria </button>
         </form>
 
 

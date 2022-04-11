@@ -78,7 +78,7 @@ const navigate=useNavigate();
 
            
 
-            <button type="submit" className="btn btn-primary" > <i class="fa-solid fa-right-to-bracket"></i> Loggin </button>
+            <button type="submit" className="btn btn-primary" > <i className="fa-solid fa-right-to-bracket"></i> Loggin </button>
         </form>
 
 

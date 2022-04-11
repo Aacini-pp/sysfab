@@ -27,12 +27,12 @@ function App() {
   return (
     <div className="App">
      
-     <div className="container-fluid">
+     <div className="container-fluid m-0 p-0">
         <div className="row">
             <div className="col">
 
 
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-5">
   <a className="navbar-brand" href="/"> <img src="/iconAnabella.png" width="30" height="30"/>  Ana Bella  México</a>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
@@ -52,17 +52,17 @@ function App() {
 
 
       <li className="nav-item">
-        <a className="nav-link" href="/Usuarios/"> <i class="fa-solid fa-child-dress"></i> Usuarias</a>
+        <a className="nav-link" href="/Usuarios/"> <i className="fa-solid fa-child-dress"></i> Usuarias</a>
       </li>
 
 
       <li className="nav-item">
-        <a className="nav-link" href="/Tickets/"> <i class="fa-solid fa-ticket"></i> Tickets</a>
+        <a className="nav-link" href="/Tickets/"> <i className="fa-solid fa-ticket"></i> Tickets</a>
       </li>
 
 
       <li className="nav-item">
-        <a className="nav-link" href="/AsignacionCaso/"> <i class="fa-solid fa-list-check"></i> Asignación de Casos</a>
+        <a className="nav-link" href="/AsignacionCaso/"> <i className="fa-solid fa-list-check"></i> Asignación de Casos</a>
       </li>
 
 
@@ -92,7 +92,7 @@ function App() {
         <BrowserRouter>
           <Routes>
 
-          <Route path="login/" element={<ComplogUsuarios/>}/>
+            <Route path="login/" element={<ComplogUsuarios/>}/>
 
 
             <Route path="Usuarios/" element={<CompShowUsuarios/>}/>
@@ -120,6 +120,8 @@ function App() {
        
 
       </header>
+
+   
     </div>
   );
 }

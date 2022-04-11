@@ -32,7 +32,7 @@ const CompShowTickets=  ()=>{
         <div className="container">
         <div className="row">
             <div className="col">
-            <h1><i class="fa-solid fa-ticket"></i> Tickets</h1>
+            <h1><i className="fa-solid fa-ticket"></i> Tickets</h1>
             <Link to={'create'} className='btn btn-primary m-2'><i className="fas fa-plus"></i> Registrar Ticket</Link>
 
 

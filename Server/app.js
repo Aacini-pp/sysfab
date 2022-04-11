@@ -18,6 +18,11 @@ app.use("/AsignacionCaso",asignacionCasoRoutes);
 
 
 
+//app.use("/Catalogos",asignacionCasoRoutes);
+
+
+
+
 
 try {
     await db.authenticate();
