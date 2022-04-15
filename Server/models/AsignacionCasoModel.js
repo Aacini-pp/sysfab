@@ -3,25 +3,23 @@ import { DataTypes } from "sequelize";
 
 
 const AsignacionCasoModel= db.define("AsignacionCaso",{
-   
-    Victima:{
+   Ticket:{
+    type:DataTypes.INTEGER,
+    allowNull: false
+    
+    },
+    Voluntaria:{
         type:DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 1
       },
 
-
-      Ticket:{
+      Estatus:{
         type:DataTypes.INTEGER,
-        allowNull: false
-        
-      },
-
-      FechaAsignacion:{
-        type:DataTypes.DATE,
-        defaultValue: db.NOW
-      },
+        allowNull: false,
+        defaultValue: 1
+      }
    
-}, { timestamps: false,  freezeTableName: true});
+}, { freezeTableName: true});
 
 export default AsignacionCasoModel;

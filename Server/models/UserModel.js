@@ -44,13 +44,7 @@ const UsuarioModel= db.define("Usuaria",{
         allowNull: false,
         
     },
-    PrimerMedioContacto:{
-        type:DataTypes.STRING,
-        allowNull: false,
-        unique: {
-          msg: 'El medio de contacto necesita ser unico' 
-        }
-    },
+    
     
     FechaNacimiento:{
       type:DataTypes.DATE,
@@ -63,11 +57,56 @@ const UsuarioModel= db.define("Usuaria",{
     },
 
     
-    FechaIngreso:{
-      type:DataTypes.DATE,
-      defaultValue: db.NOW, 
-      
+    PerfilFB:{
+      type:DataTypes.STRING,
+      allowNull: true,
+      unique: {
+        msg: 'El enlace a FB ya se habia registrado' 
+      },
+
+      validate:{
+        isUrl:{
+            args:true,
+            msg:"El perfil de FB no tiene formato apropiado"
+        }
+      }
+
     },
+
+
+    Email:{
+      type:DataTypes.STRING,
+      allowNull: true,
+      unique: {
+        msg: 'Este correo ya se habia registrado' 
+      },
+
+      validate:{
+        isEmail:{
+            args:true,
+            msg:"No se introdujo un correo valido"
+        }
+      }
+    },
+
+    Telefono:{
+      type:DataTypes.STRING,
+      allowNull: true,
+      unique: {
+        msg: 'Este numero telefonico ya se habia registrado' 
+      },
+
+      validate:{
+        isNumeric:{
+            args:true,
+            msg:"El telefono solo puede contener numeros con su lada "
+        }
+      }
+    },
+
+
+
+    
 
                         /***************************CATALOGOS********************/
     Rol:{
@@ -89,6 +128,6 @@ const UsuarioModel= db.define("Usuaria",{
    
 
    
-}, { timestamps: false });
+});
 
 export default UsuarioModel;

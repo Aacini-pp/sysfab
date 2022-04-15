@@ -1,5 +1,5 @@
 import  {Sequelize} from 'sequelize'
-const db =  new Sequelize("fab3","root","",{
+const db =  new Sequelize("fab2","root","",{
     host: 'localhost',
     dialect:"mysql"
 

@@ -17,7 +17,7 @@ const CompEditAsgCaso=()=>{
         e.preventDefault()
         await axios.put(URI+id,{ 
             Ticket:Ticket,
-            Victima:Voluntaria,
+            Voluntaria:Voluntaria,
            
         }  ).then((response) => {
             console.log(response.data);
@@ -36,7 +36,7 @@ const CompEditAsgCaso=()=>{
     const  getAsgCasbyId = async (e) =>{
         const res = await axios.get(URI+id).then(function (response) {
             setTicket(response.data[0].Ticket)
-            setVoluntaria(response.data[0].Victima)
+            setVoluntaria(response.data[0].Voluntaria)
                        
 
           })

@@ -11,6 +11,7 @@ TicketControler.listar=async(req,res)=>{
        const tickets =   await  TicketModel.findAll ();
        res.json (tickets);
     } catch (error) {
+        res.status(400)
         res.json(  {  message :error.message }   );
     }
    
@@ -26,6 +27,7 @@ TicketControler.obtener=async(req,res)=>{
 
         res.json (ticket);
     } catch (error) {
+        res.status(400)
         res.json(  {  message :error.message }   );
     }
 
@@ -40,6 +42,7 @@ TicketControler.crear=async(req,res)=>{
         res.json(  {  message :"Registro creado Correctamente" }   );
 
     } catch (error) {
+        res.status(400)
         res.json(  {  message :error.message }   );
     }
 
@@ -56,6 +59,7 @@ TicketControler.actualizar=async(req,res)=>{
        res.json(  {  message :"Registro actualizado Correctamente" }   );
 
    } catch (error) {
+    res.status(400)
     res.json(  {  message :error.message }   );
    }
 
@@ -73,6 +77,7 @@ TicketControler.eliminar=async (req,res)=>{
         res.json(  {  message :"Registro eliminado Correctamente" }   );
  
     } catch (error) {
+        res.status(400)
         res.json(  {  message :error.message }   );
     }
     

@@ -8,9 +8,12 @@ import asignacionCasoRoutes from './routes/asignacionCasoRoutes.js'
 
 const app= express();
 
-
+app.use(express.static('public'));
 app.use(cors());
 app.use(express.json());
+
+
+
 
 app.use("/Usuarios",usersRoutes);
 app.use("/Tickets",ticketsRoutes);

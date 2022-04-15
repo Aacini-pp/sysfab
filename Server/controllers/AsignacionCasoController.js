@@ -11,6 +11,7 @@ AsignacionCasoControler.listar=async(req,res)=>{
        const casos =   await  AsignacionCasoModel.findAll ();
        res.json (casos);
     } catch (error) {
+        res.status(400)
         res.json(  {  message :error.message }   );
     }
    
@@ -26,6 +27,7 @@ AsignacionCasoControler.obtener=async(req,res)=>{
 
         res.json (caso);
     } catch (error) {
+        res.status(400)
         res.json(  {  message :error.message }   );
     }
 
@@ -41,6 +43,7 @@ AsignacionCasoControler.crear=async(req,res)=>{
         res.json(  {  message :"Registro AsignacionCaso creado Correctamente" }   );
 
     } catch (error) {
+        res.status(400)
         res.json(  {  message :error.message }   );
     }
 
@@ -57,6 +60,7 @@ AsignacionCasoControler.actualizar=async(req,res)=>{
        res.json(  {  message :"Registro actualizado Correctamente" }   );
 
    } catch (error) {
+    res.status(400)
     res.json(  {  message :error.message }   );
    }
 
@@ -74,6 +78,7 @@ AsignacionCasoControler.eliminar=async (req,res)=>{
         res.json(  {  message :"Registro eliminado Correctamente" }   );
  
     } catch (error) {
+        res.status(400)
         res.json(  {  message :error.message }   );
     }
     

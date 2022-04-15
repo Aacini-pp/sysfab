@@ -51,7 +51,7 @@ const CompShowAsgCaso=  ()=>{
                         <tr key={ AsgCaso.id} >
                                 <td> {AsgCaso.id}  </td>
                                 <td> {AsgCaso.Ticket}  </td>
-                                <td> {AsgCaso.Victima}  </td>
+                                <td> {AsgCaso.Voluntaria}  </td>
                                
     
                                 <td>  

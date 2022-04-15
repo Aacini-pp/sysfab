@@ -11,6 +11,7 @@ UsuarioControler.listar=async(req,res)=>{
        const usuarios =   await  UsuarioModel.findAll ();
        res.json (usuarios);
     } catch (error) {
+        res.status(400)
         res.json(  {  message :error.message }   );
     }
    
@@ -26,6 +27,7 @@ UsuarioControler.obtener=async(req,res)=>{
 
         res.json (usuario);
     } catch (error) {
+        res.status(400)
         res.json(  {  message :error.message }   );
     }
 
@@ -40,6 +42,7 @@ UsuarioControler.crear=async(req,res)=>{
         res.json(  {  message :"Registro creado Correctamente" }   );
 
     } catch (error) {
+        res.status(400)
         res.json(  {  message :error.message }   );
     }
 
@@ -56,6 +59,7 @@ UsuarioControler.actualizar=async(req,res)=>{
        res.json(  {  message :"Registro actualizado Correctamente" }   );
 
    } catch (error) {
+    res.status(400)
     res.json(  {  message :error.message }   );
    }
 
@@ -73,6 +77,7 @@ UsuarioControler.eliminar=async (req,res)=>{
         res.json(  {  message :"Registro eliminado Correctamente" }   );
  
     } catch (error) {
+        res.status(400)
         res.json(  {  message :error.message }   );
     }
     

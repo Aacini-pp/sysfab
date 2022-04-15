@@ -28,7 +28,7 @@ const TicketModel= db.define("Ticket",{
       
     
     Descripcion:{
-        type:DataTypes.STRING,
+        type:DataTypes.TEXT,
         allowNull: true,
         validate:{
             len:{
@@ -37,9 +37,14 @@ const TicketModel= db.define("Ticket",{
                }
         }
       
-    }, 
+    },
+    Estatus:{
+      type:DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1
+    }
 
    
-}, { timestamps: false,  freezeTableName: true});
+}, { freezeTableName: true});
 
 export default TicketModel;

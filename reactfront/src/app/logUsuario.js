@@ -4,6 +4,7 @@ import  {useState} from 'react'
 //import {useNative} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
+
 const URI="http://localhost:8080/Usuarios/";
 
 
@@ -16,8 +17,10 @@ const ComplogUsuarios=()=>{
 const navigate=useNavigate();
 
 
-    const store = async (e)=>{
+    const login = async (e)=>{
         e.preventDefault()
+
+
         console.log({ 
          
             NickName:NickName,
@@ -26,7 +29,8 @@ const navigate=useNavigate();
 
         })
         
-        
+        navigate("/Usuarios/")
+        /*
         axios.post(URI,{ 
           
             NickName:NickName,
@@ -37,14 +41,14 @@ const navigate=useNavigate();
             console.log(response.data);
             navigate("/Usuarios/")
         });
-      
+        */  
     }
 
 
     return (
         <div >
         <h3>LoginUsuario</h3>
-        <form onSubmit={store}>
+        <form onSubmit={login}>
 
             <div className="row">
                 <div className="form-group col-md-6">
