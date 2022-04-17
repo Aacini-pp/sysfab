@@ -1,3 +1,4 @@
+import React from 'react';
 import axios from 'axios'
 import {useState,useEffect} from "react"
 
@@ -6,6 +7,15 @@ import { useNavigate,useParams } from 'react-router-dom'
 const URI="http://localhost:8080/AsignacionCaso/";
 
 const CompEditAsgCaso=()=>{
+
+    const  [msgEstado, setMegEstado] = useState('');
+    const  [msgError, setMegError] = useState('');
+    const limpiarMsg=  ()=>{
+        setMegEstado("")
+        setMegError("")
+    }
+
+
     const [Ticket, setTicket] = useState('')
     const [Voluntaria, setVoluntaria] = useState('')
 
@@ -15,16 +25,23 @@ const CompEditAsgCaso=()=>{
 
     const update= async (e) =>{
         e.preventDefault()
-        await axios.put(URI+id,{ 
+        let params = { 
             Ticket:Ticket,
             Voluntaria:Voluntaria,
            
-        }  ).then((response) => {
-            console.log(response.data);
-            navigate("/AsignacionCaso/")
-        });
-       
+        } 
+        console.log(params)
 
+        await axios.put(URI+id,params ).then((response) => {
+            console.log(response.data);
+            limpiarMsg()
+            setMegEstado(response.data.message)
+            setTimeout(function(){navigate("/AsignacionCaso/")}, 2000);
+        }).catch(error => {
+            console.error(error.response.data)
+            limpiarMsg()
+            setMegError(error.response.data.message)
+        });
     }
 
 
@@ -37,17 +54,25 @@ const CompEditAsgCaso=()=>{
         const res = await axios.get(URI+id).then(function (response) {
             setTicket(response.data[0].Ticket)
             setVoluntaria(response.data[0].Voluntaria)
-                       
-
-          })
-        
-
+          }).catch(error => {
+            console.error(error)
+            limpiarMsg()
+            setMegError(error.response.data.message)
+        });
     }
 
 
     return (
         <div >
         <h3>Editando Asignación de Casos</h3>
+
+
+        <div className="row">
+                <div className="alert alert-success" role="alert">{msgEstado}</div>
+                <div className="alert alert-danger" role="alert">{msgError}</div>
+        </div> 
+
+
         <form onSubmit={update}>
 
         <div className="row">

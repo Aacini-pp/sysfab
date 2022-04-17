@@ -1,3 +1,4 @@
+import React from 'react';
 import axios from 'axios'
 import {useState,useEffect} from "react"
 
@@ -6,6 +7,14 @@ import { useNavigate,useParams } from 'react-router-dom'
 const URI="http://localhost:8080/Usuarios/";
 
 const CompEditUsuario=()=>{
+    const  [msgEstado, setMegEstado] = useState('');
+    const  [msgError, setMegError] = useState('');
+    const limpiarMsg=  ()=>{
+        setMegEstado("")
+        setMegError("")
+    }
+
+
     const [Nombre, setNombre] = useState('')
     const [NickName, setNickName] = useState('')
     const [Pass, setPass] = useState('')
@@ -24,7 +33,8 @@ const CompEditUsuario=()=>{
 
     const update= async (e) =>{
         e.preventDefault()
-        await axios.put(URI+id,{ 
+
+        let params = { 
             Nombre:Nombre,
             NickName:NickName,
             Pass:Pass,
@@ -38,12 +48,18 @@ const CompEditUsuario=()=>{
             Email:Email,
             Telefono:Telefono
 
-        }).then((response) => {
+        }
+        console.log(params)
+
+        await axios.put(URI+id,params).then((response) => {
             console.log(response.data);
-            navigate("/Usuarios/")
+            limpiarMsg()
+            setMegEstado(response.data.message)
+            setTimeout(function(){navigate("/Usuarios/")}, 2000);
         }).catch(error => {
-            
             console.error(error.response.data)
+            limpiarMsg()
+            setMegError(error.response.data.message)
         });
        
 
@@ -72,16 +88,27 @@ const CompEditUsuario=()=>{
             setEmail(response.data[0].Email)
             setTelefono(response.data[0].Telefono)
 
-          })
+
+          }).catch(error => {
+                console.error(error)
+                limpiarMsg()
+                setMegError(error.response.data.message)
+            });
         
 
     }
 
 
     return (
-        <div >
-        <h3>Editar usuaria</h3>
+        <div>
+        <h3>Editar perfil</h3>
+        <div className="row">
+                <div className="alert alert-success" role="alert">{msgEstado}</div>
+                <div className="alert alert-danger" role="alert">{msgError}</div>
+        </div> 
         <form onSubmit={update}>
+               
+
 
             <div className="row">
                 <div className="form-group col-md-6">

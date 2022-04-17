@@ -1,3 +1,4 @@
+import React from 'react';
 import axios from 'axios'
 
 import  {useState} from 'react'
@@ -8,6 +9,14 @@ const URI="http://localhost:8080/Usuarios/";
 
 
 const CompCreateUsuarios=()=>{
+    const  [msgEstado, setMegEstado] = useState('');
+    const  [msgError, setMegError] = useState('');
+    const limpiarMsg=  ()=>{
+        setMegEstado("")
+        setMegError("")
+    }
+
+
     const [Nombre, setNombre] = useState('')
     const [NickName, setNickName] = useState('')
     const [Pass, setPass] = useState('')
@@ -22,27 +31,14 @@ const CompCreateUsuarios=()=>{
     const [Email, setEmail] = useState('')
     const [Telefono, setTelefono] = useState('')
 
-const navigate=useNavigate();
+    const navigate=useNavigate();
+
+   
 
 
     const store = async (e)=>{
         e.preventDefault()
-        console.log({ 
-            Nombre:Nombre,
-            NickName:NickName,
-            Pass:Pass,
-           
-            ApellidoPaterno:ApellidoPaterno,
-            ApellidoMaterno:ApellidoMaterno,
-            FechaNacimiento:FechaNacimiento,
-            Ciudad:Ciudad,
-            PerfilFB:PerfilFB,
-            Email:Email,
-            Telefono:Telefono
-        } )
-        
-        
-        axios.post(URI,{ 
+        const params={ 
             Nombre:Nombre,
             NickName:NickName,
             Pass:Pass,
@@ -55,12 +51,23 @@ const navigate=useNavigate();
             PerfilFB:PerfilFB,
             Email:Email,
             Telefono:Telefono
-        } ).then((response) => {
+        } 
+        
+        console.log(params)
+        
+        
+        axios.post(URI,params).then((response) => {
             console.log("mensaje ",response.data);
-            navigate("/Usuarios/")
-        }).catch(error => {
+            limpiarMsg()
+            setMegEstado(response.data.message)
             
+            setTimeout(function(){navigate("/Usuarios/")}, 2000);
+
+
+        }).catch(error => {
             console.error(error.response.data)
+            limpiarMsg()
+            setMegError(error.response.data.message)
         });
       
     }
@@ -69,6 +76,10 @@ const navigate=useNavigate();
     return (
         <div >
         <h3>Registrando Usuaria</h3>
+
+        <div className="alert alert-success" role="alert">{msgEstado}</div>
+        <div className="alert alert-danger" role="alert">{msgError}</div>
+
         <form onSubmit={store}>
 
             <div className="row">

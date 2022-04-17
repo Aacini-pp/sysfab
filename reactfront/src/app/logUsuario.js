@@ -1,18 +1,30 @@
+import React from 'react';
 import axios from 'axios'
 
 import  {useState} from 'react'
-//import {useNative} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
 
-const URI="http://localhost:8080/Usuarios/";
+const URI="http://localhost:8080/login/";
 
 
 const ComplogUsuarios=()=>{
+
+
+    
+  const  [msgEstado, setMegEstado] = useState('');
+  const  [msgError, setMegError] = useState('');
+
+  
   
     const [NickName, setNickName] = useState('')
     const [Pass, setPass] = useState('')
  
+
+const limpiarMsg=  ()=>{
+    setMegEstado("")
+    setMegError("")
+}
   
 const navigate=useNavigate();
 
@@ -21,33 +33,41 @@ const navigate=useNavigate();
         e.preventDefault()
 
 
-        console.log({ 
-         
+        let params ={ 
             NickName:NickName,
             Pass:Pass,
-            
-
-        })
+        } 
+        console.log(params)
+              
         
-        navigate("/Usuarios/")
-        /*
-        axios.post(URI,{ 
-          
-            NickName:NickName,
-            Pass:Pass,
+        axios.post(URI,params).then((response) => {
+            console.log(response);
+            if('NickName' in response.data){
+                localStorage.setItem("Usuaria",JSON.stringify(response.data))
+                setTimeout(function(){navigate("/")}, 2000);
+            }
+            limpiarMsg()
+            setMegEstado("Bienvenida "+response.data.Nombre)
             
 
-        } ).then((response) => {
-            console.log(response.data);
-            navigate("/Usuarios/")
+
+           
+        }).catch(error => {
+            console.error(error.response.data)
+            limpiarMsg()
+            setMegError(error.response.data.message)
         });
-        */  
+         
     }
 
 
     return (
         <div >
-        <h3>LoginUsuario</h3>
+        <h3>Iniciar sesión</h3>
+
+
+        <div className="alert alert-success" role="alert">{msgEstado}</div>
+        <div className="alert alert-danger" role="alert">{msgError}</div>
         <form onSubmit={login}>
 
             <div className="row">
@@ -82,7 +102,7 @@ const navigate=useNavigate();
 
            
 
-            <button type="submit" className="btn btn-primary" > <i className="fa-solid fa-right-to-bracket"></i> Loggin </button>
+            <button type="submit" className="btn btn-primary m-3" > <i className="fa-solid fa-right-to-bracket"></i> Loggin </button>
         </form>
 
 

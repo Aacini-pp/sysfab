@@ -1,3 +1,4 @@
+import React from 'react';
 import axios from 'axios'
 
 import  {useState} from 'react'
@@ -8,6 +9,14 @@ const URI="http://localhost:8080/Tickets/";
 
 
 const CompCreateTickets=()=>{
+    const  [msgEstado, setMegEstado] = useState('');
+    const  [msgError, setMegError] = useState('');
+    const limpiarMsg=  ()=>{
+        setMegEstado("")
+        setMegError("")
+    }
+
+
     const [Usuaria, setUsuaria] = useState('')
     const [Semaforo, setSemaforo] = useState('')
     const [Descripcion, setDescripcion] = useState('')
@@ -19,20 +28,25 @@ const navigate=useNavigate();
 
     const store = async (e)=>{
         e.preventDefault()
-        console.log({ 
+        const params={ 
             Usuaria:Usuaria,
             Semaforo_id:Semaforo,
             Descripcion:Descripcion,
-        } );
+        }
+        
+        console.log(params)
         
         
-        axios.post(URI,{ 
-            Usuaria:Usuaria,
-            Semaforo_id:Semaforo,
-            Descripcion:Descripcion,
-        } ).then((response) => {
+        axios.post(URI,params ).then((response) => {
             console.log(response.data);
-            navigate("/Tickets/")
+            limpiarMsg()
+            setMegEstado(response.data.message)
+            setTimeout(function(){navigate("/Tickets/")}, 2000);
+            
+        }).catch(error => {
+            console.error(error.response.data)
+            limpiarMsg()
+            setMegError(error.response.data.message)
         });
       
     }
@@ -41,6 +55,12 @@ const navigate=useNavigate();
     return (
         <div >
         <h3>Registrando Ticket</h3>
+
+        <div className="row">
+                <div className="alert alert-success" role="alert">{msgEstado}</div>
+                <div className="alert alert-danger" role="alert">{msgError}</div>
+        </div>  
+
         <form onSubmit={store}>
 
             <div className="row">

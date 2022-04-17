@@ -1,3 +1,4 @@
+import React from 'react';
 import axios from 'axios'
 import {useState,useEffect} from "react"
 import {Link} from 'react-router-dom'
@@ -6,6 +7,15 @@ import {Link} from 'react-router-dom'
 const URI="http://localhost:8080/Tickets/";
 
 const CompShowTickets=  ()=>{ 
+
+    const  [msgEstado, setMegEstado] = useState('');
+    const  [msgError, setMegError] = useState('');
+    const limpiarMsg=  ()=>{
+        setMegEstado("")
+        setMegError("")
+    }
+
+    
     const [tickets,setTickets] = useState([])
     useEffect( ()=>{
              getTicket()   
@@ -14,16 +24,29 @@ const CompShowTickets=  ()=>{
 
     //procedimiento para mostrar todos los tickets
     const getTicket= async () =>{
-         const res =  await  axios.get(URI)
+         const res =  await  axios.get(URI).then((response) => {
+            console.log(response.data);
+            setTickets(response.data)
+        }).catch(error => {
+            console.error(error.response.data)
+            limpiarMsg()
+            setMegError(error.response.data.message)
+        });
 
-         setTickets(res.data)
+        
     }
 
     //procedimiento para eliminar un tickets
     const deleteTickets= async (id) =>{
            await axios.delete(`${URI}${id} `).then((response) => {
-            console.log(response.data);
-            getTicket()
+                console.log(response.data);
+                limpiarMsg()
+                setMegEstado(response.data.message)
+                getTicket()
+            }).catch(error => {
+                console.error(error.response.data)
+                limpiarMsg()
+                setMegError(error.response.data.message)
             });
             
     }
@@ -33,6 +56,12 @@ const CompShowTickets=  ()=>{
         <div className="row">
             <div className="col">
             <h1><i className="fa-solid fa-ticket"></i> Tickets</h1>
+
+            <div className="row">
+                <div className="alert alert-success" role="alert">{msgEstado}</div>
+                <div className="alert alert-danger" role="alert">{msgError}</div>
+            </div>    
+
             <Link to={'create'} className='btn btn-primary m-2'><i className="fas fa-plus"></i> Registrar Ticket</Link>
 
 

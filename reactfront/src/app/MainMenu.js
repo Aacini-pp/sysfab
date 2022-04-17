@@ -1,3 +1,4 @@
+import React from 'react';
 import axios from 'axios'
 
 import  {useState} from 'react'
@@ -5,10 +6,48 @@ import  {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import {Link} from 'react-router-dom'
 
-const URI="http://localhost:8080/Usuarios/";
+const URI="http://localhost:8080/logout/";
+
+const useAuth = () => {
+  let  isAuth = !(localStorage.getItem("Usuaria") === null);
+  console.log("Estado del Auth ", isAuth);
+  return  isAuth;
+};
+
 
 
 const CompMainMenu=()=>{
+  const navigate=useNavigate();
+
+
+  const logOutFn = (e)=>{
+   
+    console.log("Cerrando session");
+
+        e.preventDefault()
+        
+        axios.get(URI).then((response) => {
+            console.log(response);
+            let usuaria = JSON.parse(localStorage.getItem("Usuaria"));
+        
+            setTimeout(function(){navigate("/")}, 2000);
+            
+            console.log("Adios "+usuaria.Nombre)
+            console.log(response.message)
+           
+            //limpiarMsg()
+            //setMegEstado("Adios "+usuaria.Nombre)           
+            localStorage.clear();
+        }).catch(error => {
+            console.error(error.response.data)
+            localStorage.clear();
+            //limpiarMsg()
+            //setMegError(error.response.data.message)
+        });
+  }
+
+
+ 
   
    
     return (
@@ -25,41 +64,52 @@ const CompMainMenu=()=>{
   </button>
 
   <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-    <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+    <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center">
       <li className="nav-item active">
         <Link className="nav-link" to={'/'}>Home <span className="sr-only">(current)</span></Link>
       </li>
-      <li className="nav-item">
-        <Link className="nav-link" to={'/Usuarios/create'}>Registrarse</Link>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" to={'/login/'}>Login</Link>
-      </li>
+      </ul>
+      { (!useAuth() )?
+      <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center"> 
+        <li className="nav-item">
+          <Link className="nav-link" to={'/Usuarios/create'}>Registrarse</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to={'/login/'}>Login</Link>
+        </li>
+      </ul>
+      :<ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center">
+        <li className="nav-item">
+          <Link className="nav-link" to={'/Usuarios/'}> <i className="fa-solid fa-child-dress"></i> Usuarias</Link>
+        </li>
 
 
-      <li className="nav-item">
-        <Link className="nav-link" to={'/Usuarios/'}> <i className="fa-solid fa-child-dress"></i> Usuarias</Link>
-      </li>
+        <li className="nav-item">
+          <Link className="nav-link" to={'/Tickets/'}> <i className="fa-solid fa-ticket"></i> Tickets</Link>
+        </li>
 
 
-      <li className="nav-item">
-        <Link className="nav-link" to={'/Tickets/'}> <i className="fa-solid fa-ticket"></i> Tickets</Link>
-      </li>
-
-
-      <li className="nav-item">
-        <Link className="nav-link" to={'/AsignacionCaso/'}> <i className="fa-solid fa-list-check"></i> Asignación de Casos</Link>
-      </li>
-
-
+        <li className="nav-item">
+          <Link className="nav-link" to={'/AsignacionCaso/'}> <i className="fa-solid fa-list-check"></i> Asignación de Casos</Link>
+        </li>
 
       
-    </ul>
-    <form className="form-inline my-2 my-lg-0">
-      <input className="form-control mr-sm-2" type="search" placeholder="Search"/>
+
+        <form className="form-inline my-2 my-lg-0">
+           <input className="form-control mr-sm-2" type="search" placeholder="Search"/>
      
-    </form>
-  </div>
+        </form>
+
+         <button  className="btn btn-primary m-2" onClick={ logOutFn}  > <i className="fa-solid fa-arrow-right-from-bracket"></i>Logout</button>
+    
+
+      </ul>    
+     }
+
+      
+    
+ 
+   </div>
 </nav>
 
 
