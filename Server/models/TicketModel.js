@@ -2,6 +2,9 @@ import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
 
+import  UsuarioModel from "./UserModel.js"
+
+
 
 
 const TicketModel= db.define("Ticket",{
@@ -46,5 +49,8 @@ const TicketModel= db.define("Ticket",{
 
    
 }, { freezeTableName: true});
+
+
+//TicketModel.UsuariaCreadora = TicketModel.belongsTo(UsuarioModel,{as:"UsuariaCreadora",foreignKey:"Usuaria"})
 
 export default TicketModel;

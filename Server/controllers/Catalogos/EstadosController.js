@@ -1,5 +1,5 @@
 import EstadosModel from "../../models/Catalogos/EstadosModel.js";
-
+import UsuarioModel from "../../models/UserModel.js"
 
 
 const EstadosControler={}

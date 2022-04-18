@@ -1,5 +1,8 @@
 import db from "../database/db.js";
 import { DataTypes } from "sequelize";
+
+import TicketModel from "./TicketModel.js"
+
 import  EstadosModel from"./Catalogos/EstadosModel.js"
 
 
@@ -120,7 +123,7 @@ const UsuarioModel= db.define("Usuaria",{
     EntidadFederativa:{
       type:DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 9
+      defaultValue: 34
     },
     Estatus:{
       type:DataTypes.INTEGER,
@@ -134,5 +137,11 @@ const UsuarioModel= db.define("Usuaria",{
 
 
 UsuarioModel.Estado = UsuarioModel.belongsTo(EstadosModel,{as:"Estado",foreignKey:"EntidadFederativa"})
+//UsuarioModel.tieneTickets = UsuarioModel.hasMany(TicketModel,{as:"Generadora",foreignKey:"Usuaria"})
+UsuarioModel.TicketsSuyos = TicketModel.belongsTo(UsuarioModel,{as:"Creadora",foreignKey:"Usuaria"})
+
+
+//UsuarioModel.relEstado = EstadosModel.hasMany(UsuarioModel,{as:"Habitantes",foreignKey:"EntidadFederativa"})
+
 
 export default UsuarioModel;

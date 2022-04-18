@@ -1,5 +1,5 @@
 import UsuarioModel from "../models/UserModel.js";
-
+import EstadoModel from "../models/Catalogos/EstadosModel.js";
 
 
 const UsuarioControler={}
@@ -9,7 +9,7 @@ UsuarioControler.listar=async(req,res)=>{
     console.log("UsuariotControler.listar");
     try {
        const usuarios =   await  UsuarioModel.findAll ({
-        // Queremos que incluya la relación "oficina"
+        // Queremos que incluya la relación "Estado"
         include: [
             {
                 association: UsuarioModel.Estado

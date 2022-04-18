@@ -1,4 +1,5 @@
 import TicketModel from "../models/TicketModel.js";
+import UsuarioModel from "../models/UserModel.js";
 
 
 
@@ -8,7 +9,14 @@ const TicketControler={}
 TicketControler.listar=async(req,res)=>{
     console.log("UsuariotControler.listar");
     try {
-       const tickets =   await  TicketModel.findAll ();
+       const tickets =   await  TicketModel.findAll ({
+        // Queremos que incluya la relación "Estado"
+        include: [
+            {
+                association: UsuarioModel.TicketsSuyos
+            }
+        ]
+    });
        res.json (tickets);
     } catch (error) {
         res.status(400)
