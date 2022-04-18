@@ -8,7 +8,14 @@ const UsuarioControler={}
 UsuarioControler.listar=async(req,res)=>{
     console.log("UsuariotControler.listar");
     try {
-       const usuarios =   await  UsuarioModel.findAll ();
+       const usuarios =   await  UsuarioModel.findAll ({
+        // Queremos que incluya la relación "oficina"
+        include: [
+            {
+                association: UsuarioModel.Estado
+            }
+        ]
+    });
        res.json (usuarios);
     } catch (error) {
         console.log(error);  

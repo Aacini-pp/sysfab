@@ -4,11 +4,16 @@ import cors from 'cors';
 import db from './database/db.js';
 
 
-
+//entidades
 import usersRoutes from './routes/usersRoutes.js'
 import ticketsRoutes from './routes/ticketsRoutes.js'
 import asignacionCasoRoutes from './routes/asignacionCasoRoutes.js'
 
+//catalogos
+import EstadosRoutes from './routes/Catalogos/estadosRoutes.js'
+
+
+//aplicacion
 import appRoues from './routes/appRoutes.js'
 
 
@@ -27,8 +32,8 @@ app.use(session({secret: "6e3df1e2bccb9e5eea0d1822814ed45f"})); //Palabra secret
 //FAB en MD5 = 6e3df1e2bccb9e5eea0d1822814ed45f
 
 //middlewares implementaciones
-app.use("/Usuarios",sessionMiddleware);
-app.use("/Tickets",sessionMiddleware);
+//app.use("/Usuarios",sessionMiddleware);
+//app.use("/Tickets",sessionMiddleware);
 app.use("/AsignacionCaso",sessionMiddleware);
 app.use("/AsignacionCaso",sessionCoordinadora);
 
@@ -43,7 +48,7 @@ app.use("/AsignacionCaso",asignacionCasoRoutes);
 
 
 
-//app.use("/Catalogos",asignacionCasoRoutes);
+app.use("/Cat/Estados",EstadosRoutes);
 
 
 try {

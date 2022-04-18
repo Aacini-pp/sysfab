@@ -4,8 +4,6 @@ import UserController from '../controllers/UserController.js'
 const router = express.Router();
 
 
-
-
 router.get("/",UserController.listar);
 router.get("/:id",UserController.obtener);
 router.post("/",UserController.crear);

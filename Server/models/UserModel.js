@@ -1,5 +1,7 @@
 import db from "../database/db.js";
 import { DataTypes } from "sequelize";
+import  EstadosModel from"./Catalogos/EstadosModel.js"
+
 
 
 const UsuarioModel= db.define("Usuaria",{
@@ -129,5 +131,8 @@ const UsuarioModel= db.define("Usuaria",{
 
    
 });
+
+
+UsuarioModel.Estado = UsuarioModel.belongsTo(EstadosModel,{as:"Estado",foreignKey:"EntidadFederativa"})
 
 export default UsuarioModel;
