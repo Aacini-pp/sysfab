@@ -6,13 +6,11 @@ import  {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import {Link} from 'react-router-dom'
 
+
+import {useAuth} from './funciones'
+
 const URI="http://localhost:8080/logout/";
 
-const useAuth = () => {
-  let  isAuth = !(localStorage.getItem("Usuaria") === null);
-  console.log("Estado del Auth ", isAuth);
-  return  isAuth;
-};
 
 
 
@@ -39,7 +37,7 @@ const CompMainMenu=()=>{
             //setMegEstado("Adios "+usuaria.Nombre)           
             localStorage.clear();
         }).catch(error => {
-            console.error(error.response.data)
+            console.error(error)
             localStorage.clear();
             //limpiarMsg()
             //setMegError(error.response.data.message)
@@ -58,7 +56,7 @@ const CompMainMenu=()=>{
 
 
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-5">
-  <Link className="navbar-brand" to={'/'}> <img src="./iconAnabella.png" width="30" height="30"/>  Ana Bella  México</Link>
+  <Link className="navbar-brand" to={'/'}> <img src="/iconAnabella.png" width="30" height="30"/>  Ana Bella  México</Link>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
   </button>

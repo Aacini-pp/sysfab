@@ -15,6 +15,7 @@ import appRoues from './routes/appRoutes.js'
 //middlewares
 
 import sessionMiddleware from './middleware/session.js'
+import sessionCoordinadora from './middleware/sessionCoordinadora.js'
 
 
 const app= express();
@@ -29,6 +30,7 @@ app.use(session({secret: "6e3df1e2bccb9e5eea0d1822814ed45f"})); //Palabra secret
 app.use("/Usuarios",sessionMiddleware);
 app.use("/Tickets",sessionMiddleware);
 app.use("/AsignacionCaso",sessionMiddleware);
+app.use("/AsignacionCaso",sessionCoordinadora);
 
 
 //URL App

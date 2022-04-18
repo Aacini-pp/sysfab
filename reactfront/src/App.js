@@ -5,6 +5,7 @@ import './App.css';
 import {useState} from 'react'
 
 import ProtectedRoutes from './Routes/ProtectedRoutes';
+import ProtectedRoutesCoordinador from './Routes/ProtectedRoutesCoordinador';
 
 import CompShowUsuarios from './usuario/ShowUsuario';
 import CompCreateUsuarios from './usuario/CreateUsuario';
@@ -70,11 +71,12 @@ function App() {
               <Route path="/Tickets/create" element={<CompCreateTickets/>}/>
               <Route path="/Tickets/edit/:id" element={<CompEditTickets/>}/>
            
-
-
-            <Route path="/AsignacionCaso/" element={<CompShowAsgCaso/>}/>
-            <Route path="/AsignacionCaso/create" element={<CompCreateAsgCaso/>}/>
-            <Route path="/AsignacionCaso/edit/:id" element={<CompEditAsgCas/>}/>
+            <Route element={<ProtectedRoutesCoordinador />} >
+              <Route path="/AsignacionCaso/" element={<CompShowAsgCaso/>}/>
+              <Route path="/AsignacionCaso/create" element={<CompCreateAsgCaso/>}/>
+              <Route path="/AsignacionCaso/edit/:id" element={<CompEditAsgCas/>}/>
+            </Route>
+          
           </Route>
 
           

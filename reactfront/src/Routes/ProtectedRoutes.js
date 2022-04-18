@@ -1,13 +1,8 @@
 import React from 'react';
 import { useLocation } from "react-router";
 import { Navigate, Outlet } from "react-router-dom";
+import {useAuth} from '../app/funciones';
 
-
-const useAuth = () => {
-  let  isAuth = !(localStorage.getItem("Usuaria") === null);
-  console.log("Estado del Auth ", isAuth);
-  return  isAuth;
-};
 
 const ProtectedRoutes = () => {
   const location = useLocation();
