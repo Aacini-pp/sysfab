@@ -1,4 +1,5 @@
 import UsuarioModel from "../models/UserModel.js";
+import relaciones from "../models/relacions.js"
 
 
 
@@ -42,6 +43,25 @@ appControler.logout= (req,res)=>{
     console.log("usuaria deslogeada",req.session.usuaria )
     req.session.destroy();
     res.json(  {  message :"Sesion finalizada" }   );
+
+}
+
+
+
+appControler.registrarse= async(req,res)=>{
+    console.log("appControler.registrarse");
+    
+    try {
+        await UsuarioModel.create(req.body, {
+            include: [ relaciones.Usuaria.Tickets ]
+          });
+        res.json(  {  message :"Registro creado Correctamente" }   );
+
+    } catch (error) {
+        console.log(error);  
+        res.status(400)
+        res.json(  {  message :error.message }   );
+    }
 
 }
 

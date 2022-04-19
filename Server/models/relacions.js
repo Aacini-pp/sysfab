@@ -26,9 +26,6 @@ const Relaciones={
         Usuaria: AsignacionCasoModel.belongsTo(UsuarioModel,{as:"deVoluntaria",foreignKey:"Voluntaria"}),
         Ticket: AsignacionCasoModel.belongsTo(TicketModel,{as:"deTicket",foreignKey:"Ticket"}), 
         Estatus:AsignacionCasoModel.belongsTo(EstatusModel,{as:"deEstatus",foreignKey:"Estatus"}),
-    }
-
-
-    
+    }   
 }
 export default Relaciones

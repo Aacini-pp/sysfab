@@ -135,14 +135,4 @@ const UsuarioModel= db.define("Usuaria",{
    
 });
 
-
-/*
-UsuarioModel.Estado = UsuarioModel.belongsTo(EstadosModel,{as:"deEstado",foreignKey:"EntidadFederativa"})
-//UsuarioModel.tieneTickets = UsuarioModel.hasMany(TicketModel,{as:"Generadora",foreignKey:"Usuaria"})
-UsuarioModel.TicketsSuyos = TicketModel.belongsTo(UsuarioModel,{as:"deUsuaria",foreignKey:"Usuaria"})
-*/
-
-//UsuarioModel.relEstado = EstadosModel.hasMany(UsuarioModel,{as:"Habitantes",foreignKey:"EntidadFederativa"})
-
-
 export default UsuarioModel;

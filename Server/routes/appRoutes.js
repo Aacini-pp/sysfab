@@ -4,9 +4,16 @@ import appControler from '../controllers/appController.js'
 const router = express.Router();
 
 
+//MIDDLEWARE
+//AGREGAR MIDLEWARE
 
 
+//acceder solo sin contraseña
 router.post("/login",appControler.login);
-router.get("/logout",appControler.logout);
+router.post("/registrarse",appControler.registrarse);
+
+//acceder logeado
+router.get("/logout",appControler.logout); //cambiar a post para que sea mas dificik salir, no solo conun enlace
+
 
 export default router;
