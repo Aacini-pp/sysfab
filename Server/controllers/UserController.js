@@ -1,5 +1,6 @@
 import UsuarioModel from "../models/UserModel.js";
 import EstadoModel from "../models/Catalogos/EstadosModel.js";
+import relaciones from "../models/relacions.js"
 
 
 const UsuarioControler={}
@@ -9,11 +10,11 @@ UsuarioControler.listar=async(req,res)=>{
     console.log("UsuariotControler.listar");
     try {
        const usuarios =   await  UsuarioModel.findAll ({
-        // Queremos que incluya la relación "Estado"
+        // Queremos que incluya la relaciónes
         include: [
-            {
-                association: UsuarioModel.Estado
-            }
+            {association: relaciones.Usuaria.Estado},
+            {association: relaciones.Usuaria.Rol},
+            {association: relaciones.Usuaria.Estatus}
         ]
     });
        res.json (usuarios);
@@ -30,7 +31,12 @@ UsuarioControler.obtener=async(req,res)=>{
 
     try {
         const usuario= await UsuarioModel.findAll({
-            where: { id: req.params.id}
+            where: { id: req.params.id},
+            include: [
+                {association: relaciones.Usuaria.Estado},
+                {association: relaciones.Usuaria.Rol},
+                {association: relaciones.Usuaria.Estatus}
+            ]
         });
 
         res.json (usuario);

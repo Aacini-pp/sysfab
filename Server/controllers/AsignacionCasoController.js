@@ -1,5 +1,5 @@
 import AsignacionCasoModel from "../models/AsignacionCasoModel.js";
-
+import relaciones from "../models/relacions.js"
 
 
 const AsignacionCasoControler={}
@@ -8,7 +8,14 @@ const AsignacionCasoControler={}
 AsignacionCasoControler.listar=async(req,res)=>{
     console.log("AsignacionCasoControler.listar");
     try {
-       const casos =   await  AsignacionCasoModel.findAll ();
+       const casos =   await  AsignacionCasoModel.findAll ({
+        // Queremos que incluya la relación "Estado"
+        include: [
+            {association:relaciones.AsignacionCaso.Usuaria},
+            {association:relaciones.AsignacionCaso.Ticket},
+            {association:relaciones.AsignacionCaso.Estatus},
+        ]
+    });
        res.json (casos);
     } catch (error) {
         res.status(400)
@@ -22,7 +29,12 @@ AsignacionCasoControler.obtener=async(req,res)=>{
 
     try {
         const caso= await AsignacionCasoModel.findAll({
-            where: { id: req.params.id}
+            where: { id: req.params.id},
+            include: [
+                {association:relaciones.AsignacionCaso.Usuaria},
+                {association:relaciones.AsignacionCaso.Ticket},
+                {association:relaciones.AsignacionCaso.Estatus},
+            ]
         });
 
         res.json (caso);

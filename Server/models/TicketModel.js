@@ -6,7 +6,6 @@ import  UsuarioModel from "./UserModel.js"
 
 
 
-
 const TicketModel= db.define("Ticket",{
    
     Usuaria:{
@@ -49,8 +48,5 @@ const TicketModel= db.define("Ticket",{
 
    
 }, { freezeTableName: true});
-
-
-//TicketModel.UsuariaCreadora = TicketModel.belongsTo(UsuarioModel,{as:"UsuariaCreadora",foreignKey:"Usuaria"})
 
 export default TicketModel;

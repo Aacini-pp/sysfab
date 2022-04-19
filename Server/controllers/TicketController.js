@@ -1,7 +1,7 @@
 import TicketModel from "../models/TicketModel.js";
 import UsuarioModel from "../models/UserModel.js";
 
-
+import relaciones from "../models/relacions.js"
 
 const TicketControler={}
 
@@ -12,9 +12,8 @@ TicketControler.listar=async(req,res)=>{
        const tickets =   await  TicketModel.findAll ({
         // Queremos que incluya la relación "Estado"
         include: [
-            {
-                association: UsuarioModel.TicketsSuyos
-            }
+            {association:relaciones.Tickets.Usuaria},
+            {association:relaciones.Tickets.Estatus}
         ]
     });
        res.json (tickets);
@@ -30,7 +29,11 @@ TicketControler.obtener=async(req,res)=>{
 
     try {
         const ticket= await TicketModel.findAll({
-            where: { id: req.params.id}
+            where: { id: req.params.id},
+            include: [
+                {association:relaciones.Tickets.Usuaria},
+                {association:relaciones.Tickets.Estatus}
+            ]
         });
 
         res.json (ticket);

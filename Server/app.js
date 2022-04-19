@@ -34,8 +34,8 @@ app.use(session({secret: "6e3df1e2bccb9e5eea0d1822814ed45f"})); //Palabra secret
 //middlewares implementaciones
 //app.use("/Usuarios",sessionMiddleware);
 //app.use("/Tickets",sessionMiddleware);
-app.use("/AsignacionCaso",sessionMiddleware);
-app.use("/AsignacionCaso",sessionCoordinadora);
+//app.use("/AsignacionCaso",sessionMiddleware);
+//app.use("/AsignacionCaso",sessionCoordinadora);
 
 
 //URL App
