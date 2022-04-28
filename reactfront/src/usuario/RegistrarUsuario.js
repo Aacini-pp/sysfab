@@ -5,7 +5,7 @@ import  {useState,useEffect} from 'react'
 //import {useNative} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
-const URI="http://localhost:8080/Usuarios/";
+const URI="http://localhost:8080/registrarse/";
 
 
 const CompRegistrarUsuario=()=>{
