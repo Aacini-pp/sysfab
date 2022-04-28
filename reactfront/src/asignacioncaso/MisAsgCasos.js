@@ -4,9 +4,9 @@ import {useState,useEffect} from "react"
 import {Link} from 'react-router-dom'
 
 
-const URI="http://localhost:8080/AsignacionCaso/";
+const URI="http://localhost:8080/MisAsignaciones/";
 
-const CompShowAsgCaso=  ()=>{ 
+const CompMisAsgCasos=  ()=>{ 
     const  [msgEstado, setMegEstado] = useState('');
     const  [msgError, setMegError] = useState('');
     const limpiarMsg=  ()=>{
@@ -53,21 +53,21 @@ const CompShowAsgCaso=  ()=>{
         <div className="container">
         <div className="row">
             <div className="col">
-            <h1><i className="fa-solid fa-list-check"></i> Asignación de Casos</h1>
-
+            <h1><i className="fa-solid fa-clipboard"></i> Mis Asignaciones</h1>
+            <br/>
+            
             <div className="row">
                 <div className="alert alert-success" role="alert">{msgEstado}</div>
                 <div className="alert alert-danger" role="alert">{msgError}</div>
             </div> 
 
-            <Link to={'create'} className='btn btn-primary m-2'><i className="fas fa-plus"></i>Asignar caso</Link>
-
+          
 
             <table className="table table-dark">
                 <thead className="table-primary">
                     <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Voluntaria</th>
+                    
                     <th scope="col">Ticket</th>
                   
                     <th scope="col">Victima</th>
@@ -79,13 +79,13 @@ const CompShowAsgCaso=  ()=>{
                     { AsgCasos.map( (AsgCaso)=>(
                         <tr key={ AsgCaso.id} >
                                 <td> {AsgCaso.id}  </td>
-                                <td> <Link to={`/Usuarios/edit/${AsgCaso.deVoluntaria.id}`} >   {AsgCaso.deVoluntaria.NickName}   </Link> </td>
+                               
                                 <td > <Link to={`/Tickets/edit/${AsgCaso.deTicket.id}`} >{AsgCaso.Ticket}</Link>:  {AsgCaso.deTicket.Descripcion}    </td>
                                 <td> <Link to={`/Usuarios/edit/${AsgCaso.deTicket.deUsuaria.id}`} > {AsgCaso.deTicket.deUsuaria.NickName}  </Link>  </td>
                                
     
                                 <td>  
-                                    <Link to={`edit/${AsgCaso.id}`} className='btn btn-info'><i className="fas fa-edit"></i></Link>
+                                   
                                     <button  onClick={ ()=>deleteAsgCasos( AsgCaso.id)   } className='btn btn-danger'><i className="fas fa-trash-alt"></i></button>
                                 </td>
                         </tr>   
@@ -105,4 +105,4 @@ const CompShowAsgCaso=  ()=>{
 }
 
 
-export default CompShowAsgCaso
+export default CompMisAsgCasos

@@ -3,9 +3,6 @@ import UserController from '../controllers/UserController.js'
 
 const router = express.Router();
 
-router.get("/MisTickets",UserController.misTickets);
-router.get("/MisAsignaciones",UserController.misAsignaciones);
-
 
 
 router.get("/",UserController.listar);

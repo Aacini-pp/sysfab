@@ -69,14 +69,21 @@ const CompMainMenu=()=>{
       </ul>
       { (!useAuth() )?
       <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center"> 
-        <li className="nav-item">
-          <Link className="nav-link" to={'/Usuarios/create'}>Registrarse</Link>
-        </li>
-        <li className="nav-item">
+         <li className="nav-item">
           <Link className="nav-link" to={'/login/'}>Login</Link>
         </li>
+        <li className="nav-item">
+          <Link className="nav-link" to={'/Registrarse'}>Registrarse</Link>
+        </li>
+       
       </ul>
       :<ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center">
+         <li className="nav-item">
+          <Link className="nav-link" to={'/MisTickets/'}> <i className="fa-solid fa-ticket-simple"></i> Mis Tickets</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to={'/MisAsignaciones/'}><i className="fa-solid fa-clipboard"></i> Mis Asignaciones</Link>
+        </li> 
         <li className="nav-item">
           <Link className="nav-link" to={'/Usuarios/'}> <i className="fa-solid fa-child-dress"></i> Usuarias</Link>
         </li>
@@ -88,15 +95,15 @@ const CompMainMenu=()=>{
 
 
         <li className="nav-item">
-          <Link className="nav-link" to={'/AsignacionCaso/'}> <i className="fa-solid fa-list-check"></i> Asignación de Casos</Link>
+          <Link className="nav-link" to={'/AsignacionCaso/'}> <i className="fa-solid fa-clipboard-list"></i> Asignación de Casos</Link>
         </li>
 
       
 
-        <form className="form-inline my-2 my-lg-0">
+        {/* <form className="form-inline my-2 my-lg-0">
            <input className="form-control mr-sm-2" type="search" placeholder="Search"/>
      
-        </form>
+        </form> */}
 
          <button  className="btn btn-primary m-2" onClick={ logOutFn}  > <i className="fa-solid fa-arrow-right-from-bracket"></i>Logout</button>
     

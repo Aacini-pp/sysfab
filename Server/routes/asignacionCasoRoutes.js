@@ -1,7 +1,12 @@
 import express from 'express';
 import AsignacionCasoController from '../controllers/AsignacionCasoController.js'
-
+import sessionCoordinadora from './../middleware/sessionCoordinadora.js'
+import sessionMiddleware from './../middleware/session.js'
 const router = express.Router();
+
+
+
+
 
 
 

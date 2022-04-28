@@ -22,7 +22,7 @@ const HomeComponent=()=>{
             <h1 className="display-1"> 
             <i className="fa-solid fa-person-dress"></i>  Bienvenida  {(useAuth())?<span> {getUruaria().Nombre}  </span>:<span> </span>  } 
             </h1>
-            <h3>Buscamos ayudarte. {(!useAuth())?<span><Link className="" to={'/Usuarios/create'}>Registrate</Link>  y cuentanos todo</span>:<span><Link className="" to={'/Tickets/create'}>Cuentanos todo </Link></span>  }  </h3>
+            <h3>Buscamos ayudarte. {(!useAuth())?<span><Link className="" to={'/Registrarse'}>Registrate</Link>  y cuentanos todo</span>:<span><Link className="" to={'/Tickets/create'}>Cuentanos todo </Link></span>  }  </h3>
             <p>
                 
             </p>

@@ -97,7 +97,7 @@ const CompRegistrarUsuario=()=>{
 
     return (
         <div >
-         <h3>Crear Usuaria</h3>
+        <h3>Registrar Usuaria</h3>
 
         <div className="alert alert-success" role="alert">{msgEstado}</div>
         <div className="alert alert-danger" role="alert">{msgError}</div>

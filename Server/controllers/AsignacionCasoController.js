@@ -5,6 +5,10 @@ import relaciones from "../models/relacions.js"
 const AsignacionCasoControler={}
 
 
+
+
+
+
 AsignacionCasoControler.listar=async(req,res)=>{
     console.log("AsignacionCasoControler.listar");
     try {
@@ -12,7 +16,10 @@ AsignacionCasoControler.listar=async(req,res)=>{
         // Queremos que incluya la relación "Estado"
         include: [
             {association:relaciones.AsignacionCaso.Usuaria},
-            {association:relaciones.AsignacionCaso.Ticket},
+            {
+                association:relaciones.AsignacionCaso.Ticket,
+                include: [  {association:relaciones.Tickets.Usuaria},]
+            },
             {association:relaciones.AsignacionCaso.Estatus},
         ]
     });
@@ -32,7 +39,10 @@ AsignacionCasoControler.obtener=async(req,res)=>{
             where: { id: req.params.id},
             include: [
                 {association:relaciones.AsignacionCaso.Usuaria},
-                {association:relaciones.AsignacionCaso.Ticket},
+                {
+                    association:relaciones.AsignacionCaso.Ticket,
+                    include: [  {association:relaciones.Tickets.Usuaria},]
+                },
                 {association:relaciones.AsignacionCaso.Estatus},
             ]
         });

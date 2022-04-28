@@ -16,8 +16,17 @@ const Relaciones={
         Estado:UsuarioModel.belongsTo(EstadosModel,{as:"deEstado",foreignKey:"EntidadFederativa"}),
         Rol:UsuarioModel.belongsTo(RolesModel,{as:"deRol",foreignKey:"Rol"}),
         Estatus:UsuarioModel.belongsTo(EstatusModel,{as:"deEstatus",foreignKey:"Estatus"}),
-        Tickets: UsuarioModel.hasMany(TicketModel,{as:"susTickets",foreignKey:"Usuaria"})
-    },  
+        Tickets: UsuarioModel.hasMany(TicketModel,{as:"susTickets",foreignKey:"Usuaria"}),
+
+       
+    },
+   /* Voluntaria:{
+      Ticket:UsuarioModel.belongsToMany(TicketModel, {
+        through: 'AsignacionCaso',
+        foreignKey: 'Voluntaria', // replaces `productId`
+        otherKey: 'Ticket' // replaces `categoryId`
+      }),
+    }, */
     Tickets :{
         Usuaria:TicketModel.belongsTo(UsuarioModel,{as:"deUsuaria",foreignKey:"Usuaria"}), 
         Estatus:TicketModel.belongsTo(EstatusModel,{as:"deEstatus",foreignKey:"Estatus"})

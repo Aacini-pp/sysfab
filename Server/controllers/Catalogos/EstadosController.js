@@ -8,7 +8,9 @@ const EstadosControler={}
 EstadosControler.listar=async(req,res)=>{
     console.log("EstadosControler.listar");
     try {
-       const estados =   await  EstadosModel.findAll ();
+       const estados =   await  EstadosModel.findAll ({
+        order: [ ['id', 'ASC'], ]
+       });
        res.json (estados);
     } catch (error) {
         res.status(400)

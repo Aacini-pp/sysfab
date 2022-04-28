@@ -1,14 +1,14 @@
 import React from 'react';
 import axios from 'axios'
 
-import  {useState,useEffect} from 'react'
+import  {useState} from 'react'
 //import {useNative} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
 const URI="http://localhost:8080/Usuarios/";
 
 
-const CompRegistrarUsuario=()=>{
+const CompCreateUsuarios=()=>{
     const  [msgEstado, setMegEstado] = useState('');
     const  [msgError, setMegError] = useState('');
     const limpiarMsg=  ()=>{
@@ -16,46 +16,25 @@ const CompRegistrarUsuario=()=>{
         setMegError("")
     }
 
-    const [estados,setEstados] = useState([])
-    
-    useEffect( ()=>{
-        getEstados()   
-   
-    },[])
-
-    //procedimiento para mostrar todos los tickets
-    const getEstados= async () =>{
-        const URIEstados ="http://localhost:8080/Cat/Estados/"
-        const res =  await  axios.get(URIEstados).then((response) => {
-           console.log(response.data);
-           setEstados(response.data)
-       }).catch(error => {
-           console.error(error.response.data)
-           limpiarMsg()
-           setMegError(error.response.data.message)
-       });
-
-       
-   }
-
-
 
     const [Nombre, setNombre] = useState('')
     const [NickName, setNickName] = useState('')
     const [Pass, setPass] = useState('')
    
     
-    const [ApellidoPaterno, setApellidoPaterno] = useState(undefined)
-    const [ApellidoMaterno, setApellidoMaterno] = useState(undefined)
+    const [ApellidoPaterno, setApellidoPaterno] = useState('')
+    const [ApellidoMaterno, setApellidoMaterno] = useState('')
     const [FechaNacimiento, setFechaNacimiento] = useState('')
-    const [Estado, setEstado] = useState(34)
     const [Ciudad, setCiudad] = useState('')
 
-    const [PerfilFB, setPerfilFB] = useState(undefined)
-    const [Email, setEmail] = useState(undefined)
-    const [Telefono, setTelefono] = useState(undefined)
+    const [PerfilFB, setPerfilFB] = useState('')
+    const [Email, setEmail] = useState('')
+    const [Telefono, setTelefono] = useState('')
 
     const navigate=useNavigate();
+
+   
+
 
     const store = async (e)=>{
         e.preventDefault()
@@ -64,15 +43,14 @@ const CompRegistrarUsuario=()=>{
             NickName:NickName,
             Pass:Pass,
             
-            ApellidoPaterno: (ApellidoPaterno == "")? null :ApellidoPaterno,
-            ApellidoMaterno: (ApellidoMaterno == "")? null :ApellidoMaterno,
+            ApellidoPaterno:ApellidoPaterno,
+            ApellidoMaterno:ApellidoMaterno,
             FechaNacimiento:FechaNacimiento,
-            EntidadFederativa:Estado,
             Ciudad:Ciudad,
 
-            PerfilFB: (PerfilFB == "")? null : PerfilFB,
-            Email: (Email == "")? null : Email ,
-            Telefono:(Telefono == "")? null : Telefono, 
+            PerfilFB:PerfilFB,
+            Email:Email,
+            Telefono:Telefono
         } 
         
         console.log(params)
@@ -97,7 +75,7 @@ const CompRegistrarUsuario=()=>{
 
     return (
         <div >
-         <h3>Crear Usuaria</h3>
+        <h3>Crear Usuaria</h3>
 
         <div className="alert alert-success" role="alert">{msgEstado}</div>
         <div className="alert alert-danger" role="alert">{msgError}</div>
@@ -146,7 +124,7 @@ const CompRegistrarUsuario=()=>{
 
 
 
-            <div className="row align-items-end">
+            <div className="row">
                 <div className="form-group col-md-6">
                     
                     <label className="form-label" >Apellido Paterno</label>
@@ -223,14 +201,13 @@ const CompRegistrarUsuario=()=>{
         <div className="row align-items-end">
                 <div className="form-group col-md-6">
                     
-                        <label className="form-label"    >Estado</label>
-                        <select name="Estado" className="form-select"  onChange={  (e)=> {setEstado(e.target.value)  }  }>  
-                        <option value="34"  > Seleccione un estado.. </option>  
-                            { estados.map( (edo)=>(
-                                <option key={ edo.id} value={edo.id} > {edo.Estado}  </option>
-                             ))}
-
-                        </select>  
+                        <label className="form-label" >Fecha de Nacimiento</label>
+                        <input 
+                        value={FechaNacimiento}
+                        onChange={  (e)=> setFechaNacimiento(e.target.value)  }
+                        type="date"
+                        className="form-control"    
+                        />
 
 
                 </div>
@@ -247,16 +224,7 @@ const CompRegistrarUsuario=()=>{
                 </div>
         </div>
 
-        <div className="mb-3">
 
-                         <label className="form-label" >Fecha de Nacimiento</label>
-                        <input 
-                        value={FechaNacimiento}
-                        onChange={  (e)=> setFechaNacimiento(e.target.value)  }
-                        type="date"
-                        className="form-control"    
-                        />
-        </div>
            
 
             <button type="submit" className="btn btn-primary" > <i className="fa-solid fa-floppy-disk"></i> Registrar Usuaria </button>
@@ -268,4 +236,4 @@ const CompRegistrarUsuario=()=>{
 }
 
 
-export default CompRegistrarUsuario
+export default CompCreateUsuarios

@@ -5,7 +5,6 @@ const router = express.Router();
 
 
 
-
 router.get("/",TicketController.listar);
 router.get("/:id",TicketController.obtener);
 router.post("/",TicketController.crear);

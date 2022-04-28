@@ -1,4 +1,6 @@
 import UsuarioModel from "../models/UserModel.js";
+import AsignacionCasoModel from "../models/AsignacionCasoModel.js";
+import TicketModel from "../models/TicketModel.js";
 import relaciones from "../models/relacions.js"
 
 
@@ -64,6 +66,59 @@ appControler.registrarse= async(req,res)=>{
     }
 
 }
+
+
+appControler.misTickets=async (req,res)=>{
+    console.log("UsuariotControler.misTickets")
+
+    try {
+        const ticket= await TicketModel.findAll({
+            where: {Usuaria:47 /* req.session.usuaria.id */  },
+            include: [
+                {association:relaciones.Tickets.Estatus}
+            ]
+        });
+
+        res.json (ticket);
+    } catch (error) {
+        res.status(400)
+        res.json(  {  message :error.message }   );
+    }
+
+    
+}
+
+
+appControler.misAsignaciones = async(req,res)=>{
+    console.log("UsuarioControler.misAsignaciones ");
+    try {
+       const casos =   await  AsignacionCasoModel.findAll ({
+         where: { Voluntaria: 47/* req.session.usuaria.id */  },
+        // Queremos que incluya la relación "Estado"
+            include: [
+                {
+                    association:relaciones.AsignacionCaso.Ticket,
+                    include: [  {association:relaciones.Tickets.Usuaria},]
+                },
+                {association:relaciones.AsignacionCaso.Estatus},
+       
+                
+              ]
+         });
+
+     
+
+       res.json (casos);
+    } catch (error) {
+        res.status(400)
+        res.json(  {  message :error.message }   );
+    }
+   
+} 
+
+
+
+
 
 
 export default appControler

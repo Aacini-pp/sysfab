@@ -4,9 +4,9 @@ import {useState,useEffect} from "react"
 import {Link} from 'react-router-dom'
 
 
-const URI="http://localhost:8080/Tickets/";
+const URI="http://localhost:8080/MisTickets/";
 
-const CompShowTickets=  ()=>{ 
+const CompMisTickets=  ()=>{ 
 
     const  [msgEstado, setMegEstado] = useState('');
     const  [msgError, setMegError] = useState('');
@@ -28,9 +28,9 @@ const CompShowTickets=  ()=>{
             console.log(response.data);
             setTickets(response.data)
         }).catch(error => {
-            console.error(error.response.data)
-            limpiarMsg()
-            setMegError(error.response.data.message)
+            console.error(error)
+           limpiarMsg()
+           setMegError(error.response.data.message)
         });
 
         
@@ -55,7 +55,7 @@ const CompShowTickets=  ()=>{
         <div className="container">
         <div className="row">
             <div className="col">
-            <h1><i className="fa-solid fa-ticket"></i> Tickets</h1>
+            <h1><i className="fa-solid fa-ticket-simple"></i> Mis Tickets</h1>
 
             <div className="row">
                 <div className="alert alert-success" role="alert">{msgEstado}</div>
@@ -69,9 +69,10 @@ const CompShowTickets=  ()=>{
                 <thead className="table-primary">
                     <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Victima</th>
+                   
                     <th scope="col">Semaforo</th>
                     <th scope="col">Descripcion</th>
+                    <th scope="col">Estatus</th>
                      <th scope="col"> </th>
                     </tr>
                 </thead>
@@ -79,12 +80,13 @@ const CompShowTickets=  ()=>{
                     { tickets.map( (Ticket)=>(
                         <tr key={ Ticket.id} >
                                 <td> {Ticket.id}  </td>
-                                <td>  <Link to={`/Usuarios/edit/${Ticket.Usuaria}`} >      {Ticket.deUsuaria.NickName}   </Link>  </td>
+                                
                                 <td> {Ticket.Semaforo_id}  </td>
                                 <td> {Ticket.Descripcion}  </td>
+                                <td> {Ticket.deEstatus.Nombre}    </td>
     
                                 <td>  
-                                    <Link to={`edit/${Ticket.id}`} className='btn btn-info'><i className="fas fa-edit"></i></Link>
+                                   
                                     <button  onClick={ ()=>deleteTickets( Ticket.id)   } className='btn btn-danger'><i className="fas fa-trash-alt"></i></button>
                                 </td>
                         </tr>   
@@ -104,4 +106,4 @@ const CompShowTickets=  ()=>{
 }
 
 
-export default CompShowTickets
+export default CompMisTickets

@@ -7,15 +7,17 @@ import {useState} from 'react'
 import ProtectedRoutes from './Routes/ProtectedRoutes';
 import ProtectedRoutesCoordinador from './Routes/ProtectedRoutesCoordinador';
 
+import CompRegistrarUsuario from './usuario/RegistrarUsuario';
 import CompShowUsuarios from './usuario/ShowUsuario';
 import CompCreateUsuarios from './usuario/CreateUsuario';
 import CompEditUsuario from './usuario/EditUsuario';
 
+import CompMisTickets from './ticket/MisTickets';
 import CompShowTickets from './ticket/ShowTicket';
 import CompCreateTickets from './ticket/CreateTicket'
 import CompEditTickets from './ticket/EditTicket'
 
-
+import CompMisAsgCasos from './asignacioncaso/MisAsgCasos';
 import CompShowAsgCaso from './asignacioncaso/ShowAsgCaso';
 import CompCreateAsgCaso from   './asignacioncaso/CreateAsgCaso';
 import CompEditAsgCas from './asignacioncaso/EditAsgCaso'
@@ -58,11 +60,16 @@ function App() {
           
             <Route path="/" element={<HomeComponent/>}/>
             <Route path="/login" element={<ComplogUsuarios/>}/>
-            <Route path="/Usuarios/create" element={<CompCreateUsuarios/>}/>
+            <Route path="/Registrarse" element={<CompRegistrarUsuario/>}/>
 
             <Route element={<ProtectedRoutes />} >
-              <Route path="/Usuarios/" element={<CompShowUsuarios/>}/>
             
+            <Route path="/MisTickets/" element={<CompMisTickets/>}/>
+            <Route path="/MisAsignaciones/" element={<CompMisAsgCasos/>}/>
+            
+              
+              <Route path="/Usuarios/" element={<CompShowUsuarios/>}/>
+              <Route path="/Usuarios/create" element={<CompCreateUsuarios/>}/>
               <Route path="/Usuarios/edit/:id" element={<CompEditUsuario/>}/>
             
 

@@ -104,45 +104,7 @@ UsuarioControler.eliminar=async (req,res)=>{
 
 
 
-UsuarioControler.misTickets=async (req,res)=>{
-    console.log("UsuariotControler.misTickets")
 
-    try {
-        const ticket= await TicketModel.findAll({
-            where: {Usuaria:req.session.usuaria.id },
-            include: [
-                {association:relaciones.Tickets.Estatus}
-            ]
-        });
-
-        res.json (ticket);
-    } catch (error) {
-        res.status(400)
-        res.json(  {  message :error.message }   );
-    }
-
-    
-}
-
-
-UsuarioControler.misAsignaciones = async(req,res)=>{
-    console.log("UsuarioControler.misAsignaciones ");
-    try {
-       const casos =   await  AsignacionCasoModel.findAll ({
-        where: {Voluntaria: req.session.usuaria.id },
-        // Queremos que incluya la relación "Estado"
-        include: [
-            {association:relaciones.AsignacionCaso.Ticket},
-            {association:relaciones.AsignacionCaso.Estatus},
-        ]
-    });
-       res.json (casos);
-    } catch (error) {
-        res.status(400)
-        res.json(  {  message :error.message }   );
-    }
-   
-} 
 
 
 

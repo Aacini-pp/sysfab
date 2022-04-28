@@ -15,5 +15,10 @@ router.post("/registrarse",appControler.registrarse);
 //acceder logeado
 router.get("/logout",appControler.logout); //cambiar a post para que sea mas dificik salir, no solo conun enlace
 
+router.get("/MisAsignaciones",appControler.misAsignaciones);
+router.get("/MisTickets",appControler.misTickets);
+
+
+
 
 export default router;
