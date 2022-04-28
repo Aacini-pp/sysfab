@@ -19,3 +19,9 @@ code {
   content:"*";
   color:red;
 }
+
+
+.form-control:disabled, .form-control[readonly] {
+  background-color: #e9ecef;
+  opacity: .5 !important;
+}
