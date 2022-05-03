@@ -17,8 +17,8 @@ const CompCreateTickets=()=>{
     }
 
 
-    const [Usuaria, setUsuaria] = useState('')
-    const [Semaforo, setSemaforo] = useState('')
+   /*  const [Usuaria, setUsuaria] = useState('')
+    const [Semaforo, setSemaforo] = useState('') */
     const [Descripcion, setDescripcion] = useState('')
     
 
@@ -29,8 +29,8 @@ const navigate=useNavigate();
     const store = async (e)=>{
         e.preventDefault()
         const params={ 
-            Usuaria:Usuaria,
-            Semaforo_id:Semaforo,
+            /* Usuaria:Usuaria,
+            Semaforo_id:Semaforo, */
             Descripcion:Descripcion,
         }
         
@@ -63,7 +63,7 @@ const navigate=useNavigate();
 
         <form onSubmit={store}>
 
-            <div className="row">
+           {/*  <div className="row">
                 <div className="form-group col-md-6">
 
                     <label className="form-label required" >Victima</label>
@@ -89,7 +89,7 @@ const navigate=useNavigate();
                    
 
                 </div>
-            </div>
+            </div> */}
 
 
             <div className="mb-3">

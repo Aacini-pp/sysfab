@@ -79,9 +79,9 @@ const CompShowAsgCaso=  ()=>{
                     { AsgCasos.map( (AsgCaso)=>(
                         <tr key={ AsgCaso.id} >
                                 <td> {AsgCaso.id}  </td>
-                                <td> <Link to={`/Usuarios/edit/${AsgCaso.deVoluntaria.id}`} >   {AsgCaso.deVoluntaria.NickName}   </Link> </td>
-                                <td > <Link to={`/Tickets/edit/${AsgCaso.deTicket.id}`} >{AsgCaso.Ticket}</Link>:  {AsgCaso.deTicket.Descripcion}    </td>
-                                <td> <Link to={`/Usuarios/edit/${AsgCaso.deTicket.deUsuaria.id}`} > {AsgCaso.deTicket.deUsuaria.NickName}  </Link>  </td>
+                                <td> <Link to={`/Usuarios/${AsgCaso.deVoluntaria.id}`} >   {AsgCaso.deVoluntaria.NickName}   </Link> </td>
+                                <td > <Link to={`/Tickets/${AsgCaso.deTicket.id}`} >{AsgCaso.Ticket}</Link>:  {AsgCaso.deTicket.Descripcion}    </td>
+                                <td> <Link to={`/Usuarios/${AsgCaso.deTicket.deUsuaria.id}`} > {AsgCaso.deTicket.deUsuaria.NickName}  </Link>  </td>
                                
     
                                 <td>  

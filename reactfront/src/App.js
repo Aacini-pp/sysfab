@@ -7,11 +7,14 @@ import {useState} from 'react'
 import ProtectedRoutes from './Routes/ProtectedRoutes';
 import ProtectedRoutesCoordinador from './Routes/ProtectedRoutesCoordinador';
 
+import CompDetalleUsuario from "./usuario/DetalleUsuario"
 import CompRegistrarUsuario from './usuario/RegistrarUsuario';
 import CompShowUsuarios from './usuario/ShowUsuario';
 import CompCreateUsuarios from './usuario/CreateUsuario';
 import CompEditUsuario from './usuario/EditUsuario';
 
+
+import CompDetalleTicket from './ticket/DetalleTicket';
 import CompMisTickets from './ticket/MisTickets';
 import CompShowTickets from './ticket/ShowTicket';
 import CompCreateTickets from './ticket/CreateTicket'
@@ -68,12 +71,14 @@ function App() {
             <Route path="/MisAsignaciones/" element={<CompMisAsgCasos/>}/>
             
               
+               <Route path="/Usuarios/:id" element={<CompDetalleUsuario/>}/>
               <Route path="/Usuarios/" element={<CompShowUsuarios/>}/>
               <Route path="/Usuarios/create" element={<CompCreateUsuarios/>}/>
               <Route path="/Usuarios/edit/:id" element={<CompEditUsuario/>}/>
             
 
             
+              <Route path="/Tickets/:id" element={<CompDetalleTicket/>}/>
               <Route path="/Tickets/" element={<CompShowTickets/>}/>
               <Route path="/Tickets/create" element={<CompCreateTickets/>}/>
               <Route path="/Tickets/edit/:id" element={<CompEditTickets/>}/>

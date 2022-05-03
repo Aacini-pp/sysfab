@@ -11,6 +11,7 @@ import asignacionCasoRoutes from './routes/asignacionCasoRoutes.js'
 
 //catalogos
 import EstadosRoutes from './routes/Catalogos/estadosRoutes.js'
+import CatRoutes from './routes/Catalogos/catRoutes.js'
 
 
 //aplicacion
@@ -48,6 +49,7 @@ app.use("/AsignacionCaso",asignacionCasoRoutes);
 
 
 
+app.use("/Cat",CatRoutes);
 app.use("/Cat/Estados",EstadosRoutes);
 
 

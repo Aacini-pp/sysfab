@@ -1,10 +1,15 @@
 import React from 'react';
 import axios from 'axios'
 import {useState,useEffect} from "react"
+import {Link} from 'react-router-dom'
 
 import { useNavigate,useParams } from 'react-router-dom'
 
 const URI="http://localhost:8080/Tickets/";
+const URISemaforos ="http://localhost:8080/Cat/Semaforo/";
+const URIEstatus ="http://localhost:8080/Cat/Estatus/";
+
+
 
 const CompEditTickets=()=>{
     const  [msgEstado, setMegEstado] = useState('');
@@ -14,9 +19,14 @@ const CompEditTickets=()=>{
         setMegError("")
     }
 
+    const [NivelesSemaforo,setNivelesSemaforo] = useState([])
+    const [estatusArry,setEstatusArry] = useState([])
+
     const [Usuaria, setUsuaria] = useState('')
+    const [deUsuaria, setDeUsuaria] = useState('')
     const [Semaforo, setSemaforo] = useState('')
     const [Descripcion, setDescripcion] = useState('')
+    const [Estatus, setEstatus] = useState('')
 
     const navigate = useNavigate()
     const {id} = useParams()
@@ -28,8 +38,9 @@ const CompEditTickets=()=>{
 
         let params = { 
             Usuaria:Usuaria,
-            Semaforo_id:Semaforo,
+            Semaforo_id:(Semaforo == "")? null :Semaforo,
             Descripcion:Descripcion,
+            Estatus:Estatus
         }
         console.log(params)
 
@@ -51,15 +62,46 @@ const CompEditTickets=()=>{
 
 
     useEffect( ()=>{
-        getTicketsbyId()   
-   
+        getTicketsbyId()
+        getNivelesSemaforo()   
+        getEstatus()
     },[])
+
+    const getEstatus= async () =>{
+       
+        const res =  await  axios.get(URIEstatus).then((response) => {
+           console.log(response.data);
+           setEstatusArry(response.data)
+       }).catch(error => {
+           console.error(error.response.data)
+           limpiarMsg()
+           setMegError(error.response.data.message)
+       });
+
+       
+   }
+
+    const getNivelesSemaforo= async () =>{
+       
+        const res =  await  axios.get(URISemaforos).then((response) => {
+           console.log(response.data);
+           setNivelesSemaforo(response.data)
+       }).catch(error => {
+           console.error(error.response.data)
+           limpiarMsg()
+           setMegError(error.response.data.message)
+       });
+
+       
+   }
 
     const  getTicketsbyId = async (e) =>{
         const res = await axios.get(URI+id).then(function (response) {
             setUsuaria(response.data[0].Usuaria)
             setSemaforo(response.data[0].Semaforo_id)
             setDescripcion(response.data[0].Descripcion)
+            setDeUsuaria(response.data[0].deUsuaria.NickName)
+            setEstatus(response.data[0].Estatus)
             
 
           }).catch(error => {
@@ -82,30 +124,45 @@ const CompEditTickets=()=>{
         </div>
 
         <form onSubmit={update}>
-
-            <div className="row">
-                <div className="form-group col-md-6">
+             <div className="form-group ">
 
                     <label className="form-label required" >Victima</label>
-                    <input value={Usuaria}
-                    onChange={  (e)=> setUsuaria(e.target.value)  }
-                    type="number"
-                    className="form-control"
-                    required    
-                    />
+                    
+                    <div className=" ">
+                       <Link to={`/usuarios/${id}`} className='btn  btn-secondary  btn-link '>{deUsuaria}</Link>
+                    </div>
+                    
+                    
             
                         
 
                 </div>
+
+            <div className="row">
+               
+                
+                <div className="form-group col-md-6">
+                    
+                        <label className="form-label required" >Estatus</label>
+                        <select name="Estado" className="form-select"  onChange={  (e)=> {setEstatus(e.target.value)   }  }  required>  
+                            { estatusArry.map( (estatusItem)=>(
+                                <option key={ estatusItem.id} value={estatusItem.id} selected={ estatusItem.id==Estatus }  > {estatusItem.Nombre}  </option>
+                             ))}
+
+                    </select>
+                   
+
+                </div>
+                
                 <div className="form-group col-md-6">
                     
                         <label className="form-label required" >Semaforo</label>
-                        <input value={Semaforo}
-                        onChange={  (e)=> setSemaforo(e.target.value)  }
-                        type="number"
-                        className="form-control"
-                        required    
-                        />
+                       <select name="Estado" className="form-select"  onChange={  (e)=> {setSemaforo(e.target.value)   }  }  required>  
+                            { NivelesSemaforo.map( (nivelSem)=>(
+                                <option key={ nivelSem.id} value={nivelSem.id} selected={ nivelSem.id==Semaforo }  > {nivelSem.Nombre}  </option>
+                             ))}
+
+                    </select>
                    
 
                 </div>
@@ -131,6 +188,7 @@ const CompEditTickets=()=>{
            
 
             <button type="submit" className="btn btn-primary" > <i className="fa-solid fa-floppy-disk"></i> Guardar cambios </button>
+            <Link to={`/Tickets/`} className='btn btn-danger m-2'> <i class="fa-solid fa-ban"></i>  Cancelar  </Link>
         </form>
 
 

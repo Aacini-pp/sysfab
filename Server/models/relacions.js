@@ -29,7 +29,8 @@ const Relaciones={
     }, */
     Tickets :{
         Usuaria:TicketModel.belongsTo(UsuarioModel,{as:"deUsuaria",foreignKey:"Usuaria"}), 
-        Estatus:TicketModel.belongsTo(EstatusModel,{as:"deEstatus",foreignKey:"Estatus"})
+        Estatus:TicketModel.belongsTo(EstatusModel,{as:"deEstatus",foreignKey:"Estatus"}),
+        Semaforo:TicketModel.belongsTo(SemaforoModel,{as:"deSemaforo",foreignKey:"Semaforo_id"}),
     },
     AsignacionCaso:{
         Usuaria: AsignacionCasoModel.belongsTo(UsuarioModel,{as:"deVoluntaria",foreignKey:"Voluntaria"}),

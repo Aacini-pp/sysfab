@@ -6,7 +6,10 @@ import  {useState,useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const URI="http://localhost:8080/Usuarios/";
+const URIEstados ="http://localhost:8080/Cat/Estados/";
 
+const URIRoles ="http://localhost:8080/Cat/Roles/";
+const URIEstatus ="http://localhost:8080/Cat/Estatus/";
 
 const CompRegistrarUsuario=()=>{
     const  [msgEstado, setMegEstado] = useState('');
@@ -17,15 +20,21 @@ const CompRegistrarUsuario=()=>{
     }
 
     const [estados,setEstados] = useState([])
+    const [roles,setRoles] = useState([])
+    const [estatusArry,setEstatusArry] = useState([])
+
+
+
     
     useEffect( ()=>{
-        getEstados()   
-   
+        getEstados()
+        getRoles()   
+        getEstatus()
     },[])
 
-    //procedimiento para mostrar todos los tickets
+    //procedimiento para mostrar todos los Usuarios
     const getEstados= async () =>{
-        const URIEstados ="http://localhost:8080/Cat/Estados/"
+       
         const res =  await  axios.get(URIEstados).then((response) => {
            console.log(response.data);
            setEstados(response.data)
@@ -37,6 +46,36 @@ const CompRegistrarUsuario=()=>{
 
        
    }
+
+   const getRoles= async () =>{
+       
+        const res =  await  axios.get(URIRoles).then((response) => {
+           console.log(response.data);
+           setRoles(response.data)
+       }).catch(error => {
+           console.error(error.response.data)
+           limpiarMsg()
+           setMegError(error.response.data.message)
+       });
+
+       
+   }
+
+   const getEstatus= async () =>{
+       
+        const res =  await  axios.get(URIEstatus).then((response) => {
+           console.log(response.data);
+           setEstatusArry(response.data)
+       }).catch(error => {
+           console.error(error.response.data)
+           limpiarMsg()
+           setMegError(error.response.data.message)
+       });
+
+       
+   }
+
+
 
 
 
@@ -55,6 +94,9 @@ const CompRegistrarUsuario=()=>{
     const [Email, setEmail] = useState(undefined)
     const [Telefono, setTelefono] = useState(undefined)
 
+    const [Rol, setRol] = useState(undefined)
+    const [Estatus, setEstatus] = useState(undefined)
+
     const navigate=useNavigate();
 
     const store = async (e)=>{
@@ -66,13 +108,16 @@ const CompRegistrarUsuario=()=>{
             
             ApellidoPaterno: (ApellidoPaterno == "")? null :ApellidoPaterno,
             ApellidoMaterno: (ApellidoMaterno == "")? null :ApellidoMaterno,
-            FechaNacimiento:FechaNacimiento,
+            FechaNacimiento:(FechaNacimiento == "")? null : FechaNacimiento,
             EntidadFederativa:Estado,
-            Ciudad:Ciudad,
+            Ciudad: (Ciudad == "")? null : Ciudad,
 
             PerfilFB: (PerfilFB == "")? null : PerfilFB,
             Email: (Email == "")? null : Email ,
             Telefono:(Telefono == "")? null : Telefono, 
+
+            Rol: (Rol == "")? null : Rol,
+            Estatus: (Estatus == "")? null : Estatus
         } 
         
         console.log(params)
@@ -174,6 +219,38 @@ const CompRegistrarUsuario=()=>{
                 </div>
             </div>
 
+
+
+            <div className="row align-items-end">
+                <div className="form-group col-md-6">
+                    
+                    <label className="form-label" >Rol</label>
+                    <select name="Estado" className="form-select"  onChange={  (e)=> {setRol(e.target.value)  }  }>  
+                            <option value=""  > Seleccione un Rol.. </option>  
+                            { roles.map( (rol)=>(
+                                <option key={ rol.id} value={rol.id} > {rol.Nombre}  </option>
+                             ))}
+
+                    </select>
+
+
+                </div>
+                <div className="form-group col-md-6">
+                    
+                    <label className="form-label" >Estatus</label>
+                    <select name="Estado" className="form-select"  onChange={  (e)=> {setEstatus(e.target.value)  }  }>  
+                            <option value=""  > Seleccione un  estauts.. </option>  
+                            { estatusArry.map( (estatusItem)=>(
+                                <option key={ estatusItem.id} value={estatusItem.id}  > {estatusItem.Nombre}  </option>
+                             ))}
+
+                    </select>
+
+
+
+                </div>
+            </div>
+
            
            
 
@@ -225,7 +302,7 @@ const CompRegistrarUsuario=()=>{
                     
                         <label className="form-label"    >Estado</label>
                         <select name="Estado" className="form-select"  onChange={  (e)=> {setEstado(e.target.value)  }  }>  
-                        <option value="34"  > Seleccione un estado.. </option>  
+                            <option value="34"  > Seleccione un estado.. </option>  
                             { estados.map( (edo)=>(
                                 <option key={ edo.id} value={edo.id} > {edo.Estado}  </option>
                              ))}

@@ -13,7 +13,10 @@ TicketControler.listar=async(req,res)=>{
         // Queremos que incluya la relación "Estado"
         include: [
             {association:relaciones.Tickets.Usuaria},
-            {association:relaciones.Tickets.Estatus}
+            {association:relaciones.Tickets.Estatus},
+            {association:relaciones.Tickets.Semaforo}
+
+            
         ]
     });
        res.json (tickets);
@@ -32,7 +35,8 @@ TicketControler.obtener=async(req,res)=>{
             where: { id: req.params.id},
             include: [
                 {association:relaciones.Tickets.Usuaria},
-                {association:relaciones.Tickets.Estatus}
+                {association:relaciones.Tickets.Estatus},
+                {association:relaciones.Tickets.Semaforo}
             ]
         });
 
@@ -49,7 +53,10 @@ TicketControler.obtener=async(req,res)=>{
 TicketControler.crear=async(req,res)=>{
   console.log("UsuariotControler.crear ");
     try {
-        await TicketModel.create(req.body);
+        await TicketModel.create({
+            Usuaria: 1 /*TODO req.session.usuaria.id */,
+            Descripcion:req.body.Descripcion
+        });
         res.json(  {  message :"Registro creado Correctamente" }   );
 
     } catch (error) {

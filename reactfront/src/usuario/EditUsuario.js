@@ -1,10 +1,16 @@
 import React from 'react';
 import axios from 'axios'
-import {useState,useEffect} from "react"
 
-import { useNavigate,useParams } from 'react-router-dom'
+import  {useState,useEffect} from 'react'
+//import {useNative} from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 const URI="http://localhost:8080/Usuarios/";
+
+const URIEstados ="http://localhost:8080/Cat/Estados/";
+const URIRoles ="http://localhost:8080/Cat/Roles/";
+const URIEstatus ="http://localhost:8080/Cat/Estatus/";
 
 const CompEditUsuario=()=>{
     const  [msgEstado, setMegEstado] = useState('');
@@ -14,64 +20,64 @@ const CompEditUsuario=()=>{
         setMegError("")
     }
 
-
-    const [Nombre, setNombre] = useState('')
-    const [NickName, setNickName] = useState('')
-    const [Pass, setPass] = useState('')
-   
-    const [ApellidoPaterno, setApellidoPaterno] = useState('')
-    const [ApellidoMaterno, setApellidoMaterno] = useState('')
-    const [FechaNacimiento, setFechaNacimiento] = useState('')
-    const [Ciudad, setCiudad] = useState('')
-    const [PerfilFB, setPerfilFB] = useState('')
-    const [Email, setEmail] = useState('')
-    const [Telefono, setTelefono] = useState('')
-
-    const navigate = useNavigate()
-    const {id} = useParams()
+    const [estados,setEstados] = useState([])
+    const [roles,setRoles] = useState([])
+    const [estatusArry,setEstatusArry] = useState([])
 
 
-    const update= async (e) =>{
-        e.preventDefault()
 
-        let params = { 
-            Nombre:Nombre,
-            NickName:NickName,
-            Pass:Pass,
-          
-            ApellidoPaterno:ApellidoPaterno,
-            ApellidoMaterno:ApellidoMaterno,
-            FechaNacimiento:FechaNacimiento,
-            Ciudad:Ciudad,
-
-            PerfilFB:PerfilFB,
-            Email:Email,
-            Telefono:Telefono
-
-        }
-        console.log(params)
-
-        await axios.put(URI+id,params).then((response) => {
-            console.log(response.data);
-            limpiarMsg()
-            setMegEstado(response.data.message)
-            setTimeout(function(){navigate("/Usuarios/")}, 2000);
-        }).catch(error => {
-            console.error(error.response.data)
-            limpiarMsg()
-            setMegError(error.response.data.message)
-        });
-       
-
-    }
-
-
+    
     useEffect( ()=>{
-        getUsuariobyId()   
-   
+        getEstados()
+        getRoles()   
+        getEstatus()
+        getUsuariobyId()
     },[])
 
-    const  getUsuariobyId = async (e) =>{
+    //procedimiento para mostrar todos los Usuarios
+    const getEstados= async () =>{
+       
+        const res =  await  axios.get(URIEstados).then((response) => {
+           console.log(response.data);
+           setEstados(response.data)
+       }).catch(error => {
+           console.error(error.response.data)
+           limpiarMsg()
+           setMegError(error.response.data.message)
+       });
+
+       
+   }
+
+   const getRoles= async () =>{
+       
+        const res =  await  axios.get(URIRoles).then((response) => {
+           console.log(response.data);
+           setRoles(response.data)
+       }).catch(error => {
+           console.error(error.response.data)
+           limpiarMsg()
+           setMegError(error.response.data.message)
+       });
+
+       
+   }
+
+   const getEstatus= async () =>{
+       
+        const res =  await  axios.get(URIEstatus).then((response) => {
+           console.log(response.data);
+           setEstatusArry(response.data)
+       }).catch(error => {
+           console.error(error.response.data)
+           limpiarMsg()
+           setMegError(error.response.data.message)
+       });
+
+       
+   }
+
+   const  getUsuariobyId = async (e) =>{
         const res = await axios.get(URI+id).then(function (response) {
             setNombre(response.data[0].Nombre)
             setNickName(response.data[0].NickName)
@@ -88,6 +94,9 @@ const CompEditUsuario=()=>{
             setEmail(response.data[0].Email)
             setTelefono(response.data[0].Telefono)
 
+            setRol(response.data[0].Rol)
+            setEstatus(response.data[0].Estatus)
+
 
           }).catch(error => {
                 console.error(error)
@@ -99,16 +108,79 @@ const CompEditUsuario=()=>{
     }
 
 
-    return (
-        <div>
-        <h3>Editar perfil</h3>
-        <div className="row">
-                <div className="alert alert-success" role="alert">{msgEstado}</div>
-                <div className="alert alert-danger" role="alert">{msgError}</div>
-        </div> 
-        <form onSubmit={update}>
-               
 
+
+
+    const [Nombre, setNombre] = useState('')
+    const [NickName, setNickName] = useState('')
+    const [Pass, setPass] = useState('')
+   
+    
+    const [ApellidoPaterno, setApellidoPaterno] = useState(undefined)
+    const [ApellidoMaterno, setApellidoMaterno] = useState(undefined)
+    const [FechaNacimiento, setFechaNacimiento] = useState('')
+    const [Estado, setEstado] = useState(34)
+    const [Ciudad, setCiudad] = useState('')
+
+    const [PerfilFB, setPerfilFB] = useState(undefined)
+    const [Email, setEmail] = useState(undefined)
+    const [Telefono, setTelefono] = useState(undefined)
+
+    const [Rol, setRol] = useState(undefined)
+    const [Estatus, setEstatus] = useState(undefined)
+
+    const navigate=useNavigate();
+    const {id} = useParams()
+
+    const update = async (e)=>{
+        e.preventDefault()
+        const params={ 
+            Nombre:Nombre,
+            NickName:NickName,
+            Pass:Pass,
+            
+            ApellidoPaterno: (ApellidoPaterno == "")? null :ApellidoPaterno,
+            ApellidoMaterno: (ApellidoMaterno == "")? null :ApellidoMaterno,
+            FechaNacimiento:(FechaNacimiento == "")? null : FechaNacimiento,
+            EntidadFederativa:Estado,
+            Ciudad: (Ciudad == "")? null : Ciudad,
+
+            PerfilFB: (PerfilFB == "")? null : PerfilFB,
+            Email: (Email == "")? null : Email ,
+            Telefono:(Telefono == "")? null : Telefono, 
+
+            Rol: (Rol == "")? null : Rol,
+            Estatus: (Estatus == "")? null : Estatus
+        } 
+        
+        console.log(params)
+        
+        
+        axios.put(URI+id,params).then((response) => {
+            console.log("mensaje ",response.data);
+            limpiarMsg()
+            setMegEstado(response.data.message)
+            
+            setTimeout(function(){navigate("/Usuarios/")}, 2000);
+
+
+        }).catch(error => {
+            console.error(error.response.data)
+            limpiarMsg()
+            setMegError(error.response.data.message)
+        });
+      
+    }
+
+
+    return (
+        <div >
+         <h3>Crear Usuaria</h3>
+
+        <div className="alert alert-success" role="alert">{msgEstado}</div>
+        <div className="alert alert-danger" role="alert">{msgError}</div>
+
+        <form onSubmit={update}>
 
             <div className="row">
                 <div className="form-group col-md-6">
@@ -152,7 +224,7 @@ const CompEditUsuario=()=>{
 
 
 
-            <div className="row">
+            <div className="row align-items-end">
                 <div className="form-group col-md-6">
                     
                     <label className="form-label" >Apellido Paterno</label>
@@ -180,8 +252,40 @@ const CompEditUsuario=()=>{
                 </div>
             </div>
 
+
+
+            <div className="row align-items-end">
+                <div className="form-group col-md-6">
+                    
+                    <label className="form-label" >Rol</label>
+                    <select name="Estado" className="form-select"  onChange={  (e)=> {setRol(e.target.value)  }  }>  
+                            <option value=""  > Seleccione un Rol.. </option>  
+                            { roles.map( (rol)=>(
+                                <option key={ rol.id} value={rol.id} selected={ rol.id==Rol }  > {rol.Nombre}  </option>
+                             ))}
+
+                    </select>
+
+
+                </div>
+                <div className="form-group col-md-6">
+                    
+                    <label className="form-label" >Estatus</label>
+                    <select name="Estado" className="form-select"  onChange={  (e)=> {setEstatus(e.target.value)  }  }>  
+                            <option value=""  > Seleccione un  estauts.. </option>  
+                            { estatusArry.map( (estatusItem)=>(
+                                <option key={ estatusItem.id} value={estatusItem.id} selected={ estatusItem.id==Estatus }  > {estatusItem.Nombre}  </option>
+                             ))}
+
+                    </select>
+
+
+
+                </div>
+            </div>
+
            
-  
+           
 
         <div className="row align-items-end">
                 <div className="form-group col-md-6">
@@ -224,16 +328,19 @@ const CompEditUsuario=()=>{
         </div>
 
 
+
+
         <div className="row align-items-end">
                 <div className="form-group col-md-6">
                     
-                        <label className="form-label" >Fecha de Nacimiento</label>
-                        <input 
-                        value={FechaNacimiento}
-                        onChange={  (e)=> setFechaNacimiento(e.target.value)  }
-                        type="date"
-                        className="form-control"    
-                        />
+                        <label className="form-label"    >Estado</label>
+                        <select name="Estado" className="form-select"  onChange={  (e)=> {setEstado(e.target.value)  }  }>  
+                            <option value="34"  > Seleccione un estado.. </option>  
+                            { estados.map( (edo)=>(
+                                <option key={ edo.id} value={edo.id} selected={ edo.id==Estado  } > {edo.Estado}  </option>
+                             ))}
+
+                        </select>  
 
 
                 </div>
@@ -248,19 +355,28 @@ const CompEditUsuario=()=>{
 
 
                 </div>
-            </div>
+        </div>
 
+        <div className="mb-3">
 
+                         <label className="form-label" >Fecha de Nacimiento</label>
+                        <input 
+                        value={FechaNacimiento}
+                        onChange={  (e)=> setFechaNacimiento(e.target.value)  }
+                        type="date"
+                        className="form-control"    
+                        />
+        </div>
            
 
-            <button type="submit" className="btn btn-primary" > <i className="fa-solid fa-floppy-disk"></i> Guardar cambios</button>
-        </form>
+            <button type="submit" className="btn btn-primary" > <i className="fa-solid fa-floppy-disk"></i> Actualizar Usuaria </button>
+            <Link to={`/usuarios/`} className='btn btn-danger m-2'> <i class="fa-solid fa-ban"></i>  Cancelar  </Link>                                            
+       </form>
 
 
     </div>
-
     )
-
 }
 
-export default CompEditUsuario;
+
+export default CompEditUsuario

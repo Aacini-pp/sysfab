@@ -79,7 +79,7 @@ const CompShowTickets=  ()=>{
                     { tickets.map( (Ticket)=>(
                         <tr key={ Ticket.id} >
                                 <td> {Ticket.id}  </td>
-                                <td>  <Link to={`/Usuarios/edit/${Ticket.Usuaria}`} >      {Ticket.deUsuaria.NickName}   </Link>  </td>
+                                <td>  <Link to={`/Usuarios/${Ticket.Usuaria}`} >      {Ticket.deUsuaria.NickName}   </Link>  </td>
                                 <td> {Ticket.Semaforo_id}  </td>
                                 <td> {Ticket.Descripcion}  </td>
     

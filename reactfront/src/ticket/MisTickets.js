@@ -62,7 +62,7 @@ const CompMisTickets=  ()=>{
                 <div className="alert alert-danger" role="alert">{msgError}</div>
             </div>    
 
-            <Link to={'create'} className='btn btn-primary m-2'><i className="fas fa-plus"></i> Registrar Ticket</Link>
+            <Link to={'/Tickets/create'} className='btn btn-primary m-2'><i className="fas fa-plus"></i> Registrar Ticket</Link>
 
 
             <table className="table table-dark">

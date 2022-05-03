@@ -69,9 +69,9 @@ const CompRegistrarUsuario=()=>{
             
             ApellidoPaterno: (ApellidoPaterno == "")? null :ApellidoPaterno,
             ApellidoMaterno: (ApellidoMaterno == "")? null :ApellidoMaterno,
-            FechaNacimiento:FechaNacimiento,
+            FechaNacimiento:(FechaNacimiento == "")? null : FechaNacimiento,
             EntidadFederativa:Estado,
-            Ciudad:Ciudad,
+            Ciudad: (Ciudad == "")? null : Ciudad,
 
             PerfilFB: (PerfilFB == "")? null : PerfilFB,
             Email: (Email == "")? null : Email ,
@@ -93,7 +93,7 @@ const CompRegistrarUsuario=()=>{
             limpiarMsg()
             setMegEstado(response.data.message)
             
-            setTimeout(function(){navigate("/Usuarios/")}, 2000);
+            setTimeout(function(){navigate("/login/")}, 2000);
 
 
         }).catch(error => {
@@ -107,8 +107,9 @@ const CompRegistrarUsuario=()=>{
 
     return (
         <div className="container-fluid" >
-        <h3>Crear Cuenta</h3>
+        <h3>Registrarse</h3>
 
+        
         <div className="alert alert-success" role="alert">{msgEstado}</div>
         <div className="alert alert-danger" role="alert">{msgError}</div>
 
@@ -236,18 +237,22 @@ const CompRegistrarUsuario=()=>{
 
                                 <div className="row align-items-end">
                                         <div className="form-group col-md-6">
-                                            
+
                                                 <label className="form-label"    >Estado</label>
                                                 <select name="Estado" className="form-select"  onChange={  (e)=> {setEstado(e.target.value)  }  }>  
-                                                <option value="34"  > Seleccione un estado.. </option>  
+                                                    
+                                                    <option value="34" > Seleccione un estado.. </option>  
                                                     { estados.map( (edo)=>(
-                                                        <option key={ edo.id} value={edo.id} > {edo.Estado}  </option>
+                                                        <option key={ edo.id} value={edo.id}   > {edo.Estado}  </option>
                                                     ))}
+
 
                                                 </select>  
 
 
                                         </div>
+
+                                        
                                         <div className="form-group col-md-6">
                                             
                                                 <label className="form-label" >Ciudad</label>

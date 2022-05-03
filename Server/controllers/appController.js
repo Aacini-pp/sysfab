@@ -73,7 +73,7 @@ appControler.misTickets=async (req,res)=>{
 
     try {
         const ticket= await TicketModel.findAll({
-            where: {Usuaria:47 /* req.session.usuaria.id */  },
+            where: {Usuaria:1 /*TODO req.session.usuaria.id */  },
             include: [
                 {association:relaciones.Tickets.Estatus}
             ]
@@ -93,8 +93,8 @@ appControler.misAsignaciones = async(req,res)=>{
     console.log("UsuarioControler.misAsignaciones ");
     try {
        const casos =   await  AsignacionCasoModel.findAll ({
-         where: { Voluntaria: 47/* req.session.usuaria.id */  },
-        // Queremos que incluya la relación "Estado"
+         where: { Voluntaria: 1/*TODO req.session.usuaria.id */  },
+        // Queremos que incluya la relaciónES
             include: [
                 {
                     association:relaciones.AsignacionCaso.Ticket,
