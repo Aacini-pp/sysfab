@@ -18,7 +18,7 @@ TicketControler.listar=async(req,res)=>{
 
             
         ],
-        order: [ ['Estatus', 'DESC'], ['id', 'ASC']]
+        order: [ ['Estatus', 'DESC'],['Semaforo_id', 'DESC'], ['id', 'ASC']]
     });
        res.json (tickets);
     } catch (error) {

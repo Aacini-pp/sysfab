@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import {Link} from 'react-router-dom'
 
 
-import {useAuth} from './funciones'
+import {useAuth,getRolUruaria} from './funciones'
 
 const URI="http://localhost:8080/logout/";
 
@@ -66,8 +66,8 @@ const CompMainMenu=()=>{
       <li className="nav-item active">
         <Link className="nav-link" to={'/'}>Home <span className="sr-only">(current)</span></Link>
       </li>
-      </ul>
-      { (!useAuth() )?
+    </ul>
+    { (!useAuth() )?
       <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center"> 
          <li className="nav-item">
           <Link className="nav-link" to={'/login/'}>Login</Link>
@@ -81,22 +81,38 @@ const CompMainMenu=()=>{
          <li className="nav-item">
           <Link className="nav-link" to={'/MisTickets/'}> <i className="fa-solid fa-ticket-simple"></i> Mis Tickets</Link>
         </li>
-        <li className="nav-item">
-          <Link className="nav-link" to={'/MisAsignaciones/'}><i className="fa-solid fa-clipboard"></i> Mis Asignaciones</Link>
-        </li> 
-        <li className="nav-item">
-          <Link className="nav-link" to={'/Usuarios/'}> <i className="fa-solid fa-child-dress"></i> Usuarias</Link>
-        </li>
+        
+         {/* Solo Voluntarias o superior */}
+        { (getRolUruaria() >= 3) ?(
+          <li className="nav-item">     
+            <Link className="nav-link" to={'/MisAsignaciones/'}><i className="fa-solid fa-clipboard"></i> Mis Asignaciones</Link>
+          </li>):"" 
+         }
+
+         {/* Solo Coordinadores */}
+         { (getRolUruaria() >= 4) ?(    
+              <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center">
+                <li className="nav-item">
+                  <Link className="nav-link" to={'/Usuarios/'}> <i className="fa-solid fa-child-dress"></i> Usuarias</Link>
+                </li>
 
 
-        <li className="nav-item">
-          <Link className="nav-link" to={'/Tickets/'}> <i className="fa-solid fa-ticket"></i> Tickets</Link>
-        </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to={'/Tickets/'}> <i className="fa-solid fa-ticket"></i> Tickets</Link>
+                </li>
 
 
-        <li className="nav-item">
-          <Link className="nav-link" to={'/AsignacionCaso/'}> <i className="fa-solid fa-clipboard-list"></i> Asignación de Casos</Link>
-        </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to={'/AsignacionCaso/'}> <i className="fa-solid fa-clipboard-list"></i> Asignación de Casos</Link>
+                </li>
+              </ul>
+            ):"" 
+         }
+         
+                
+
+
+        
 
       
 

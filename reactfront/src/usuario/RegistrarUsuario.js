@@ -299,7 +299,7 @@ const CompRegistrarUsuario=()=>{
                                 type="textarea"
                                 className="form-control"
                                 rows="15"
-                                placeholder="Describa la situacion por la que requiera ayuda"
+                                placeholder="Describa la situacion por la que requiere ayuda"
                                 disabled={!ContarHistoria}
                                 minLength={15}
                                 maxLength={300}

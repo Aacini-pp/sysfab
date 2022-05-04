@@ -5,6 +5,7 @@ import './App.css';
 import {useState} from 'react'
 
 import ProtectedRoutes from './Routes/ProtectedRoutes';
+import ProtectedRoutesVoluntaria from './Routes/ProtectedRoutesVoluntaria';
 import ProtectedRoutesCoordinador from './Routes/ProtectedRoutesCoordinador';
 
 import CompDetalleUsuario from "./usuario/DetalleUsuario"
@@ -65,31 +66,39 @@ function App() {
             <Route path="/login" element={<ComplogUsuarios/>}/>
             <Route path="/Registrarse" element={<CompRegistrarUsuario/>}/>
 
-            <Route element={<ProtectedRoutes />} >
             
-            <Route path="/MisTickets/" element={<CompMisTickets/>}/>
-            <Route path="/MisAsignaciones/" element={<CompMisAsgCasos/>}/>
-            
-              
-              <Route path="/Usuarios/:id" element={<CompDetalleUsuario/>}/>
-              <Route path="/Usuarios/" element={<CompShowUsuarios/>}/>
-              <Route path="/Usuarios/create" element={<CompCreateUsuarios/>}/>
-              <Route path="/Usuarios/edit/:id" element={<CompEditUsuario/>}/>
+            <Route element={<ProtectedRoutes />} > {/* usuarios logeados */}
             
 
-            
-              <Route path="/Tickets/:id" element={<CompDetalleTicket/>}/>
-              <Route path="/Tickets/" element={<CompShowTickets/>}/>
+              <Route path="/MisTickets/" element={<CompMisTickets/>}/>
               <Route path="/Tickets/create" element={<CompCreateTickets/>}/>
-              <Route path="/Tickets/edit/:id" element={<CompEditTickets/>}/>
-           
-            <Route element={<ProtectedRoutesCoordinador />} >
+
               
-              <Route path="/AsignacionCaso/" element={<CompShowAsgCaso/>}/>
-              <Route path="/AsignacionCaso/create/:id" element={<CompCreateAsgCaso/>}/>
-              <Route path="/AsignacionCaso/create" element={<CompCreateAsgCaso/>}/>
-              <Route path="/AsignacionCaso/edit/:id" element={<CompEditAsgCas/>}/>
-            </Route>
+              <Route element={<ProtectedRoutesVoluntaria />} >  
+                <Route path="/MisAsignaciones/" element={<CompMisAsgCasos/>}/>
+                <Route path="/Usuarios/:id" element={<CompDetalleUsuario/>}/>
+                <Route path="/Tickets/:id" element={<CompDetalleTicket/>}/>
+                
+
+                <Route element={<ProtectedRoutesCoordinador />} >   
+                    
+                      <Route path="/Usuarios/" element={<CompShowUsuarios/>}/>
+                      <Route path="/Usuarios/create" element={<CompCreateUsuarios/>}/>
+                      <Route path="/Usuarios/edit/:id" element={<CompEditUsuario/>}/>
+
+
+                      <Route path="/Tickets/" element={<CompShowTickets/>}/>
+                      {/* ...Crear es publico */}
+                      <Route path="/Tickets/edit/:id" element={<CompEditTickets/>}/>
+                  
+                  
+                      
+                      <Route path="/AsignacionCaso/" element={<CompShowAsgCaso/>}/>
+                      <Route path="/AsignacionCaso/create" element={<CompCreateAsgCaso/>}/>
+                      <Route path="/AsignacionCaso/create/:id" element={<CompCreateAsgCaso/>}/>
+                      <Route path="/AsignacionCaso/edit/:id" element={<CompEditAsgCas/>}/>
+                </Route>
+              </Route>
           
           </Route>
 
