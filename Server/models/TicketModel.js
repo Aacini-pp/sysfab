@@ -41,7 +41,7 @@ const TicketModel= db.define("Ticket",{
     Estatus:{
       type:DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 1
+      defaultValue: 2
     }
 
    

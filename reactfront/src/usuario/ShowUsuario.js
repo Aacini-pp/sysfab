@@ -83,9 +83,11 @@ const CompShowUsuarios=  ()=>{
                                 <td> {usuario.ApellidoPaterno}  </td>
                                 <td> {usuario.NickName}  </td>
     
-                                <td>  
-                                    <Link to={`edit/${usuario.id}`} className='btn btn-info'><i className="fas fa-edit"></i></Link>
-                                    <button  onClick={ ()=>deleteUsuario( usuario.id)   } className='btn btn-danger'><i className="fas fa-trash-alt"></i></button>
+                                <td> 
+                                    <div className="btn-group" role="group" >
+                                        <Link to={`edit/${usuario.id}`}  title="Editar Usuaria" className='btn btn-info'><i className="fas fa-edit"></i></Link>
+                                        <button   title="Eliminar usuaria" onClick={ ()=>deleteUsuario( usuario.id)   } className='btn btn-danger'><i className="fas fa-trash-alt"></i></button>
+                                    </div> 
                                 </td>
                         </tr>   
     

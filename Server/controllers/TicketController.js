@@ -17,7 +17,8 @@ TicketControler.listar=async(req,res)=>{
             {association:relaciones.Tickets.Semaforo}
 
             
-        ]
+        ],
+        order: [ ['Estatus', 'DESC'], ['id', 'ASC']]
     });
        res.json (tickets);
     } catch (error) {

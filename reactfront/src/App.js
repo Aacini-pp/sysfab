@@ -71,7 +71,7 @@ function App() {
             <Route path="/MisAsignaciones/" element={<CompMisAsgCasos/>}/>
             
               
-               <Route path="/Usuarios/:id" element={<CompDetalleUsuario/>}/>
+              <Route path="/Usuarios/:id" element={<CompDetalleUsuario/>}/>
               <Route path="/Usuarios/" element={<CompShowUsuarios/>}/>
               <Route path="/Usuarios/create" element={<CompCreateUsuarios/>}/>
               <Route path="/Usuarios/edit/:id" element={<CompEditUsuario/>}/>
@@ -84,7 +84,9 @@ function App() {
               <Route path="/Tickets/edit/:id" element={<CompEditTickets/>}/>
            
             <Route element={<ProtectedRoutesCoordinador />} >
+              
               <Route path="/AsignacionCaso/" element={<CompShowAsgCaso/>}/>
+              <Route path="/AsignacionCaso/create/:id" element={<CompCreateAsgCaso/>}/>
               <Route path="/AsignacionCaso/create" element={<CompCreateAsgCaso/>}/>
               <Route path="/AsignacionCaso/edit/:id" element={<CompEditAsgCas/>}/>
             </Route>

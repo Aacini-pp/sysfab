@@ -72,20 +72,30 @@ const CompShowTickets=  ()=>{
                     <th scope="col">Victima</th>
                     <th scope="col">Semaforo</th>
                     <th scope="col">Descripcion</th>
-                     <th scope="col"> </th>
+                    <th scope="col">Estatus </th>
+                    <th scope="col"> </th>
                     </tr>
                 </thead>
                 <tbody>
                     { tickets.map( (Ticket)=>(
-                        <tr key={ Ticket.id} >
+                        <tr key={ Ticket.id}  >
                                 <td> {Ticket.id}  </td>
                                 <td>  <Link to={`/Usuarios/${Ticket.Usuaria}`} >      {Ticket.deUsuaria.NickName}   </Link>  </td>
                                 <td> {Ticket.Semaforo_id}  </td>
                                 <td> {Ticket.Descripcion}  </td>
+                                <td> {Ticket.deEstatus.Nombre}  </td>
     
-                                <td>  
-                                    <Link to={`edit/${Ticket.id}`} className='btn btn-info'><i className="fas fa-edit"></i></Link>
-                                    <button  onClick={ ()=>deleteTickets( Ticket.id)   } className='btn btn-danger'><i className="fas fa-trash-alt"></i></button>
+                                <td > 
+                                    <div className="btn-group d-flex justify-content-end " role="group" >
+                                        {/* Si el tiket esta sin asignar mostrar el boton para asignar */}
+                                        { (Ticket.Estatus==2)?
+                                         <Link to={`/AsignacionCaso/create/${Ticket.id}`} title="Asignar ticket"  className='btn btn-success align-self-center'> <i className="fa-solid fa-play"></i></Link> 
+                                         : "" 
+                                        }
+                                        
+                                        <Link to={`edit/${Ticket.id}`} title="Editar ticket" className='btn btn-info'><i className="fas fa-edit"></i></Link>
+                                        <button  title="Eliminar ticket" onClick={ ()=>deleteTickets( Ticket.id)   } className='btn btn-danger'><i className="fas fa-trash-alt"></i></button>
+                                    </div>
                                 </td>
                         </tr>   
     

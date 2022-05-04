@@ -1,4 +1,5 @@
 import AsignacionCasoModel from "../models/AsignacionCasoModel.js";
+import TicketModel from "../models/TicketModel.js";
 import relaciones from "../models/relacions.js"
 
 
@@ -62,6 +63,10 @@ AsignacionCasoControler.crear=async(req,res)=>{
   console.log(req.body);
     try {
         await AsignacionCasoModel.create(req.body);
+        //cambiar el estado del ticket a 1:Activo
+        await TicketModel.update( { Estatus:1},{
+           where: {id: req.body.Ticket  }
+         });
         res.json(  {  message :"Registro AsignacionCaso creado Correctamente" }   );
 
     } catch (error) {

@@ -97,6 +97,12 @@ const CompDetalleUsuario=()=>{
             setRol(response.data[0].Rol)
             setEstatus(response.data[0].Estatus)
 
+            let data  = {...response.data[0]}
+           
+            data.createdAt = data.createdAt.slice(0,10)
+            data.updatedAt = data.updatedAt.slice(0,10)
+            setUsuariaDataCompl(data)
+
 
           }).catch(error => {
                 console.error(error)
@@ -110,6 +116,7 @@ const CompDetalleUsuario=()=>{
 
 
 
+    const [UsuariaDataCompl, setUsuariaDataCompl] = useState({})
 
     const [Nombre, setNombre] = useState('')
     const [NickName, setNickName] = useState('')
@@ -372,6 +379,18 @@ const CompDetalleUsuario=()=>{
                         className="form-control"    
                         disabled
                         />
+        </div>
+        <div className="row align-items-end">
+                <div className="form-group col-md-6">
+                        <label className="form-label" >Fecha de creación</label>        
+                        <a className='btn  btn-secondary form-control'>{UsuariaDataCompl.createdAt}</a>
+                        
+                </div>
+                <div className="form-group col-md-6">
+                        <label className="form-label" >Fecha de modificación</label>        
+                        <a className='btn  btn-secondary form-control'>{UsuariaDataCompl.updatedAt}</a>        
+                        
+                </div>
         </div>
            
 

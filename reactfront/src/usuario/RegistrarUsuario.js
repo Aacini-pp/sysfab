@@ -106,7 +106,7 @@ const CompRegistrarUsuario=()=>{
 
 
     return (
-        <div className="container-fluid" >
+        <div className="container" >
         <h3>Registrarse</h3>
 
         
@@ -301,7 +301,11 @@ const CompRegistrarUsuario=()=>{
                                 rows="15"
                                 placeholder="Describa la situacion por la que requiera ayuda"
                                 disabled={!ContarHistoria}
-                                onClick={ ()=>{setContarHistoria(true); console.log("cambiandoestado")} }    /* no funcionapor que en disable se desactiva */  
+                                minLength={15}
+                                maxLength={300}
+
+                                onClick={ ()=>{setContarHistoria(true); console.log("cambiandoestado")} }    /* no funcionapor que en disable se desactiva */ 
+                                required 
                                 />
                         </div> 
 

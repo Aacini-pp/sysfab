@@ -128,7 +128,7 @@ const CompDetalleTicket=()=>{
 
                     <label className="form-label required" >Victima </label>
                     <div className=" ">
-                       <Link to={`/usuarios/${id}`} className='btn  btn-secondary  btn-link '>{deUsuaria}</Link>
+                       <Link to={`/usuarios/${Usuaria}`} className='btn  btn-secondary  '>{deUsuaria}</Link>
                     </div>
 
                     

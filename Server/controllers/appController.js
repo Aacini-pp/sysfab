@@ -1,3 +1,5 @@
+import bd from  "../database/db.js"
+
 import UsuarioModel from "../models/UserModel.js";
 import AsignacionCasoModel from "../models/AsignacionCasoModel.js";
 import TicketModel from "../models/TicketModel.js";
@@ -18,10 +20,10 @@ appControler.login=async(req,res)=>{
 
         if(usuaria === null){
 
-            console.log("El usuario que intento ingresar no estaba registrado");
+            console.log("El usuario que intento ingresar no estaba registrado o la contraseña  es incorrecta");
             res.status(400)
            
-            res.json(  {  message :"Usuaria no encontrada" }   );
+            res.json(  {  message :"Usuaria no encontrada o la contraseña  es incorrecta" }   );
 
         } else{
             req.session.usuaria = usuaria.dataValues
@@ -53,10 +55,22 @@ appControler.logout= (req,res)=>{
 appControler.registrarse= async(req,res)=>{
     console.log("appControler.registrarse");
     
+    
     try {
-        await UsuarioModel.create(req.body, {
-            include: [ relaciones.Usuaria.Tickets ]
-          });
+        
+        //realizar una ransaccion para garantizar la atomicidad del registro con su ticket
+        const result = await bd.transaction(async (t) => {
+
+                const user = await UsuarioModel.create(req.body, {
+                    include: [ relaciones.Usuaria.Tickets ]
+                    ,  transaction: t 
+                });
+                return user;
+         });
+
+       
+
+       
         res.json(  {  message :"Registro creado Correctamente" }   );
 
     } catch (error) {

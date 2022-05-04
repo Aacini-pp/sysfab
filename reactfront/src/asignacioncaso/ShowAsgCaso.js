@@ -84,9 +84,11 @@ const CompShowAsgCaso=  ()=>{
                                 <td> <Link to={`/Usuarios/${AsgCaso.deTicket.deUsuaria.id}`} > {AsgCaso.deTicket.deUsuaria.NickName}  </Link>  </td>
                                
     
-                                <td>  
-                                    <Link to={`edit/${AsgCaso.id}`} className='btn btn-info'><i className="fas fa-edit"></i></Link>
-                                    <button  onClick={ ()=>deleteAsgCasos( AsgCaso.id)   } className='btn btn-danger'><i className="fas fa-trash-alt"></i></button>
+                                <td> 
+                                    <div className="btn-group" role="group" >
+                                        <Link to={`edit/${AsgCaso.id}`} title="Editar Asignacion"className='btn btn-info'><i className="fas fa-edit"></i></Link>
+                                        <button title="Eliminar Asignacion" onClick={ ()=>deleteAsgCasos( AsgCaso.id)   } className='btn btn-danger'><i className="fas fa-trash-alt"></i></button>
+                                    </div>     
                                 </td>
                         </tr>   
     
