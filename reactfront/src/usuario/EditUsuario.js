@@ -79,6 +79,7 @@ const CompEditUsuario=()=>{
 
    const  getUsuariobyId = async (e) =>{
         const res = await axios.get(URI+id).then(function (response) {
+            console.log("usuario encontrado",response.data[0]);
             setNombre(response.data[0].Nombre)
             setNickName(response.data[0].NickName)
             setPass(response.data[0].Pass)
@@ -87,6 +88,7 @@ const CompEditUsuario=()=>{
             setApellidoPaterno(response.data[0].ApellidoPaterno)
             setApellidoMaterno(response.data[0].ApellidoMaterno)
             setFechaNacimiento(response.data[0].FechaNacimiento)
+            setEstado(response.data[0].EntidadFederativa)
             setCiudad(response.data[0].Ciudad)
 
 
@@ -346,7 +348,7 @@ const CompEditUsuario=()=>{
                         <select name="Estado" className="form-select"  onChange={  (e)=> {setEstado(e.target.value)  }  }>  
                             <option value="34"  > Seleccione un estado.. </option>  
                             { estados.map( (edo)=>(
-                                <option key={ edo.id} value={edo.id} selected={ edo.id==Estado  } > {edo.Estado}  </option>
+                                <option key={ edo.id} value={edo.id} selected={ edo.id==Estado  } >{edo.Estado}</option>
                              ))}
 
                         </select>  

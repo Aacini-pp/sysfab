@@ -1,14 +1,14 @@
 import React from 'react';
 import { useLocation } from "react-router";
 import { Navigate, Outlet } from "react-router-dom";
-import {useAuth,getRolUruaria} from '../app/funciones';
+import {useAuth,getRolUruaria,isVoluntaria} from '../app/funciones';
 
 
 
 const ProtectedRoutesVoluntaria = () => {
   const location = useLocation();
-  const isVoluntaria = (getRolUruaria() >= 3) ; //es voluntaria o rol superior
-  return (isVoluntaria) ? (
+  //es voluntaria o rol superior
+  return (isVoluntaria()) ? (
     <Outlet />
   ) : (
     <Navigate to="/" replace state={{ from: location }} />

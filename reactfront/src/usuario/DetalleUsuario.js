@@ -87,6 +87,7 @@ const CompDetalleUsuario=()=>{
             setApellidoPaterno(response.data[0].ApellidoPaterno)
             setApellidoMaterno(response.data[0].ApellidoMaterno)
             setFechaNacimiento(response.data[0].FechaNacimiento)
+            setEstado(response.data[0].EntidadFederativa)
             setCiudad(response.data[0].Ciudad)
 
 
@@ -395,7 +396,7 @@ const CompDetalleUsuario=()=>{
            
 
             <Link to={`/usuarios/edit/${id}`} className='btn btn-primary m-2'>  <i className="fa-solid fa-floppy-disk"></i> Editar Usuaria   </Link>
-            <Link to={`/usuarios/`} className='btn btn-danger m-2'> <i class="fa-solid fa-ban"></i>  Cancelar  </Link>                        
+            <Link to={`/usuarios/`} className='btn btn-danger m-2'> <i className="fa-solid fa-ban"></i>  Cancelar  </Link>                        
             
         </form>
 

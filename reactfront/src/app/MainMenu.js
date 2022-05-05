@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import {Link} from 'react-router-dom'
 
 
-import {useAuth,getRolUruaria} from './funciones'
+import {useAuth,getRolUruaria,isVoluntaria,isCoordinadora } from './funciones'
 
 const URI="http://localhost:8080/logout/";
 
@@ -83,14 +83,14 @@ const CompMainMenu=()=>{
         </li>
         
          {/* Solo Voluntarias o superior */}
-        { (getRolUruaria() >= 3) ?(
+        { (isVoluntaria()) ?(
           <li className="nav-item">     
             <Link className="nav-link" to={'/MisAsignaciones/'}><i className="fa-solid fa-clipboard"></i> Mis Asignaciones</Link>
           </li>):"" 
          }
 
          {/* Solo Coordinadores */}
-         { (getRolUruaria() >= 4) ?(    
+         { ( isCoordinadora() ) ?(    
               <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center">
                 <li className="nav-item">
                   <Link className="nav-link" to={'/Usuarios/'}> <i className="fa-solid fa-child-dress"></i> Usuarias</Link>

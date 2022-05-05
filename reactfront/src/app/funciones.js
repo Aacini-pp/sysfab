@@ -24,4 +24,18 @@ export  const getRolUruaria = () =>{
   
 }
 
+export const isVoluntaria = () =>{
+
+    return (getRolUruaria() >= 3)
+}
+
+
+export const isCoordinadora = () =>{
+  return   (getRolUruaria() >= 4)
+
+
+}
+
+
+
 

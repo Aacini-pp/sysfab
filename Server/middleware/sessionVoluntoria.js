@@ -9,11 +9,11 @@ export default function(req,res,next){
      next();
      return ;
     console.log(req.session);
-    if( req.session.usuaria  && req.session.usuaria.Rol == 4){
+    if( req.session.usuaria  && req.session.usuaria.Rol >= 3){
         next();
     }else{
         res.status(400)
-        res.json(  {  message :"Se necesita ser coordinadora " }   );  
+        res.json(  {  message :"Se necesita ser voluntaria o coordinadora " }   );  
     }
 
 

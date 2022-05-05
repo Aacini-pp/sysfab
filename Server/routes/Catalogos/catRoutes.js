@@ -3,17 +3,15 @@ import express from 'express';
  import CatControler from '../../controllers/Catalogos/CatController.js'
 
 import sessionCoordinadora from '../../middleware/sessionCoordinadora.js'
-
+import sessionVoluntoria from   '../../middleware/sessionVoluntoria.js'
 const router = express.Router();
 
 
 //MIDDLEWARE
-/*
-router.post("/",sessionCoordinadora);
-router.put("/:id",sessionCoordinadora);
-router.delete("/:id",sessionCoordinadora);
-*/
-
+router.get("/Estatus",sessionVoluntoria);
+router.get("/Roles",sessionVoluntoria);
+router.get("/Semaforo",sessionVoluntoria);
+router.get("/Voluntarias",sessionCoordinadora);
 
 
 

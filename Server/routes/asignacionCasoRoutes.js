@@ -5,7 +5,12 @@ import sessionMiddleware from './../middleware/session.js'
 const router = express.Router();
 
 
-
+//MIDDLEWAREs
+router.get("/",sessionCoordinadora);
+router.get("/:id",sessionCoordinadora);
+router.post("/",sessionCoordinadora);
+router.put("/:id",sessionCoordinadora);
+router.delete("/:id",sessionCoordinadora);
 
 
 

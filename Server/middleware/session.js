@@ -6,7 +6,8 @@ import UsuarioModel from "../models/UserModel.js";
 
 export default   function(req,res,next){
     console.log("Middleware session");
-   
+    next();
+     return ;
     if(!req.session.usuaria){
         res.status(400)
         res.json(  {  message :"Sesion no iniciada" }   );
