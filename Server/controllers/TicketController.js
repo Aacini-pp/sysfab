@@ -1,7 +1,47 @@
+import axios from 'axios'
+
 import TicketModel from "../models/TicketModel.js";
 import UsuarioModel from "../models/UserModel.js";
 
 import relaciones from "../models/relacions.js"
+
+/**
+ * Esta funcion se encargara de consultar la api de google para consultas analisis de sentimientos de google
+ * oara regresar el valor menor de sus items
+ */
+let analisisCasos = async function  (descripcion)  {
+    const secreetKey ="AIzaSyAdhkuz10po_ShRex2W93Vcbpb10Lqp32w"
+    const APIgoogle = "https://language.googleapis.com/v1/documents:analyzeSentiment?key="+secreetKey
+   
+    
+    var data = { 
+        "document":{
+            "type":"PLAIN_TEXT",
+            "content":descripcion,         
+            "language": "es"
+        },
+        "encodingType":"UTF8"
+            
+    }
+     let minVal= 1
+     const res =  await  axios.post(APIgoogle,data).then((response) => {
+           console.log("Consulta api response",response.data);
+           response.data.sentences.forEach((sentence) => {
+               console.log("sentence",sentence)
+               if(sentence.sentiment.score < minVal){
+                    minVal = sentence.sentiment.score
+               }
+                
+           })
+           
+       }).catch(error => {
+           console.error("Consulta api error",error)
+           
+       });
+       
+       return  {min: minVal, semaforo:Math.ceil(minVal*-5)+5};
+
+}
 
 const TicketControler={}
 
@@ -51,12 +91,18 @@ TicketControler.obtener=async(req,res)=>{
 }
 
 
-TicketControler.crear=async(req,res)=>{
+TicketControler.crear=async (req,res)=>{
   console.log("UsuariotControler.crear ");
+
+    //analizar texto 
+    const resp = await analisisCasos(req.body.Descripcion)
+    console.log(resp);
+    
     try {
         await TicketModel.create({
-            Usuaria: 1 /*TODO req.session.usuaria.id */,
-            Descripcion:req.body.Descripcion
+            Usuaria: 1, //TODO req.session.usuaria.id 
+            Descripcion:req.body.Descripcion,
+            Semaforo_id:resp.semaforo
         });
         res.json(  {  message :"Registro creado Correctamente" }   );
 

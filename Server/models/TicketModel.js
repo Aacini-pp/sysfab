@@ -32,8 +32,8 @@ const TicketModel= db.define("Ticket",{
         allowNull: true,
         validate:{
             len:{
-                   args:[15,300],
-                   msg:"La descripcion  tiene que estar entre 15 y 300 catacteres"
+                   args:[15,500],
+                   msg:"La descripcion tiene que estar entre 15 y 500 catacteres"
                }
         }
       

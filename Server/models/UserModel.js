@@ -6,6 +6,10 @@ import TicketModel from "./TicketModel.js"
 import  EstadosModel from"./Catalogos/EstadosModel.js"
 
 
+/**
+ //TODO Encontrar como mandar mensajes personalizados para  unique o quitarles el mensaje 
+ */
+
 
 const UsuarioModel= db.define("Usuaria",{
     Nombre :{
@@ -133,6 +137,18 @@ const UsuarioModel= db.define("Usuaria",{
    
 
    
-});
+}
+, {
+  //validacion almenos un medio de contacto
+  validate: {
+    medioDecontacto() {
+      if ( ( this.PerfilFB === null) &&  (this.Telefono === null) &&  (this.PerfilFB === null)   ) {
+        throw new Error('Tiene que especicarse almenos un medio de contacto (Telefono , email o Perfil de facebook)');
+      }
+    }
+  }
+}
+
+);
 
 export default UsuarioModel;
