@@ -12,13 +12,13 @@ const router = express.Router();
 
 
 //MIDDLEWAREs
-/*
+
 router.get("/",sessionVoluntoria);
 router.get("/:id",sessionVoluntoria);
 router.post("/",sessionCoordinadora);
 router.put("/:id",sessionCoordinadora);
 router.delete("/:id",sessionCoordinadora);
-*/
+
 
 router.get("/",UserController.listar);
 router.get("/:id",UserController.obtener);

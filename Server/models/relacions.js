@@ -7,6 +7,8 @@ import RolesModel from "./Catalogos/RolesModel.js"
 import EstatusModel from "./Catalogos/EstatusModel.js"
 import SemaforoModel from "./Catalogos/SemaforoModel.js"
 
+import EmailRecuperacionModel from "./EmailRecuperacionModelModel.js"
+
 
 /**Contiene la relacion de  todas las entidaes */
 
@@ -36,6 +38,9 @@ const Relaciones={
         Usuaria: AsignacionCasoModel.belongsTo(UsuarioModel,{as:"deVoluntaria",foreignKey:"Voluntaria"}),
         Ticket: AsignacionCasoModel.belongsTo(TicketModel,{as:"deTicket",foreignKey:"Ticket"}), 
         Estatus:AsignacionCasoModel.belongsTo(EstatusModel,{as:"deEstatus",foreignKey:"Estatus"}),
+    },
+   EmailRecuperacion:{
+        Usuaria: EmailRecuperacionModel.belongsTo(UsuarioModel,{as:"deUsuaria",foreignKey:"Usuaria"}),
     }   
 }
 export default Relaciones

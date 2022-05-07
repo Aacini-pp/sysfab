@@ -1,10 +1,6 @@
 import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
-import TicketModel from "./TicketModel.js"
-
-import  EstadosModel from"./Catalogos/EstadosModel.js"
-
 
 /**
  //TODO Encontrar como mandar mensajes personalizados para  unique o quitarles el mensaje 
@@ -42,7 +38,7 @@ const UsuarioModel= db.define("Usuaria",{
 
     NickName :{
         type:DataTypes.STRING,
-        allowNull: false,
+        allowNull: false, //TODO: tiene que tener letras pero no simbolos @
         unique: {
           msg: 'El NickName necesita ser unico'  //TODO  msg
         }
@@ -51,7 +47,14 @@ const UsuarioModel= db.define("Usuaria",{
     Pass :{
         type:DataTypes.STRING,
         allowNull: false,
-        
+        /**
+         * set(value) {
+      // Storing passwords in plaintext in the database is terrible.
+      // Hashing the value with an appropriate cryptographic hash function is better.
+      this.setDataValue('password', hash(value));
+      }
+         * 
+         */
     },
     
     
@@ -83,7 +86,7 @@ const UsuarioModel= db.define("Usuaria",{
     },
 
 
-    Email:{
+    Email:{ 
       type:DataTypes.STRING,
       allowNull: true,
       unique: {
@@ -98,7 +101,7 @@ const UsuarioModel= db.define("Usuaria",{
       }
     },
 
-    Telefono:{
+    Telefono:{ //TODO:EL NUMERO DEVE TENER LONGITUD DE NUMERO CON LADA
       type:DataTypes.STRING,
       allowNull: true,
       unique: {
@@ -143,7 +146,7 @@ const UsuarioModel= db.define("Usuaria",{
   validate: {
     medioDecontacto() {
       if ( ( this.PerfilFB === null) &&  (this.Telefono === null) &&  (this.PerfilFB === null)   ) {
-        throw new Error('Tiene que especicarse almenos un medio de contacto (Telefono , email o Perfil de facebook)');
+        throw new Error('Tiene que especicarse almenos un medio de contacto (Telefono , Email o Perfil de facebook)');
       }
     }
   }

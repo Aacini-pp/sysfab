@@ -1,114 +1,102 @@
-import React from 'react';
-import axios from 'axios'
+import React from "react";
+import axios from "axios";
 
-import  {useState} from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
+const URI = "http://localhost:8080/login/";
 
-const URI="http://localhost:8080/login/";
+const ComplogUsuarios = () => {
+  const [msgEstado, setMegEstado] = useState("");
+  const [msgError, setMegError] = useState("");
 
+  const [NickName, setNickName] = useState("");
+  const [Pass, setPass] = useState("");
 
-const ComplogUsuarios=()=>{
+  const limpiarMsg = () => {
+    setMegEstado("");
+    setMegError("");
+  };
 
+  const navigate = useNavigate();
 
-    
-  const  [msgEstado, setMegEstado] = useState('');
-  const  [msgError, setMegError] = useState('');
+  const login = async (e) => {
+    e.preventDefault();
 
-  
-  
-    const [NickName, setNickName] = useState('')
-    const [Pass, setPass] = useState('')
- 
+    let params = {
+      NickName: NickName,
+      Pass: Pass,
+    };
+    console.log(params);
 
-const limpiarMsg=  ()=>{
-    setMegEstado("")
-    setMegError("")
-}
-  
-const navigate=useNavigate();
+    axios
+      .post(URI, params)
+      .then((response) => {
+        console.log(response);
+        if ("NickName" in response.data) {
+          localStorage.setItem("Usuaria", JSON.stringify(response.data));
+          setTimeout(function() {
+            navigate("/");
+          }, 2000);
+        }
+        limpiarMsg();
+        setMegEstado("Bienvenida " + response.data.Nombre);
+      })
+      .catch((error) => {
+        console.error(error.response.data);
+        limpiarMsg();
+        setMegError(error.response.data.message);
+      });
+  };
 
+  return (
+    <div>
+      <h3>Iniciar sesión</h3>
 
-    const login = async (e)=>{
-        e.preventDefault()
+      <div className="alert alert-success" role="alert">
+        {msgEstado}
+      </div>
+      <div className="alert alert-danger" role="alert">
+        {msgError}
+      </div>
+      <form onSubmit={login}>
+        <div className="row">
+          <div className="form-group col-md-6">
+            <label className="form-label required">NickName</label>
+            <input
+              value={NickName}
+              onChange={(e) => setNickName(e.target.value)}
+              type="text"
+              className="form-control"
+              required
+            />
+          </div>
+          <div className="form-group col-md-6">
+            <label className="form-label required">Pass</label>
+            <input
+              value={Pass}
+              onChange={(e) => setPass(e.target.value)}
+              type="password"
+              className="form-control"
+              required
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <Link to="/forgot-password" className="h6">
+              Olvide mi contraseña
+            </Link>
+          </div>
+        </div>
 
-
-        let params ={ 
-            NickName:NickName,
-            Pass:Pass,
-        } 
-        console.log(params)
-              
-        
-        axios.post(URI,params).then((response) => {
-            console.log(response);
-            if('NickName' in response.data){
-                localStorage.setItem("Usuaria",JSON.stringify(response.data))
-                setTimeout(function(){navigate("/")}, 2000);
-            }
-            limpiarMsg()
-            setMegEstado("Bienvenida "+response.data.Nombre)
-            
-
-
-           
-        }).catch(error => {
-            console.error(error.response.data)
-            limpiarMsg()
-            setMegError(error.response.data.message)
-        });
-         
-    }
-
-
-    return (
-        <div >
-        <h3>Iniciar sesión</h3>
-
-
-        <div className="alert alert-success" role="alert">{msgEstado}</div>
-        <div className="alert alert-danger" role="alert">{msgError}</div>
-        <form onSubmit={login}>
-
-            <div className="row">
-                <div className="form-group col-md-6">
-
-                    <label className="form-label required" >NickName</label>
-                    <input value={NickName}
-                    onChange={  (e)=> setNickName(e.target.value)  }
-                    type="text"
-                    className="form-control"
-                    required    
-                    />
-            
-                        
-
-                </div>
-                <div className="form-group col-md-6">
-                    
-                        <label className="form-label required" >Pass</label>
-                        <input value={Pass}
-                        onChange={  (e)=> setPass(e.target.value)  }
-                        type="password"
-                        className="form-control"
-                        required    
-                        />
-                   
-
-                </div>
-            </div>
-
-
-
-           
-
-            <button type="submit" className="btn btn-primary m-3" > <i className="fa-solid fa-right-to-bracket"></i> Loggin </button>
-        </form>
-
-
+        <button type="submit" className="btn btn-primary m-3">
+          <i className="fa-solid fa-right-to-bracket"></i> Loggin
+        </button>
+      </form>
     </div>
-    )
-}
+  );
+};
 
-
-export default ComplogUsuarios
+export default ComplogUsuarios;
