@@ -9,7 +9,7 @@ import relaciones from "../models/relacions.js"
  * Esta funcion se encargara de consultar la api de google para consultas analisis de sentimientos de google
  * oara regresar el valor menor de sus items
  */
-let analisisCasos = async function  (descripcion)  {
+ let analisisCasos = async function  (descripcion)  {
     const secreetKey ="AIzaSyAdhkuz10po_ShRex2W93Vcbpb10Lqp32w"
     const APIgoogle = "https://language.googleapis.com/v1/documents:analyzeSentiment?key="+secreetKey
    
@@ -35,7 +35,7 @@ let analisisCasos = async function  (descripcion)  {
            })
            
        }).catch(error => {
-           console.error("Consulta api error",error)
+           console.error("Consulta api error")
            
        });
        
@@ -44,6 +44,8 @@ let analisisCasos = async function  (descripcion)  {
 }
 
 const TicketControler={}
+
+TicketControler.analisisCasos =analisisCasos
 
 
 TicketControler.listar=async(req,res)=>{
@@ -100,7 +102,7 @@ TicketControler.crear=async (req,res)=>{
     
     try {
         await TicketModel.create({
-            Usuaria: 1, //TODO req.session.usuaria.id 
+            Usuaria:  req.session.usuaria.id, 
             Descripcion:req.body.Descripcion,
             Semaforo_id:resp.semaforo
         });

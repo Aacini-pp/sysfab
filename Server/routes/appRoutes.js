@@ -1,6 +1,7 @@
 import express from 'express';
 import appControler from '../controllers/appController.js'
 import sessionCoordinadora from './../middleware/sessionCoordinadora.js'
+import sessionVoluntoria from   "./../middleware/sessionVoluntoria.js"
 import sessionMiddleware from './../middleware/session.js'
 
 const router = express.Router();
@@ -11,7 +12,7 @@ const router = express.Router();
 
 //acceder logeado
 router.get("/logout",sessionMiddleware); 
-router.get("/MisAsignaciones",sessionCoordinadora);
+router.get("/MisAsignaciones",sessionVoluntoria);
 router.get("/MisTickets",sessionMiddleware);
 
 

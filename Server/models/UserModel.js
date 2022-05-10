@@ -144,9 +144,10 @@ const UsuarioModel= db.define("Usuaria",{
 , {
   //validacion almenos un medio de contacto
   validate: {
-    medioDecontacto() {
-      if ( ( this.PerfilFB === null) &&  (this.Telefono === null) &&  (this.PerfilFB === null)   ) {
-        throw new Error('Tiene que especicarse almenos un medio de contacto (Telefono , Email o Perfil de facebook)');
+    medioDeContacto() {
+       console.log("medioDeContacto", this.Email,this.Telefono,this.PerfilFB)
+      if ( ( this.Email === null) &&  (this.Telefono === null) &&  (this.PerfilFB === null)   ) {
+        throw new Error('Tiene que especificarse almenos un medio de contacto (Telefono , Email o Perfil de facebook)');
       }
     }
   }
