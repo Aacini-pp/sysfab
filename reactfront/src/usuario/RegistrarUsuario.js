@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 //import {useNative} from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const URI = "http://localhost:8080/registrarse/";
 
@@ -116,7 +117,7 @@ const CompRegistrarUsuario = () => {
             <div className="col-12 col-md-6">
               <div className="row">
                 <div className="form-group col-md-6">
-                  <label className="form-label required">NickName</label>
+                  <label className="form-label required">Apodo</label>
                   <input
                     value={NickName}
                     onChange={(e) => setNickName(e.target.value)}
@@ -126,7 +127,7 @@ const CompRegistrarUsuario = () => {
                   />
                 </div>
                 <div className="form-group col-md-6">
-                  <label className="form-label required">Pass</label>
+                  <label className="form-label required">Contraseña</label>
                   <input
                     value={Pass}
                     onChange={(e) => setPass(e.target.value)}
@@ -138,13 +139,12 @@ const CompRegistrarUsuario = () => {
               </div>
 
               <div className="mb-3">
-                <label className="form-label required">Nombre (s)</label>
+                <label className="form-label ">Nombre(s) real(es)</label>
                 <input
                   value={Nombre}
                   onChange={(e) => setNombre(e.target.value)}
                   type="text"
                   className="form-control"
-                  required
                 />
               </div>
 
@@ -276,6 +276,8 @@ const CompRegistrarUsuario = () => {
                   required
                 />
               </div>
+
+              <Link to="/politicas" className="h6 text-muted">Tus datos están seguros gracias a nuestra política de privacidad</Link>
             </div>
           </div>
         </div>

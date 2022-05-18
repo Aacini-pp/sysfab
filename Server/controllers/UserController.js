@@ -5,101 +5,101 @@ import AsignacionCasoModel from "../models/AsignacionCasoModel.js";
 import relaciones from "../models/relacions.js"
 
 
-const UsuarioControler={}
+const UsuarioControler = {}
 
 
-UsuarioControler.listar=async(req,res)=>{
+UsuarioControler.listar = async (req, res) => {
     console.log("UsuariotControler.listar");
     try {
-       const usuarios =   await  UsuarioModel.findAll ({
-        // Queremos que incluya la relaciónes
-        include: [
-            {association: relaciones.Usuaria.Estado},
-            {association: relaciones.Usuaria.Rol},
-            {association: relaciones.Usuaria.Estatus}
-            ,{association: relaciones.Usuaria.Tickets}
-        ]
-    });
-       res.json (usuarios);
+        const usuarios = await UsuarioModel.findAll({
+            // Queremos que incluya la relaciónes
+            include: [
+                { association: relaciones.Usuaria.Estado },
+                { association: relaciones.Usuaria.Rol },
+                { association: relaciones.Usuaria.Estatus }
+                , { association: relaciones.Usuaria.Tickets }
+            ]
+        });
+        res.json(usuarios);
     } catch (error) {
-        console.log(error);  
+        console.log(error);
         res.status(400)
-        res.json(  {  message :error.message }   );
+        res.json({ message: error.message.replace("Validation error: ", "") });
     }
-   
-} 
 
-UsuarioControler.obtener=async(req,res)=>{
-    console.log("UsuariotControler.obtener");   
+}
+
+UsuarioControler.obtener = async (req, res) => {
+    console.log("UsuariotControler.obtener");
 
     try {
-        const usuario= await UsuarioModel.findAll({
-            where: { id: req.params.id},
+        const usuario = await UsuarioModel.findAll({
+            where: { id: req.params.id },
             include: [
-                {association: relaciones.Usuaria.Estado},
-                {association: relaciones.Usuaria.Rol},
-                {association: relaciones.Usuaria.Estatus}
+                { association: relaciones.Usuaria.Estado },
+                { association: relaciones.Usuaria.Rol },
+                { association: relaciones.Usuaria.Estatus }
             ]
         });
 
-        res.json (usuario);
+        res.json(usuario);
     } catch (error) {
-        console.log(error);   
+        console.log(error);
         res.status(400)
-        res.json(  {  message :error.message }   );
+        res.json({ message: error.message.replace("Validation error: ", "") });
     }
 
-   
+
 }
 
 
-UsuarioControler.crear=async(req,res)=>{
-  console.log("UsuariotControler.crear ");
+UsuarioControler.crear = async (req, res) => {
+    console.log("UsuariotControler.crear ");
     try {
         await UsuarioModel.create(req.body);
-        res.json(  {  message :"Registro creado Correctamente" }   );
+        res.json({ message: "Registro creado correctamente" });
 
     } catch (error) {
-        console.log(error);  
+        console.log(error);
         res.status(400)
-        res.json(  {  message :error.message }   );
+        res.json({ message: error.message.replace("Validation error: ", "") });
     }
 
 }
 
 
-UsuarioControler.actualizar=async(req,res)=>{
+UsuarioControler.actualizar = async (req, res) => {
     console.log("UsuariotControler.actualizar");
-   try {
-       await UsuarioModel.update(req.body,{
-           where: {id: req.params.id  }
-       });
+    try {
+        await UsuarioModel.update(req.body, {
+            where: { id: req.params.id }
+        });
 
-       res.json(  {  message :"Registro actualizado Correctamente" }   );
+        res.json({ message: "Registro actualizado correctamente" });
 
-   } catch (error) {
-    res.status(400)
-    res.json(  {  message :error.message }   );
-   }
+    } catch (error) {
+        res.status(400)
+        res.json({ message: error.message.replace("Validation error: ", "") });
+    }
 
 }
 
 
-UsuarioControler.eliminar=async (req,res)=>{
+UsuarioControler.eliminar = async (req, res) => {
     console.log("UsuariotControler.eliminar")
 
     try {
         await UsuarioModel.destroy({
-            where: {id: req.params.id  }
+            where: { id: req.params.id }
         });
- 
-        res.json(  {  message :"Registro eliminado Correctamente" }   );
- 
+
+        res.json({ message: "Registro eliminado correctamente" });
+
     } catch (error) {
         res.status(400)
-        res.json(  {  message :error.message }   );
+        res.json({ message: error.message.replace("Validation error: ", "") });
     }
-    
+
 }
 
 

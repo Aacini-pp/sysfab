@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const URI = "http://localhost:8080/login/";
 
-const ComplogUsuarios = () => {
+const ComplogUsuarios = (props) => {
   const [msgEstado, setMegEstado] = useState("");
   const [msgError, setMegError] = useState("");
 
@@ -36,15 +36,14 @@ const ComplogUsuarios = () => {
         console.log(response);
         if ("NickName" in response.data) {
           localStorage.setItem("Usuaria", JSON.stringify(response.data));
-          setTimeout(function() {
-            navigate("/");
-          }, 2000);
+          props.ConectarSocketCanalPropio(); //llamar a las conexiones socket
+          setTimeout(function () { navigate("/"); }, 2000);
         }
         limpiarMsg();
         setMegEstado("Bienvenida " + response.data.Nombre);
       })
       .catch((error) => {
-        console.error(error.response.data);
+        console.error(error);
         limpiarMsg();
         setMegError(error.response.data.message);
       });
@@ -52,7 +51,7 @@ const ComplogUsuarios = () => {
 
   return (
     <div>
-      <h3>Iniciar sesión</h3>
+      <h3>Iniciar sesión </h3>
 
       <div className="alert alert-success" role="alert">
         {msgEstado}
@@ -63,7 +62,7 @@ const ComplogUsuarios = () => {
       <form onSubmit={login}>
         <div className="row">
           <div className="form-group col-md-6">
-            <label className="form-label required">NickName</label>
+            <label className="form-label required">Apodo</label>
             <input
               value={NickName}
               onChange={(e) => setNickName(e.target.value)}
@@ -73,7 +72,7 @@ const ComplogUsuarios = () => {
             />
           </div>
           <div className="form-group col-md-6">
-            <label className="form-label required">Pass</label>
+            <label className="form-label required">Contraseña</label>
             <input
               value={Pass}
               onChange={(e) => setPass(e.target.value)}

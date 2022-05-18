@@ -54,25 +54,28 @@ const CompForgotpass = () => {
       </div>
       <form onSubmit={RecuperarPass}>
         <div className="row justify-content-center">
-          <div className="form-group col-12  ">
-            <input
-              value={CampoBusqueda}
-              onChange={(e) => setCampoBusqueda(e.target.value)}
-              type="text"
-              className="form-control mx-2"
-              required
-            />
-            <small id="emailHelp" class="form-text  text-muted ">
+          <div className="form-group ">
+            <div class=" col-10  btn-group btn-group-toggle mx-3" data-toggle="buttons">
+              <input
+                value={CampoBusqueda}
+                onChange={(e) => setCampoBusqueda(e.target.value)}
+                type="text"
+                className="form-control"
+                required
+              />
+              <button type="submit" className="btn btn-primary ">
+                <i className="fa-solid fa-magnifying-glass"></i> Buscar
+              </button>
+            </div>
+            <div class="  form-text  text-muted  ">
               Ingrese su Nombre de usuario(NickName), Email o Numero telefonico
-            </small>
+            </div>
           </div>
         </div>
 
-        <button type="submit" className="btn btn-primary m-3">
-          <i className="fa-solid fa-magnifying-glass"></i> Buscar
-        </button>
-      </form>
-    </div>
+
+      </form >
+    </div >
   );
 };
 

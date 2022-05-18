@@ -3,8 +3,8 @@ import fs from 'fs'
 import path from 'path'
 
 
-export const cargandoHTMLEmail = (infoCLiente)=>{
-  let html=`<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+export const cargandoHTMLEmail = (infoCLiente) => {
+  let html = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -487,19 +487,19 @@ export const cargandoHTMLEmail = (infoCLiente)=>{
   </body>
 </html>
 `
-   html = html.replace("{{name}}",infoCLiente.nombre)
-              .replace("{{operating_system}}",infoCLiente.os)
-              .replace("{{browser_name}}",infoCLiente.browser)
-              .replace("{{action_url_1}}",infoCLiente.url)
-              .replace("{{action_url_2}}",infoCLiente.url)
-              .replace("{{ip_info}}",  (infoCLiente.ip ===undefined) ? "":" y con ip:"+infoCLiente.ip  )
+  html = html.replace("{{name}}", infoCLiente.nombre)
+    .replace("{{operating_system}}", infoCLiente.os)
+    .replace("{{browser_name}}", infoCLiente.browser)
+    .replace("{{action_url_1}}", infoCLiente.url)
+    .replace("{{action_url_2}}", infoCLiente.url)
+    .replace("{{ip_info}}", (infoCLiente.ip === undefined) ? "" : " y con ip:" + infoCLiente.ip)
 
   return html
 }
 
 
 /**Identifica por expreciones regulares  que Sistema regular es  atraves de UserAgent */
-export const getOS = (ua) =>{
+export const getOS = (ua) => {
   /** '/windows nt 10/i'      =>  'Windows 10',
                           '/windows nt 6.3/i'     =>  'Windows 8.1',
                           '/windows nt 6.2/i'     =>  'Windows 8',
@@ -525,151 +525,148 @@ export const getOS = (ua) =>{
                           '/webos/i'              =>  'Mobile' */
 
 
-  let sysOp ="OS desconocido"
-    if( /windows/i.test(ua) )
-      sysOp = 'windows';
-    else if( /windows nt 6.4/i.test(ua) )
-      sysOp = 'Windows 10';
-    else if( /windows nt 6.3/i.test(ua) )
-      sysOp = 'Windows 8.1';
-    else if( /windows nt 6.2/i.test(ua) )
-      sysOp = 'Windows 8';
-    else if( /windows nt 6.1/i.test(ua) )
-      sysOp = 'Windows 7';
-    else if( /windows nt 6.0/i.test(ua) )
-      sysOp = 'Windows Vista';
-    else if( /windows nt 5.1/i.test(ua) )
-      sysOp = 'Windows xp';
-    else if( /macintosh|mac os x/i.test(ua) )
-      sysOp = 'Mac OS X';
-    else if( /linux/i.test(ua) )
-      sysOp = 'linux';
-    else if( /ubuntu/i.test(ua) )
-      sysOp = 'ubuntu';
-    else if( /iphone/i.test(ua) )
-      sysOp = 'iphone';         
-    else if( /ipod/i.test(ua) )
-      sysOp = 'ipod';
-    else if( /ipad/i.test(ua) )
-      sysOp = 'ipad';
-    else if( /android/i.test(ua) )
-      sysOp = 'android';
-    else if( /blackberry/i.test(ua) )
-      sysOp = 'blackberry';
-    else if( /webos/i.test(ua) )
-      sysOp = 'Mobile';
-      
-    else
-      sysOp = 'OS desconocido ';
+  let sysOp = "OS desconocido"
+  if (/windows/i.test(ua))
+    sysOp = 'windows';
+  else if (/windows nt 6.4/i.test(ua))
+    sysOp = 'Windows 10';
+  else if (/windows nt 6.3/i.test(ua))
+    sysOp = 'Windows 8.1';
+  else if (/windows nt 6.2/i.test(ua))
+    sysOp = 'Windows 8';
+  else if (/windows nt 6.1/i.test(ua))
+    sysOp = 'Windows 7';
+  else if (/windows nt 6.0/i.test(ua))
+    sysOp = 'Windows Vista';
+  else if (/windows nt 5.1/i.test(ua))
+    sysOp = 'Windows xp';
+  else if (/macintosh|mac os x/i.test(ua))
+    sysOp = 'Mac OS X';
+  else if (/linux/i.test(ua))
+    sysOp = 'linux';
+  else if (/ubuntu/i.test(ua))
+    sysOp = 'ubuntu';
+  else if (/iphone/i.test(ua))
+    sysOp = 'iphone';
+  else if (/ipod/i.test(ua))
+    sysOp = 'ipod';
+  else if (/ipad/i.test(ua))
+    sysOp = 'ipad';
+  else if (/android/i.test(ua))
+    sysOp = 'android';
+  else if (/blackberry/i.test(ua))
+    sysOp = 'blackberry';
+  else if (/webos/i.test(ua))
+    sysOp = 'Mobile';
+
+  else
+    sysOp = 'OS desconocido ';
 
 
-    return sysOp;
+  return sysOp;
 
 }
 
 
 /**Identifica por expreciones regulares  que Navegador es  atraves de UserAgent */
-export const getBrowser =(ua) => { 
-  
-    /**
-     * '/msie/i'      => 'Internet Explorer',
-                            '/firefox/i'   => 'Firefox',
-                            '/safari/i'    => 'Safari',
-                            '/chrome/i'    => 'Chrome',
-                            '/edge/i'      => 'Edge',
-                            '/opera/i'     => 'Opera',
-                            '/netscape/i'  => 'Netscape',
-                            '/maxthon/i'   => 'Maxthon',
-                            '/konqueror/i' => 'Konqueror',
-                            '/mobile/i'    => 'Handheld Browser'
-     * 
-     */
-    
-    let browser ="Navegador desconocido"
-    if( /firefox/i.test(ua) )
-      browser = 'Firefox';
-    else if( /chrome/i.test(ua) )
-      browser = 'Chrome';
-    else if( /safari/i.test(ua) )
-      browser = 'Safari';
-    else if( /edge/i.test(ua) )
-      browser = 'Edge';
-    else if( /opera/i.test(ua) )
-      browser = 'Opera';
-    else if( /netscape/i.test(ua) )
-      browser = 'Netscape';
-    else if( /maxthon/i.test(ua) )
-      browser = 'Maxthon';
-    else if( /konqueror/i.test(ua) )
-      browser = 'konqueror';
-    else if( /mobile/i.test(ua) )
-      browser = 'Handheld Browser';
-    else if( /konqueror/i.test(ua) )
-      browser = 'konqueror';         
-    else if( /msie/i.test(ua) )
-      browser = 'Internet explorer';
-    else
-      browser = 'Navegador desconocido ';
+export const getBrowser = (ua) => {
 
-  
-  
+  /**
+   * '/msie/i'      => 'Internet Explorer',
+                          '/firefox/i'   => 'Firefox',
+                          '/safari/i'    => 'Safari',
+                          '/chrome/i'    => 'Chrome',
+                          '/edge/i'      => 'Edge',
+                          '/opera/i'     => 'Opera',
+                          '/netscape/i'  => 'Netscape',
+                          '/maxthon/i'   => 'Maxthon',
+                          '/konqueror/i' => 'Konqueror',
+                          '/mobile/i'    => 'Handheld Browser'
+   * 
+   */
+
+  let browser = "Navegador desconocido"
+  if (/firefox/i.test(ua))
+    browser = 'Firefox';
+  else if (/chrome/i.test(ua))
+    browser = 'Chrome';
+  else if (/safari/i.test(ua))
+    browser = 'Safari';
+  else if (/edge/i.test(ua))
+    browser = 'Edge';
+  else if (/opera/i.test(ua))
+    browser = 'Opera';
+  else if (/netscape/i.test(ua))
+    browser = 'Netscape';
+  else if (/maxthon/i.test(ua))
+    browser = 'Maxthon';
+  else if (/konqueror/i.test(ua))
+    browser = 'konqueror';
+  else if (/mobile/i.test(ua))
+    browser = 'Handheld Browser';
+  else if (/konqueror/i.test(ua))
+    browser = 'konqueror';
+  else if (/msie/i.test(ua))
+    browser = 'Internet explorer';
+  else
+    browser = 'Navegador desconocido ';
+
+
+
   return browser
 }
 
-const parseIp = (req) =>{
-    req.headers['x-forwarded-for']?.split(',').shift()
+const parseIp = (req) => {
+  req.headers['x-forwarded-for']?.split(',').shift()
     || req.socket?.remoteAddress
 }
 
 
 
-export const generarInfoCliente= (req) => {
-    
+export const generarInfoCliente = (req) => {
+
   let ua = req.headers['user-agent']
   let os = getOS(ua);
   let browser = getBrowser(ua)
-  let ip = parseIp(req) 
-    
+  let ip = parseIp(req)
 
-    
-
-     return { os:os, browser:browser, ip:ip   }
+  return { os: os, browser: browser, ip: ip }
 
 }
 
 
-export const generarToken = (length)=> {
-  let fecha =new Date().toISOString()
-  length = length-fecha.length
-    let result           = '';
-    let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() *  charactersLength));
-   }
+export const generarToken = (length) => {
+  let fecha = new Date().toISOString()
+  length = length - fecha.length
+  let result = '';
+  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
 
 
-   return fecha+result;
+  return fecha + result;
 }
 
 export const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true, // true for 465, false for other ports
-    auth: {
-      user: "aaacini@gmail.com", // generated ethereal user
-      pass: "azcwotxgjqbhfudg", // generated ethereal password
-    },
-  });
-
- 
-
-transporter.verify().then(()=> {
-    console.log("Listo para el envio de emails")
-    
-} )
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // true for 465, false for other ports
+  auth: {
+    user: "aaacini@gmail.com", // generated ethereal user
+    pass: "azcwotxgjqbhfudg", // generated ethereal password
+  },
+});
 
 
 
-   
+transporter.verify().then(() => {
+  console.log("Listo para el envio de emails")
+
+})
+
+
+
+
 

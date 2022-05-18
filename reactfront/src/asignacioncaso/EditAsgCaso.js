@@ -1,16 +1,16 @@
 import React from 'react';
 import axios from 'axios'
-import {useState,useEffect} from "react"
+import { useState, useEffect } from "react"
 
-import { useNavigate,useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-const URI="http://localhost:8080/AsignacionCaso/";
+const URI = "http://localhost:8080/AsignacionCaso/";
 
-const CompEditAsgCaso=()=>{
+const CompEditAsgCaso = () => {
 
-    const  [msgEstado, setMegEstado] = useState('');
-    const  [msgError, setMegError] = useState('');
-    const limpiarMsg=  ()=>{
+    const [msgEstado, setMegEstado] = useState('');
+    const [msgError, setMegError] = useState('');
+    const limpiarMsg = () => {
         setMegEstado("")
         setMegError("")
     }
@@ -20,23 +20,23 @@ const CompEditAsgCaso=()=>{
     const [Voluntaria, setVoluntaria] = useState('')
 
     const navigate = useNavigate()
-    const {id} = useParams()
+    const { id } = useParams()
 
 
-    const update= async (e) =>{
+    const update = async (e) => {
         e.preventDefault()
-        let params = { 
-            Ticket:Ticket,
-            Voluntaria:Voluntaria,
-           
-        } 
+        let params = {
+            Ticket: Ticket,
+            Voluntaria: Voluntaria,
+
+        }
         console.log(params)
 
-        await axios.put(URI+id,params ).then((response) => {
+        await axios.put(URI + id, params).then((response) => {
             console.log(response.data);
             limpiarMsg()
             setMegEstado(response.data.message)
-            setTimeout(function(){navigate("/AsignacionCaso/")}, 2000);
+            setTimeout(function () { navigate("/AsignacionCaso/") }, 2000);
         }).catch(error => {
             console.error(error.response.data)
             limpiarMsg()
@@ -45,16 +45,16 @@ const CompEditAsgCaso=()=>{
     }
 
 
-    useEffect( ()=>{
-        getAsgCasbyId()   
-   
-    },[])
+    useEffect(() => {
+        getAsgCasbyId()
 
-    const  getAsgCasbyId = async (e) =>{
-        const res = await axios.get(URI+id).then(function (response) {
+    }, [])
+
+    const getAsgCasbyId = async (e) => {
+        const res = await axios.get(URI + id).then(function (response) {
             setTicket(response.data[0].Ticket)
             setVoluntaria(response.data[0].Voluntaria)
-          }).catch(error => {
+        }).catch(error => {
             console.error(error)
             limpiarMsg()
             setMegError(error.response.data.message)
@@ -64,51 +64,51 @@ const CompEditAsgCaso=()=>{
 
     return (
         <div >
-        <h3>Editando Asignación de Casos</h3>
+            <h3>Editando Asignación de Casos</h3>
 
 
-        <div className="row">
+            <div className="row">
                 <div className="alert alert-success" role="alert">{msgEstado}</div>
                 <div className="alert alert-danger" role="alert">{msgError}</div>
-        </div> 
+            </div>
 
 
-        <form onSubmit={update}>
+            <form onSubmit={update}>
 
-        <div className="row">
-                <div className="form-group col-md-6">
+                <div className="row">
+                    <div className="form-group col-md-6">
 
-                    <label className="form-label required" >Ticket</label>
-                    <input value={Ticket}
-                    onChange={  (e)=> setTicket(e.target.value)  }
-                    type="number"
-                    className="form-control"
-                    required    
-                    />
-            
-                        
+                        <label className="form-label required" >Ticket</label>
+                        <input value={Ticket}
+                            onChange={(e) => setTicket(e.target.value)}
+                            type="number"
+                            className="form-control"
+                            required
+                        />
 
-                </div>
-                <div className="form-group col-md-6">
-                    
+
+
+                    </div>
+                    <div className="form-group col-md-6">
+
                         <label className="form-label required" >Voluntaria</label>
                         <input value={Voluntaria}
-                        onChange={  (e)=> setVoluntaria(e.target.value)  }
-                        type="number"
-                        className="form-control"
-                        required    
+                            onChange={(e) => setVoluntaria(e.target.value)}
+                            type="number"
+                            className="form-control"
+                            required
                         />
-                   
 
+
+                    </div>
                 </div>
-            </div>
-           
-
-            <button type="submit" className="btn btn-primary" > <i className="fa-solid fa-floppy-disk"></i> Guardar cambios </button>
-        </form>
 
 
-    </div>
+                <button type="submit" className="btn btn-primary" > <i className="fa-solid fa-floppy-disk"></i> Guardar cambios </button>
+            </form>
+
+
+        </div>
 
     )
 

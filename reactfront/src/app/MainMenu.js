@@ -1,147 +1,189 @@
 import React from 'react';
+import io from "socket.io-client"
+//import socket from "./../Sockets/Socket"
 import axios from 'axios'
 
-import  {useState} from 'react'
+import { useState, useEffect } from 'react'
 //import {useNative} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
-import {useAuth,getRolUruaria,isVoluntaria,isCoordinadora } from './funciones'
+import { useAuth, getRolUruaria, getUruaria, isVoluntaria, isCoordinadora } from './funciones'
 
-const URI="http://localhost:8080/logout/";
-
-
-
-
-const CompMainMenu=()=>{
-  const navigate=useNavigate();
+const URI = "http://localhost:8080/logout/";
+const URISocket = "//localhost:8080" //TODO: AGREGAR UNA OPCION GLOBAL PARA LA DIRECCION
+let socket
 
 
-  const logOutFn = (e)=>{
-   
-    console.log("Cerrando session");
+const CompMainMenu = () => {
+  const navigate = useNavigate();
+  const [Usuaria, setUsuaria] = useState("");
 
-        e.preventDefault()
-        
-        axios.get(URI).then((response) => {
-            console.log(response);
-            let usuaria = JSON.parse(localStorage.getItem("Usuaria"));
-        
-            setTimeout(function(){navigate("/")}, 2000);
-            
-            console.log("Adios "+usuaria.Nombre)
-            console.log(response.message)
-           
-            //limpiarMsg()
-            //setMegEstado("Adios "+usuaria.Nombre)           
-            localStorage.clear();
-        }).catch(error => {
-            console.error(error)
-            localStorage.clear();
-            //limpiarMsg()
-            //setMegError(error.response.data.message)
-        });
+  let usuria
+
+  useEffect(() => {
+    if (useAuth()) {
+      usuria = getUruaria()
+      setUsuaria(usuria)
+      // socket.emit('conectado', getUruaria())
+    }
+
+
+
+  }, [])
+
+
+
+
+  const emergencia = (e) => {
+    socket = io(URISocket) //Conectamos al sockets
+    e.preventDefault()
+    socket.emit('Emergencia', Usuaria, "Tengo una emergencia")
   }
 
 
- 
-  
-   
-    return (
-           
-        <div className="container-fluid m-0 p-0">
-        <div className="row">
-            <div className="col">
+  const logOutFn = (e) => {
+
+    console.log("Cerrando session");
+
+    e.preventDefault()
+
+    axios.get(URI).then((response) => {
+      console.log(response);
+      let usuaria = JSON.parse(localStorage.getItem("Usuaria"));
+
+      setTimeout(function () { navigate("/") }, 500);
+
+      console.log("Adios " + usuaria.Nombre)
+      console.log(response.message)
+
+      //limpiarMsg()
+      //setMegEstado("Adios "+usuaria.Nombre)           
+      localStorage.clear();
+    }).catch(error => {
+      console.error(error)
+      localStorage.clear();
+      //limpiarMsg()
+      //setMegError(error.response.data.message)
+    });
+  }
 
 
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-5">
-  <Link className="navbar-brand" to={'/'}> <img src="/iconAnabella.png" width="30" height="30"/>  Ana Bella  México</Link>
-  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-    <span className="navbar-toggler-icon"></span>
-  </button>
 
-  <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-    <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center">
-      <li className="nav-item active">
-        <Link className="nav-link" to={'/'}>Home <span className="sr-only">(current)</span></Link>
-      </li>
-    </ul>
-    { (!useAuth() )?
-      <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center"> 
-         <li className="nav-item">
-          <Link className="nav-link" to={'/login/'}>Login</Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to={'/Registrarse'}>Registrarse</Link>
-        </li>
-       
-      </ul>
-      :<ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center">
-         <li className="nav-item">
-          <Link className="nav-link" to={'/MisTickets/'}> <i className="fa-solid fa-ticket-simple"></i> Mis Tickets</Link>
-        </li>
-        
-         {/* Solo Voluntarias o superior */}
-        { (isVoluntaria()) ?(
-          <li className="nav-item">     
-            <Link className="nav-link" to={'/MisAsignaciones/'}><i className="fa-solid fa-clipboard"></i> Mis Asignaciones</Link>
-          </li>):"" 
-         }
 
-         {/* Solo Coordinadores */}
-         { ( isCoordinadora() ) ?(    
+
+  return (
+
+    <div className="container-fluid m-0 p-0">
+      <div className="row">
+        <div className="col">
+
+
+          <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-5">
+            <Link className="navbar-brand" to={'/'}> <img src="/iconAnabella.png" width="30" height="30" />  Ana Bella  México</Link>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+
+            <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center">
-                <li className="nav-item">
-                  <Link className="nav-link" to={'/Usuarios/'}> <i className="fa-solid fa-child-dress"></i> Usuarias</Link>
+                <li className="nav-item active">
+                  <Link className="nav-link" to={'/'}>Home <span className="sr-only">(current)</span></Link>
                 </li>
 
-
-                <li className="nav-item">
-                  <Link className="nav-link" to={'/Tickets/'}> <i className="fa-solid fa-ticket"></i> Tickets</Link>
-                </li>
-
-
-                <li className="nav-item">
-                  <Link className="nav-link" to={'/AsignacionCaso/'}> <i className="fa-solid fa-clipboard-list"></i> Asignación de Casos</Link>
-                </li>
               </ul>
-            ):"" 
-         }
-         
-                
+              {(!useAuth()) ?
+                <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center">
+                  <li className="nav-item">
+                    <Link className="nav-link" to={'/login/'}>Login</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to={'/Registrarse'}>Registrarse</Link>
+                  </li>
 
 
-        
 
-      
+                </ul>
+                : <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center">
+                  <li className="nav-item">
+                    <Link className="nav-link" to={'/Chat'}><i className="fa-solid fa-comment"></i>Chat</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to={'/MisTickets/'}> <i className="fa-solid fa-ticket-simple"></i> Mis Tickets</Link>
+                  </li>
 
-        {/* <form className="form-inline my-2 my-lg-0">
+                  {/* Solo Voluntarias o superior */}
+                  {(isVoluntaria()) ? (
+                    <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center">
+                      <li className="nav-item">
+                        <Link className="nav-link" to={'/MisAsignaciones/'}><i className="fa-solid fa-clipboard"></i> Mis Asignaciones</Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link className="nav-link" to={'/Emergencias/'}> <i className="fa-solid fa-land-mine-on"></i> Emergencias</Link>
+                      </li>
+                    </ul>
+                  ) : ""
+                  }
+
+                  {/* Solo Coordinadores */}
+                  {(isCoordinadora()) ? (
+                    <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center">
+                      <li className="nav-item">
+                        <Link className="nav-link" to={'/Usuarios/'}> <i className="fa-solid fa-child-dress"></i> Usuarias</Link>
+                      </li>
+
+
+                      <li className="nav-item">
+                        <Link className="nav-link" to={'/Tickets/'}> <i className="fa-solid fa-ticket"></i> Tickets</Link>
+                      </li>
+
+
+                      <li className="nav-item">
+                        <Link className="nav-link" to={'/AsignacionCaso/'}> <i className="fa-solid fa-clipboard-list"></i> Asignación de Casos</Link>
+                      </li>
+
+
+                    </ul>
+                  ) : ""
+                  }
+
+
+
+
+
+
+
+
+                  {/* <form className="form-inline my-2 my-lg-0">
            <input className="form-control mr-sm-2" type="search" placeholder="Search"/>
      
         </form> */}
 
-         <button  className="btn btn-primary m-2" onClick={ logOutFn}  > <i className="fa-solid fa-arrow-right-from-bracket"></i>Logout</button>
-    
+                  <button className="btn btn-danger m-2 " onClick={emergencia} > <h1 className="display-10 "> <i className="fa-solid fa-land-mine-on"></i> </h1> </button>
 
-      </ul>    
-     }
 
-      
-    
- 
-   </div>
-</nav>
+                  <button className="btn btn-primary m-2" onClick={logOutFn}  > <i className="fa-solid fa-arrow-right-from-bracket"></i>Logout</button>
+
+
+                </ul>
+              }
 
 
 
 
-          </div>
+            </div>
+          </nav>
+
+
+
+
         </div>
-     </div>
-      
-       
-    )
+      </div >
+    </div >
+
+
+  )
 }
 
 

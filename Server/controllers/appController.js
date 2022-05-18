@@ -41,7 +41,7 @@ appControler.login = async (req, res) => {
     } catch (error) {
 
         res.status(400);
-        res.json({ message: error.message });
+        res.json({ message: error.message.replace("Validation error: ", "") });
 
     }
 
@@ -51,7 +51,7 @@ appControler.logout = (req, res) => {
     console.log("appControler.logout");
     console.log("usuaria deslogeada", req.session.usuaria)
     req.session.destroy();
-    res.json({ message: "Sesion finalizada" });
+    res.json({ message: "Sesión finalizada" });
 
 }
 
@@ -64,18 +64,18 @@ appControler.registrarse = async (req, res) => {
         //realizar una ransaccion para garantizar la atomicidad del registro con su ticket
         const result = await bd.transaction(async (t) => {
             // poner semaforo a ticckes de registrarse 
-            
+
             let params = req.body
-           console.log("params", params)
+            console.log("params", params)
             //si se envio ticket 
-            
-            if( params.susTickets ){
-               //analizar texto  y asignarlo al semaforo
-               console.log( "analisisCasos",TicketController.analisisCasos," DESC",params)
-               const resp = await TicketController.analisisCasos( params.susTickets[0].Descripcion)
-               console.log("Google NLP",resp);
-               params.susTickets[0]["Semaforo_id"]=resp.semaforo
- 
+
+            if (params.susTickets) {
+                //analizar texto  y asignarlo al semaforo
+                console.log("analisisCasos", TicketController.analisisCasos, " DESC", params)
+                const resp = await TicketController.analisisCasos(params.susTickets[0].Descripcion)
+                console.log("Google NLP", resp);
+                params.susTickets[0]["Semaforo_id"] = resp.semaforo
+
             }
 
             const user = await UsuarioModel.create(params, {
@@ -85,12 +85,12 @@ appControler.registrarse = async (req, res) => {
             return user;
         });
 
-        res.json({ message: "Registro creado Correctamente" });
+        res.json({ message: "Registro creado correctamente" });
 
     } catch (error) {
         console.log(error);
         res.status(400)
-        res.json({ message: error.message });
+        res.json({ message: error.message.replace("Validation error: ", "") });
     }
 
 }
@@ -115,7 +115,7 @@ appControler.PasswordOlvidado = async (req, res) => {
     if (!CampoBusqueda || CampoBusqueda == "") {
         console.log("No se ingreso informacion a buscar ")
         res.status(400)
-        res.json({ message: "No se ingreso informacion a buscar " });
+        res.json({ message: "No se ingreso información a buscar " });
         return 0;
     }
 
@@ -131,7 +131,7 @@ appControler.PasswordOlvidado = async (req, res) => {
         if (!usuaria) {
             console.log("No se encontro coencidencia ")
             res.status(400)
-            res.json({ message: "No se encontro coencidencia " });
+            res.json({ message: "No se encontró coincidencia" });
             return 0;
         }
 
@@ -140,7 +140,7 @@ appControler.PasswordOlvidado = async (req, res) => {
     } catch (error) {
         console.log("Error buscando usuaria", error)
         res.status(400)
-        res.json({ message: "No se encontro coencidencia" });
+        res.json({ message: "No se encontró coincidencia" });
         return 0;
     }
 
@@ -199,7 +199,7 @@ appControler.PasswordOlvidado = async (req, res) => {
 
     } catch (error) {
         res.status(400)
-        res.json({ message: error.message });
+        res.json({ message: error.message.replace("Validation error: ", "") });
     }
     res.json({ message: "Revise su correo para reestablecer contraseña" });
 
@@ -272,7 +272,7 @@ appControler.verificarTokenCambioPasword = async (req, res) => {
 
     } catch (error) {
         res.status(400)
-        res.json({ message: error.message });
+        res.json({ message: error.message.replace("Validation error: ", "") });
     }
 
 
@@ -373,7 +373,7 @@ appControler.CambiarPassword = async (req, res) => {
 
     } catch (error) {
         res.status(400)
-        res.json({ message: error.message });
+        res.json({ message: error.message.replace("Validation error: ", "") });
     }
 
 
@@ -401,7 +401,7 @@ appControler.misTickets = async (req, res) => {
         res.json(ticket);
     } catch (error) {
         res.status(400)
-        res.json({ message: error.message });
+        res.json({ message: error.message.replace("Validation error: ", "") });
     }
 
 
@@ -432,7 +432,7 @@ appControler.misAsignaciones = async (req, res) => {
         res.json(casos);
     } catch (error) {
         res.status(400)
-        res.json({ message: error.message });
+        res.json({ message: error.message.replace("Validation error: ", "") });
     }
 
 }

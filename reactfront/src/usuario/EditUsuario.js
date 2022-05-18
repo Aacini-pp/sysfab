@@ -77,7 +77,7 @@ const CompEditUsuario = () => {
   const getUsuariobyId = async (e) => {
     const res = await axios
       .get(URI + id)
-      .then(function(response) {
+      .then(function (response) {
         console.log("usuario encontrado", response.data[0]);
         setNombre(response.data[0].Nombre);
         setNickName(response.data[0].NickName);
@@ -163,7 +163,7 @@ const CompEditUsuario = () => {
         limpiarMsg();
         setMegEstado(response.data.message);
 
-        setTimeout(function() {
+        setTimeout(function () {
           navigate("/Usuarios/");
         }, 2000);
       })
@@ -188,7 +188,7 @@ const CompEditUsuario = () => {
       <form onSubmit={update}>
         <div className="row">
           <div className="form-group col-md-6">
-            <label className="form-label required">NickName</label>
+            <label className="form-label required">Apodo</label>
             <input
               value={NickName}
               onChange={(e) => setNickName(e.target.value)}
@@ -198,7 +198,7 @@ const CompEditUsuario = () => {
             />
           </div>
           <div className="form-group col-md-6">
-            <label className="form-label required">Pass</label>
+            <label className="form-label required">Contraseña</label>
             <input
               value={Pass}
               onChange={(e) => setPass(e.target.value)}

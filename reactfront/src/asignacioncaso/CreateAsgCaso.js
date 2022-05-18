@@ -1,42 +1,42 @@
 import React from 'react';
 import axios from 'axios'
 
-import  {useState,useEffect} from 'react'
+import { useState, useEffect } from 'react'
 //import {useNative} from 'react-router-dom'
-import { useNavigate,useParams } from 'react-router-dom'
-import {Link} from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 
-const URI="http://localhost:8080/AsignacionCaso/";
-const URIVoluntarias ="http://localhost:8080/Cat/Voluntarias/";
-const URITicket ="http://localhost:8080/Tickets/";
+const URI = "http://localhost:8080/AsignacionCaso/";
+const URIVoluntarias = "http://localhost:8080/Cat/Voluntarias/";
+const URITicket = "http://localhost:8080/Tickets/";
 
 
 
-const CompCreateAsgCaso=()=>{
-    const navigate=useNavigate();
+const CompCreateAsgCaso = () => {
+    const navigate = useNavigate();
     const parametros = useParams()
-    console.log("parametros; ",parametros)
+    console.log("parametros; ", parametros)
 
-    const  [msgEstado, setMegEstado] = useState('');
-    const  [msgError, setMegError] = useState('');
-    const limpiarMsg=  ()=>{
+    const [msgEstado, setMegEstado] = useState('');
+    const [msgError, setMegError] = useState('');
+    const limpiarMsg = () => {
         setMegEstado("")
         setMegError("")
     }
 
-    const [VoluntariasArry,setVoluntariasArry] = useState([])
+    const [VoluntariasArry, setVoluntariasArry] = useState([])
     const [TicketSel, setTicketSel] = useState({})
 
 
     const [Ticket, setTicket] = useState('')
     const [Voluntaria, setVoluntaria] = useState('')
- 
+
     //procedimiento para mostrar todos las Voluntarias y coordinadoras
-    const getVoluntarias= async () =>{
-        
-        const res =  await  axios.get(URIVoluntarias).then((response) => {
+    const getVoluntarias = async () => {
+
+        const res = await axios.get(URIVoluntarias).then((response) => {
             console.log(response.data);
             setVoluntariasArry(response.data)
         }).catch(error => {
@@ -45,126 +45,126 @@ const CompCreateAsgCaso=()=>{
             setMegError(error.response.data.message)
         });
 
-        
+
     }
 
-    const  getTicketsbyId = async (e) =>{
-       
-        const res = await axios.get(URITicket+parametros.id).then(function (response) {
+    const getTicketsbyId = async (e) => {
+
+        const res = await axios.get(URITicket + parametros.id).then(function (response) {
             setTicketSel({
-                    id:response.data[0].id,
-                    NombreDeUsuaria:response.data[0].deUsuaria.Nombre,
-                    NickName:response.data[0].deUsuaria.NickName,
-                    deUsuaria:response.data[0].deUsuaria
-                })
-          }).catch(error => {
+                id: response.data[0].id,
+                NombreDeUsuaria: response.data[0].deUsuaria.Nombre,
+                NickName: response.data[0].deUsuaria.NickName,
+                deUsuaria: response.data[0].deUsuaria
+            })
+        }).catch(error => {
             console.error(error)
             limpiarMsg()
             setMegError(error.response.data.message)
         });
-        
+
 
     }
 
-    useEffect( ()=>{
+    useEffect(() => {
         getVoluntarias()
-        if(Object.hasOwn(parametros , "id" )  ){
+        if (Object.hasOwn(parametros, "id")) {
             setTicket(parametros.id)
             getTicketsbyId()
-             
+
         }
-    },[])
+    }, [])
 
-   // Usuaria =1
-   
+    // Usuaria =1
 
-    const store = async (e)=>{
+
+    const store = async (e) => {
         e.preventDefault()
-        const params={ 
-            Ticket:Ticket,
-            Voluntaria:Voluntaria,
-           
+        const params = {
+            Ticket: Ticket,
+            Voluntaria: Voluntaria,
+
         }
-        
+
         console.log(params)
-        
-        
-        axios.post(URI,params ).then((response) => {
+
+
+        axios.post(URI, params).then((response) => {
             console.log(response.data);
-          
+
             limpiarMsg()
             setMegEstado(response.data.message)
-            setTimeout(function(){navigate("/AsignacionCaso/")}, 2000);
+            setTimeout(function () { navigate("/AsignacionCaso/") }, 2000);
         }).catch(error => {
             console.error(error.response.data)
             limpiarMsg()
             setMegError(error.response.data.message)
         });
-      
+
     }
 
 
     return (
         <div >
-        <h3>Asignando ticket</h3>
-        
-        <div className="row">
-                <div className="alert alert-success" role="alert">{msgEstado}</div>
-                <div className="alert alert-danger" role="alert">{msgError}</div>
-        </div> 
-
-        <form onSubmit={store}>
+            <h3>Asignando ticket</h3>
 
             <div className="row">
-                <div className="form-group col-md-6">
-
-                    <label className="form-label required" >Ticket</label>
-
-                    { (Object.hasOwn(parametros , "id" ) )?
-                        <div className=" ">
-                        <Link to={`/Tickets/${TicketSel.id}`} className='btn  btn-secondary   '>  {parametros.id} (Usuaria: {TicketSel.NickName} ) </Link>
-                    
-                        </div>
-                        :
-                        <input value={Ticket}
-                        onChange={  (e)=> setTicket(e.target.value)  }
-                        type="number"
-                        className="form-control"
-                        required    
-                        />
-                    }  
-
-                    
-
-                    
-            
-                        
-
-                </div>
-                <div className="form-group col-md-6">
-                    
-                        <label className="form-label required"> Voluntaria</label>
-                        
-
-                        <select name="Voluntaria" className="form-select"  onChange={  (e)=> {setVoluntaria(e.target.value)  }  } required>  
-                            <option value=""  > Seleccione una  voluntaria.. </option>  
-                            { VoluntariasArry.map( (voluntariaItem)=>(
-                                <option key={ voluntariaItem.id} value={voluntariaItem.id}  > {voluntariaItem.NickName}  </option>
-                             ))}
-
-                        </select>
-                   
-
-                </div>
+                <div className="alert alert-success" role="alert">{msgEstado}</div>
+                <div className="alert alert-danger" role="alert">{msgError}</div>
             </div>
 
-          
+            <form onSubmit={store}>
 
-            <button type="submit" className="btn btn-primary m-2" > <i className="fa-solid fa-floppy-disk"></i> Guardar Asignacion</button>
-        </form>
+                <div className="row">
+                    <div className="form-group col-md-6">
+
+                        <label className="form-label required" >Ticket</label>
+
+                        {(Object.hasOwn(parametros, "id")) ?
+                            <div className=" ">
+                                <Link to={`/Tickets/${TicketSel.id}`} className='btn  btn-secondary   '>  {parametros.id} (Usuaria: {TicketSel.NickName} ) </Link>
+
+                            </div>
+                            :
+                            <input value={Ticket}
+                                onChange={(e) => setTicket(e.target.value)}
+                                type="number"
+                                className="form-control"
+                                required
+                            />
+                        }
 
 
-    </div>
+
+
+
+
+
+                    </div>
+                    <div className="form-group col-md-6">
+
+                        <label className="form-label required"> Voluntaria</label>
+
+
+                        <select name="Voluntaria" className="form-select" onChange={(e) => { setVoluntaria(e.target.value) }} required>
+                            <option value=""  > Seleccione una  voluntaria.. </option>
+                            {VoluntariasArry.map((voluntariaItem) => (
+                                <option key={voluntariaItem.id} value={voluntariaItem.id}  > {voluntariaItem.NickName}  </option>
+                            ))}
+
+                        </select>
+
+
+                    </div>
+                </div>
+
+
+
+                <button type="submit" className="btn btn-primary m-2" > <i className="fa-solid fa-floppy-disk"></i> Guardar Asignación</button>
+            </form>
+
+
+        </div>
     )
 }
 
