@@ -15,19 +15,19 @@ const URI = "http://localhost:8080/login/";
 const HomeComponent = () => {
 
 
-    const [msgBienvenida, setMsgBienvenida] = useState("");
 
-    useEffect(() => {//TODO:CAMBIAR  ancors por links para que no cambie la pagina
-        setMsgBienvenida(`<span><a className="" href='/Registrarse'>Registrate</a>  y cuentanos todo</span>`)
-        if (useAuth()) {
-            setMsgBienvenida(`<span><a className="" href='/Tickets/create'>Cuentanos todo </a></span>`)
-            if (getRolUruaria() >= 3) {
-                setMsgBienvenida(`<span>Muchas gracias por tu ayuda</span>`)
-            }
+    const mostrarMensaje = () => {
 
+        if (!useAuth()) {
+            return <h3>Buscamos ayudarte. <span><Link className="" to='/Registrarse'>Registrate</Link>  y cuentanos todo</span> </h3>
+
+        } else if (getRolUruaria() >= 3) {
+            return <h3><span>Muchas gracias por tu ayuda</span> </h3>
+
+        } else {
+            return <h3> Buscamos ayudarte. <span><Link className="" to='/Tickets/create'>Cuentanos todo </Link></span> </h3>
         }
-
-    }, [])
+    }
 
 
     return (
@@ -35,7 +35,8 @@ const HomeComponent = () => {
             <h1 className="display-1">
                 <i className="fa-solid fa-person-dress"></i>  Bienvenida  {(useAuth()) ? <span> {getUruaria().Nombre}  </span> : <span> </span>}
             </h1>
-            <h3>Buscamos ayudarte.  <span className="content" dangerouslySetInnerHTML={{ __html: msgBienvenida }}></span> </h3>
+
+            {mostrarMensaje()}
             <p>
 
             </p>

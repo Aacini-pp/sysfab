@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react"
+import { useState, useEffect, forwardRef, useRef, useImperativeHandle } from "react"
 
 
 import logo from "./logo.svg";
@@ -48,32 +48,63 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 function App() {
 
   const [emergencias, setEmergencias] = useState([]);
+  const [socket, setSocket] = useState(conectarSocket());
+  const childCompRef = useRef()
+
 
   const getEmergencias = () => {
-    return emergencias
+    alert("Please")
+    // return emergencias
   }
 
   const ConectarSocketCanalPropioEvent = (e) => {
-    console.log("ConectarSocketCanalPropioEvent".e)
-    let socket = conectarSocket()
-
-    let chanelUser = `Emergencias>${getUruaria().id}`//
 
 
-    console.log("Escuchando ", chanelUser)
-    socket.on(chanelUser, msg => {
-      console.log("MensajeSoket recivido: ", msg)
-      setEmergencias([...emergencias, msg])
 
-    })
-
-    console.log("Emergencias registradas", emergencias)
   }
 
-  /*   si esta logeado conectarse automaticamente*/
-  if (useAuth()) {
-    ConectarSocketCanalPropioEvent()
-  }
+  /*
+    useEffect(() => {
+    
+      if (useAuth()) {
+        console.log("ConectarSocketCanalPropioEvent")
+        let socket = conectarSocket()
+  
+        let chanelUser = `Emergencias>${getUruaria().id}`//
+  
+  
+        console.log("Escuchando ", chanelUser)
+        socket.on(chanelUser, msg => {
+          console.log("MensajeSoket recivido: ", msg, emergencias)
+          setEmergencias([...emergencias, msg])
+          console.log("Emergencias registradas", emergencias)
+        })
+  
+        return () => { socket.off() }
+      }
+  
+    }, [])
+    */
+
+
+
+  useEffect(() => {
+
+
+    if (useAuth()) {
+      let chanelUser = `Emergencias>${getUruaria().id}`//
+      console.log("Escuchando ", chanelUser)
+      socket.on(chanelUser, msg => {
+        setEmergencias([...emergencias, msg])
+        if (childCompRef.current) {
+          childCompRef.current.setemErgencias([...emergencias, msg])
+        }
+
+      })
+      return () => { socket.off() }
+    }
+  }, [socket, emergencias])
+
 
   return (
     <div className="App">
@@ -81,6 +112,10 @@ function App() {
         <BrowserRouter>
           <CompMainMenu />
           <img src={logo} className="App-logo" alt="logo" />
+          {emergencias.length}
+
+
+
 
           <Routes>
             <Route path="/" element={<HomeComponent />} />
@@ -100,7 +135,7 @@ function App() {
               <Route path="/MisTickets/" element={<CompMisTickets />} />
               <Route path="/Tickets/create" element={<CompCreateTickets />} />
               <Route element={<ProtectedRoutesVoluntaria />}>
-                <Route path="/Emergencias" element={<CompEmergencias emergencias={emergencias} getEmergencias={getEmergencias} />} />
+                <Route path="/Emergencias" element={<CompEmergencias ref={childCompRef} emergencias={emergencias} getEmergencias={getEmergencias} />} />
 
                 <Route path="/MisAsignaciones/" element={<CompMisAsgCasos />} />
                 <Route path="/Usuarios/:id" element={<CompDetalleUsuario />} />
@@ -127,7 +162,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </header>
-    </div>
+    </div >
   );
 }
 

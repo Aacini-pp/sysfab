@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import axios from 'axios'
 
 import TicketModel from "../models/TicketModel.js";
@@ -10,7 +11,7 @@ import relaciones from "../models/relacions.js"
  * oara regresar el valor menor de sus items
  */
 let analisisCasos = async function (descripcion) {
-    const secreetKey = "AIzaSyAdhkuz10po_ShRex2W93Vcbpb10Lqp32w"
+    const secreetKey = process.env.secreetKeyGoogleAPI
     const APIgoogle = "https://language.googleapis.com/v1/documents:analyzeSentiment?key=" + secreetKey
 
 
@@ -38,8 +39,8 @@ let analisisCasos = async function (descripcion) {
         console.error("Consulta api error")
 
     });
-
-    return { min: minVal, semaforo: Math.ceil(minVal * -5) + 5 };
+    console.log("Resultado semaforo ", { min: minVal, semaforo: Math.round(minVal * -5) + 5 })
+    return { min: minVal, semaforo: Math.round(minVal * -5) + 5 }; // Math.round(i * -5)+5)
 
 }
 

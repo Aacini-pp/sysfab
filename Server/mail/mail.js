@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import nodemailer from 'nodemailer'
 import fs from 'fs'
 import path from 'path'
@@ -654,8 +655,8 @@ export const transporter = nodemailer.createTransport({
   port: 465,
   secure: true, // true for 465, false for other ports
   auth: {
-    user: "aaacini@gmail.com", // generated ethereal user
-    pass: "azcwotxgjqbhfudg", // generated ethereal password
+    user: process.env.userGmail,  //TODO:enviar a env
+    pass: process.env.passGmail,
   },
 });
 

@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 import http from 'http';
 import express from 'express';
 import { Server as WebSocketServer } from 'socket.io';
@@ -26,6 +28,13 @@ import appRoues from './routes/appRoutes.js'
 
 import sessionMiddleware from './middleware/session.js'
 import sessionCoordinadora from './middleware/sessionCoordinadora.js'
+
+
+import UsuarioModel from "./models/UserModel.js"
+import EmergenciaModel from "./models/EmergenciaModel.js"
+import AsignacionCasoModel from "./models/AsignacionCasoModel.js";
+import TicketModel from "./models/TicketModel.js";
+import relaciones from "./models/relacions.js"
 
 
 const app = express();
@@ -93,16 +102,32 @@ const io = new WebSocketServer(httpServer, {
 
 //midleware para acceder a las seciones de express-session
 io.use(function (socket, next) {
-    optSession(socket.handshake, {}, next);
+    optSession(socket.handshake, {}, next); //em eñ apreton de manos acceder a las session de express
 })
 
 
 
 
-io.on('connection', socket => {
-    console.log("sessionSocket: ")
+io.on('connection', async (socket) => {
+
+    let coordinadoras = [] //cada cuanto volver a cargar las coordinadoras ? 
+
+    try {
+        const coords = await UsuarioModel.findAll({
+            where: { Rol: 4 },
+        });
+        coords.map((coordinadora) => {
+            coordinadoras.push(coordinadora.id)
+        })
+    } catch (error) {
+        console.log(error);
+    }
+    console.log("Cordinadoras: ", coordinadoras)
+
     console.log("sessionSocket: ", socket.handshake.session)
     //si el usuario no esta seteado desconectar socket.disconnect(true)
+
+    //mandar todas las emergencias que tenga  atrasadas
 
     socket.on("conectado", (arg) => {
         console.info(`Usuario conectado: `, arg)
@@ -115,25 +140,74 @@ io.on('connection', socket => {
         io.emit('mensajes', { NickName, mensaje })
     })
 
-    socket.on("Emergencia", (Usuaria, mensaje) => {
-        console.info(`Emergencia recibida:`, Usuaria.id, mensaje)
-        console.log("sessionSocket Emergencia: ", socket.handshake.session)
+    socket.on("Emergencia", async (mensaje) => {
+
+        let Usuaria = mensaje.Usuaria //conseguir esta info de la session   socket.handshake.session.Usuaria
+
+        console.info(`Emergencia recibida:`, mensaje)
+
+        //console.log("sessionSocket Emergencia: ", socket.handshake.session)
+
+
+        //registrar el ticket 
+        let regEmergencia = null
+        let Voluntarias = []
+        try {
+            await EmergenciaModel.create({ //todo: tiene q  ue devolver el registro para tener el id y la hora 
+                Victima: Usuaria.id,
+                Voluntaria_Atendio: null,
+                Estatus: 2,
+                Ubicacion: JSON.stringify(mensaje.Coordenadas) || ""
+            }).then(function (reg) {
+                regEmergencia = reg.dataValues
+            });;
+        } catch (error) {
+            console.log(error.message)
+        }
+
+        //buscar sus casos  con sus respectivas voluntarias
+        const casos = await AsignacionCasoModel.findAll({
+            // Queremos que incluya la relaciónES
+            include: [
+                {
+                    where: { Usuaria: Usuaria.id },
+                    association: relaciones.AsignacionCaso.Ticket,
+                },
+                { association: relaciones.AsignacionCaso.Usuaria, },
+                { association: relaciones.AsignacionCaso.Estatus },
+            ]
+        });
+
+        casos.map((caso) => {
+
+            if (!Voluntarias.includes(caso.Voluntaria) && !coordinadoras.includes(caso.Voluntaria)) {
+                Voluntarias.push(caso.Voluntaria)
+            }
+
+        })
+
         //emitir a las coordinadoras 
         //emitir a su voluntaria si tiene caso
-        io.emit('Emergencias>42', { Usuaria, mensaje })
+        let coordAndVoluntarias = coordinadoras.concat(Voluntarias)
+        console.log("coordAndVoluntarias", coordAndVoluntarias)
+        let emicion = { Usuaria, Coordenadas: mensaje.Coordenadas, Casos: casos, Emergencia: regEmergencia, mensaje: mensaje.msg }
+        console.info(emicion)
+
+        coordAndVoluntarias.map((vol) => {
+            let canalEmitir = `Emergencias>${vol}`
+            console.info(canalEmitir, "EnviandoEmergencia")
+
+            io.emit(canalEmitir, emicion)
+        })
+        // io.emit('Emergencias>42', { Usuaria, Emergencia: regEmergencia, mensaje: mensaje.msg })
 
     })
-
-
-
-
-
-
 
 
     socket.on("disconnect", (arg) => {
         console.info(`Usuario desconectado: `, arg)
         io.emit('mensajes', { servidor: "Servidor", mensaje: "Ha abandonado la sala" })
+        //emitir a su id de socket identificado por su session  .to()  para que no puedan escuchar otras personas 
     })
 
 
@@ -149,6 +223,7 @@ io.on('connection', socket => {
 
 
 httpServer.listen(8080, () => {
+    console.log(process.env)
     console.log("Servidor corriendo")
 })
 

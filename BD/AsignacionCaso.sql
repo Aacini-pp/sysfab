@@ -1,0 +1,12 @@
+INSERT INTO `AsignacionCaso` (`id`, `Ticket`, `Voluntaria`, `Estatus`, `createdAt`, `updatedAt`) VALUES (1, 1, 1, 1, '2022-04-29 16:08:38', '2022-04-29 16:08:38');
+INSERT INTO `AsignacionCaso` (`id`, `Ticket`, `Voluntaria`, `Estatus`, `createdAt`, `updatedAt`) VALUES (4, 1, 17, 1, '2022-04-29 16:08:39', '2022-04-29 16:08:39');
+INSERT INTO `AsignacionCaso` (`id`, `Ticket`, `Voluntaria`, `Estatus`, `createdAt`, `updatedAt`) VALUES (6, 17, 1, 1, '2022-04-29 16:08:39', '2022-05-02 03:25:42');
+INSERT INTO `AsignacionCaso` (`id`, `Ticket`, `Voluntaria`, `Estatus`, `createdAt`, `updatedAt`) VALUES (7, 1, 1, 1, '2022-04-29 16:08:39', '2022-04-29 16:08:39');
+INSERT INTO `AsignacionCaso` (`id`, `Ticket`, `Voluntaria`, `Estatus`, `createdAt`, `updatedAt`) VALUES (8, 1, 1, 1, '2022-04-29 16:08:39', '2022-04-29 16:08:39');
+INSERT INTO `AsignacionCaso` (`id`, `Ticket`, `Voluntaria`, `Estatus`, `createdAt`, `updatedAt`) VALUES (14, 19, 1, 1, '2022-05-03 02:31:53', '2022-05-03 02:31:53');
+INSERT INTO `AsignacionCaso` (`id`, `Ticket`, `Voluntaria`, `Estatus`, `createdAt`, `updatedAt`) VALUES (18, 1, 1, 1, '2022-05-03 20:57:14', '2022-05-03 20:57:14');
+INSERT INTO `AsignacionCaso` (`id`, `Ticket`, `Voluntaria`, `Estatus`, `createdAt`, `updatedAt`) VALUES (19, 1, 1, 1, '2022-05-03 20:57:38', '2022-05-03 20:57:38');
+INSERT INTO `AsignacionCaso` (`id`, `Ticket`, `Voluntaria`, `Estatus`, `createdAt`, `updatedAt`) VALUES (25, 67, 18, 1, '2022-05-07 20:05:07', '2022-05-20 19:30:54');
+INSERT INTO `AsignacionCaso` (`id`, `Ticket`, `Voluntaria`, `Estatus`, `createdAt`, `updatedAt`) VALUES (26, 50, 42, 1, '2022-05-07 21:51:29', '2022-05-07 21:51:29');
+INSERT INTO `AsignacionCaso` (`id`, `Ticket`, `Voluntaria`, `Estatus`, `createdAt`, `updatedAt`) VALUES (27, 83, 42, 1, '2022-05-14 01:26:38', '2022-05-14 01:26:38');
+INSERT INTO `AsignacionCaso` (`id`, `Ticket`, `Voluntaria`, `Estatus`, `createdAt`, `updatedAt`) VALUES (28, 87, 42, 1, '2022-05-23 21:32:11', '2022-05-23 21:32:11');

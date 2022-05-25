@@ -9,20 +9,25 @@ import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
 
-import { useAuth, getRolUruaria, getUruaria, isVoluntaria, isCoordinadora } from './funciones'
+import { useCoordenadas, useAuth, getRolUruaria, getUruaria, isVoluntaria, isCoordinadora } from './funciones'
 
 const URI = "http://localhost:8080/logout/";
 const URISocket = "//localhost:8080" //TODO: AGREGAR UNA OPCION GLOBAL PARA LA DIRECCION
 let socket
 
 
+
+
 const CompMainMenu = () => {
   const navigate = useNavigate();
   const [Usuaria, setUsuaria] = useState("");
+  let Coordenadas = useCoordenadas();
+
 
   let usuria
 
   useEffect(() => {
+
     if (useAuth()) {
       usuria = getUruaria()
       setUsuaria(usuria)
@@ -37,9 +42,16 @@ const CompMainMenu = () => {
 
 
   const emergencia = (e) => {
+
     socket = io(URISocket) //Conectamos al sockets
     e.preventDefault()
-    socket.emit('Emergencia', Usuaria, "Tengo una emergencia")
+    let param = {
+      Usuaria, Coordenadas, msg: "Tengo una emergencia"
+    }
+
+    console.log(param)
+    socket.emit('Emergencia', param)
+
   }
 
 
@@ -53,7 +65,7 @@ const CompMainMenu = () => {
       console.log(response);
       let usuaria = JSON.parse(localStorage.getItem("Usuaria"));
 
-      setTimeout(function () { navigate("/") }, 500);
+
 
       console.log("Adios " + usuaria.Nombre)
       console.log(response.message)
@@ -67,7 +79,10 @@ const CompMainMenu = () => {
       //limpiarMsg()
       //setMegError(error.response.data.message)
     });
+    setTimeout(function () { navigate("/login") }, 500);
   }
+
+
 
 
 

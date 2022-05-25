@@ -1,0 +1,10 @@
+INSERT INTO `CatSemaforo` (`id`, `Nombre`, `Descripcion`) VALUES (1, 'No en riesgo', 'Persona que no  sufre violencia');
+INSERT INTO `CatSemaforo` (`id`, `Nombre`, `Descripcion`) VALUES (2, 'Muy bajo riesgo', 'Perona con violencia');
+INSERT INTO `CatSemaforo` (`id`, `Nombre`, `Descripcion`) VALUES (3, 'Poco riesgo', 'Es urgente atender esta persona');
+INSERT INTO `CatSemaforo` (`id`, `Nombre`, `Descripcion`) VALUES (4, 'Modereado riesgo', NULL);
+INSERT INTO `CatSemaforo` (`id`, `Nombre`, `Descripcion`) VALUES (5, '5', NULL);
+INSERT INTO `CatSemaforo` (`id`, `Nombre`, `Descripcion`) VALUES (6, '6', NULL);
+INSERT INTO `CatSemaforo` (`id`, `Nombre`, `Descripcion`) VALUES (7, '7', NULL);
+INSERT INTO `CatSemaforo` (`id`, `Nombre`, `Descripcion`) VALUES (8, '8', NULL);
+INSERT INTO `CatSemaforo` (`id`, `Nombre`, `Descripcion`) VALUES (9, '9', NULL);
+INSERT INTO `CatSemaforo` (`id`, `Nombre`, `Descripcion`) VALUES (10, '10', NULL);
