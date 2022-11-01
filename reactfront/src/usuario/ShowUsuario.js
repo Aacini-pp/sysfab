@@ -71,7 +71,7 @@ const CompShowUsuarios=  ()=>{
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido Paterno</th>
-                    <th scope="col">NickName</th>
+                    <th scope="col">Apodo</th>
                      <th scope="col"> </th>
                     </tr>
                 </thead>

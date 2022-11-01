@@ -30,7 +30,9 @@ const CompEmergencias = forwardRef((props, ref) => {
 
 
 
-
+    const atenderEmergencia  =(id,Voluntarias)=>{
+        props.emitirMensaje("EstatusEmerg",{id,Voluntarias,Estatus:1,Voluntaria:getUruaria().id})
+    }
 
 
     return (
@@ -76,7 +78,7 @@ const CompEmergencias = forwardRef((props, ref) => {
 
 
                                     </td>
-                                    <td> {emerg.Emergencia.Voluntaria_Atendio} </td>
+                                    <td> <Link to={`/Usuarios/${emerg.Emergencia.Voluntaria_Atendio}`} >     {emerg.Emergencia.Voluntaria_Atendio}  </Link> </td>
 
                                     <td>
                                         <div className="btn-group" role="group" >
@@ -84,7 +86,9 @@ const CompEmergencias = forwardRef((props, ref) => {
                                             <button type="button" title="Ver Detalle" className="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                                                 Ver Detalle
                                             </button>
-                                            <button title="" className='btn btn-success'>Atender</button>
+
+                                            {(emerg.Emergencia.Estatus ==2)?(<button title="" className='btn btn-success' onClick={() => atenderEmergencia(emerg.Emergencia.id,emerg.Voluntarias)}  >Atender</button>
+                                            ):"" }
                                             <button title="" className='btn btn-danger'> Concluir</button>
 
                                         </div>

@@ -63,6 +63,11 @@ function App() {
 
   }
 
+  const emitirMensaje =(canal, mensaje) =>{
+    socket.emit(canal, mensaje)
+    
+  }
+
   /*
     useEffect(() => {
     
@@ -96,11 +101,42 @@ function App() {
       console.log("Escuchando ", chanelUser)
       socket.on(chanelUser, msg => {
         setEmergencias([...emergencias, msg])
-        if (childCompRef.current) {
+        if (childCompRef.current) { //si estamos en la vista Emergencias actualizar
           childCompRef.current.setemErgencias([...emergencias, msg])
         }
 
       })
+
+
+      socket.on("EstatusEmerg", msg => {
+        //modificar las emergencias
+        let emergActualizadas = [ ...emergencias]
+
+        console.log("EstatusEmerg",msg,emergActualizadas)
+
+        emergActualizadas.forEach( (elem,index) =>{
+            console.log(elem,index)
+            if( elem.Emergencia.id == msg.id ){
+              emergActualizadas[index].Emergencia.Estatus = msg.Estatus
+
+              if(msg.Voluntaria ){
+                emergActualizadas[index].Emergencia.Voluntaria_Atendio = msg.Voluntaria
+
+              }
+            }
+        }  )
+        
+        
+        
+        setEmergencias(emergActualizadas)
+        
+        if (childCompRef.current) {
+          childCompRef.current.setemErgencias(emergActualizadas)
+        }
+
+      })
+
+
       return () => { socket.off() }
     }
   }, [socket, emergencias])
@@ -112,7 +148,7 @@ function App() {
         <BrowserRouter>
           <CompMainMenu />
           <img src={logo} className="App-logo" alt="logo" />
-          {emergencias.length}
+          
 
 
 
@@ -135,7 +171,7 @@ function App() {
               <Route path="/MisTickets/" element={<CompMisTickets />} />
               <Route path="/Tickets/create" element={<CompCreateTickets />} />
               <Route element={<ProtectedRoutesVoluntaria />}>
-                <Route path="/Emergencias" element={<CompEmergencias ref={childCompRef} emergencias={emergencias} getEmergencias={getEmergencias} />} />
+                <Route path="/Emergencias" element={<CompEmergencias ref={childCompRef} emergencias={emergencias} emitirMensaje={emitirMensaje}  getEmergencias={getEmergencias} />} />
 
                 <Route path="/MisAsignaciones/" element={<CompMisAsgCasos />} />
                 <Route path="/Usuarios/:id" element={<CompDetalleUsuario />} />

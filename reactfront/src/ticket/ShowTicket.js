@@ -4,6 +4,21 @@ import { useState, useEffect } from "react"
 import { Link } from 'react-router-dom'
 
 
+
+const arraySemaforo ={
+    1:"btn btn-success",
+    0:"btn btn-success",
+    2:"btn btn-success",
+    3:"btn btn-success",
+    4:"btn btn-success",
+    5:"btn btn-warning",
+    6:"btn btn-warning",
+    7:"btn btn-danger",
+    8:"btn btn-danger",
+    9:"btn btn-danger",
+    10:"btn btn-danger",
+}
+
 const URI = "http://localhost:8080/Tickets/";
 
 const CompShowTickets = () => {
@@ -81,7 +96,7 @@ const CompShowTickets = () => {
                                 <tr key={Ticket.id}  >
                                     <td> {Ticket.id}  </td>
                                     <td>  <Link to={`/Usuarios/${Ticket.Usuaria}`} >      {Ticket.deUsuaria.NickName}   </Link>  </td>
-                                    <td> {Ticket.Semaforo_id}  </td>
+                                    <td> <button className={arraySemaforo[Ticket.Semaforo_id]} >  {Ticket.Semaforo_id} </button> </td>
                                     <td> {Ticket.Descripcion}  </td>
                                     <td> {Ticket.deEstatus.Nombre}  </td>
 

@@ -7,14 +7,12 @@ import sessionMiddleware from './../middleware/session.js'
 
 const router = express.Router();
 
-
 //MIDDLEWAREs
 router.get("/",sessionVoluntoria);
 router.get("/:id",sessionVoluntoria);
 router.post("/",sessionMiddleware);
 router.put("/:id",sessionCoordinadora);
 router.delete("/:id",sessionCoordinadora);
-
 
 
 router.get("/",TicketController.listar);

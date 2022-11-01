@@ -190,7 +190,13 @@ io.on('connection', async (socket) => {
         //emitir a su voluntaria si tiene caso
         let coordAndVoluntarias = coordinadoras.concat(Voluntarias)
         console.log("coordAndVoluntarias", coordAndVoluntarias)
-        let emicion = { Usuaria, Coordenadas: mensaje.Coordenadas, Casos: casos, Emergencia: regEmergencia, mensaje: mensaje.msg }
+        let emicion = { Usuaria,
+              Coordenadas: mensaje.Coordenadas,
+              Casos: casos, 
+              Emergencia: regEmergencia, 
+              mensaje: mensaje.msg,
+              Voluntarias:coordAndVoluntarias 
+            }
         console.info(emicion)
 
         coordAndVoluntarias.map((vol) => {
@@ -201,6 +207,31 @@ io.on('connection', async (socket) => {
         })
         // io.emit('Emergencias>42', { Usuaria, Emergencia: regEmergencia, mensaje: mensaje.msg })
 
+    })
+
+    socket.on("EstatusEmerg", async (mensaje) => {
+        //cambiar el estatus a la voluntaria
+        let param  ={  
+            Estatus:mensaje.Estatus
+        }
+        if(mensaje.Voluntaria){
+            param["Voluntaria_Atendio"]= mensaje.Voluntaria
+        }
+        console.log("Actualizar estado",mensaje,param)
+            
+        try {
+            await EmergenciaModel.update(param,{
+                where: { id: mensaje.id }
+            })
+        } catch (error) {
+            console.log(error.message)
+        }
+
+        //enviar mensaje de actualizacion
+
+        io.emit("EstatusEmerg", mensaje)
+       
+        
     })
 
 
