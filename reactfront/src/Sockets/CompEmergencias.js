@@ -29,7 +29,7 @@ const CompEmergencias = forwardRef((props, ref) => {
     const [emergenciasAtencion, setEmergenciasAtencion] = useState(props.emergencias);
 
 
-
+    //cambiar el estatus de una emergencia
     const atenderEmergencia  =(id,Voluntarias)=>{
         props.emitirMensaje("EstatusEmerg",{id,Voluntarias,Estatus:1,Voluntaria:getUruaria().id})
     }

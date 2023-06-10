@@ -77,7 +77,7 @@ const CompShowTickets = () => {
                         <div className="alert alert-danger" role="alert">{msgError}</div>
                     </div>
 
-                    <Link to={'create'} className='btn btn-primary m-2'><i className="fas fa-plus"></i> Registrar Ticket</Link>
+                    <Link to={'/Tickets/create'} className='btn btn-primary m-2'><i className="fas fa-plus"></i> Registrar Ticket</Link>
 
 
                     <table className="table table-dark">
@@ -108,7 +108,7 @@ const CompShowTickets = () => {
                                                 : ""
                                             }
 
-                                            <Link to={`edit/${Ticket.id}`} title="Editar ticket" className='btn btn-info'><i className="fas fa-edit"></i></Link>
+                                            <Link to={`/Tickets/edit/${Ticket.id}`} title="Editar ticket" className='btn btn-info'><i className="fas fa-edit"></i></Link>
                                             <button title="Eliminar ticket" onClick={() => deleteTickets(Ticket.id)} className='btn btn-danger'><i className="fas fa-trash-alt"></i></button>
                                         </div>
                                     </td>

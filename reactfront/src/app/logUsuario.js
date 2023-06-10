@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useHistory } from 'react-router';
 
 const URI = "http://localhost:8080/login/";
 
@@ -20,9 +21,14 @@ const ComplogUsuarios = (props) => {
   };
 
   const navigate = useNavigate();
+  
 
   const login = async (e) => {
     e.preventDefault();
+
+    if(Pass == "help"){ //si pide ayuda manda a una pantalal de juego
+      navigate("/Juego");
+    }
 
     let params = {
       NickName: NickName,
@@ -36,8 +42,12 @@ const ComplogUsuarios = (props) => {
         console.log(response);
         if ("NickName" in response.data) {
           localStorage.setItem("Usuaria", JSON.stringify(response.data));
-          props.ConectarSocketCanalPropio(); //llamar a las conexiones socket
-          setTimeout(function () { navigate("/"); }, 2000);
+          //props.EmergenciasPendientes(); //llamar a las conexiones socket
+          setTimeout(function () { //volver a la raiz y recargar pagina para reconectarse 
+            navigate("/");
+            window.location.reload(false);  
+           
+          }, 2000);
         }
         limpiarMsg();
         setMegEstado("Bienvenida " + response.data.Nombre);

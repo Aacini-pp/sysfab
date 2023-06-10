@@ -4,6 +4,8 @@ import { Op } from "sequelize"
 import UsuarioModel from "../models/UserModel.js";
 import AsignacionCasoModel from "../models/AsignacionCasoModel.js";
 import TicketModel from "../models/TicketModel.js";
+import Premios_UsuariaModel from "../models/Premios_UsuariasModel.js";
+
 import relaciones from "../models/relacions.js"
 
 import TicketController from "./TicketController.js"
@@ -11,7 +13,7 @@ import TicketController from "./TicketController.js"
 import EmailRecuperacionModel from "../models/EmailRecuperacionModelModel.js";
 import { transporter, cargandoHTMLEmail, generarToken, generarInfoCliente } from "../mail/mail.js"
 
-
+import io from '../app.js'
 const appControler = {}
 
 
@@ -33,26 +35,111 @@ appControler.login = async (req, res) => {
         } else {
             req.session.usuaria = usuaria.dataValues
             console.log("Sesión creada:", req.session.usuaria);
-            res.json(usuaria);
+            
+            //TODO:ordenar esto (quitar?  ) usar  para traer casos 
+        //si el usuario es voluntaria o cordinadora
+        //mandar todas las emergencias que tenga  atrasadas
+        //para corredinadoras  todas
+        //para voluntarias las  que tienen  su caso
 
+        //si esta logeado y 
+        //si es  voluntaria o  Coordinadora quien se logeo recibir info
+        
+    
+    /*
+    if(    [3,4].includes(   req.session.usuaria.Rol  )    ){ 
+        
+
+        const parametrosConsultarEmegencias ={
+            where: { Estatus: 2 }
+        };
+        let  emergenciasPendientes  = null;
+        console.info("---------SE LOGEO UN ADMINISTRADOR");
+        try {            
+            emergenciasPendientes  = await EmergenciaModel.findAll(parametrosConsultarEmegencias).then(function (reg) {    
+               console.log("Longitud  de  registro ",reg.length);
+                reg.map( async (emergencia) => {
+                    let usuariaEmergencia  = await UsuarioModel.findOne(
+                        { where:{id: emergencia.Victima }}
+                    );  
+                    
+        
+                    let emicion = { 
+                        Usuaria: usuariaEmergencia.dataValues, 
+                        Coordenadas: emergencia.dataValues.Ubicacion,
+                        Casos: {}, 
+                        Emergencia: emergencia.dataValues, 
+                        mensaje: "Tengo una emergencia",
+                        Voluntarias:coordinadoras 
+                    }
+                    
+                    
+                    
+                    let canalEmitir = `Emergencias>1` ;//${req.session.usuaria.id}
+                    
+                    
+                    //console.info("---------emergencia"); 
+                    //console.info(canalEmitir, "EnviandoEmergencia");
+                    //console.info(emicion);
+                    
+                    io.emit(canalEmitir, emicion);
+                                            
+                });
+
+                
+            });
+
+            console.log(emergenciasPendientes);
+        } catch (error) {
+            console.log(error.message)
+        }    
+    }
+    */
+
+
+
+/*
+        let emicion = { 
+            Usuaria: req.session.usuaria, 
+            Coordenadas: { latitud: 19.4440547, longitud: -99.2156096 },
+            Casos: {}, 
+            Emergencia: {
+                id: 120,
+                Victima: 42,
+                Voluntaria_Atendio: null,
+                Estatus: 2,
+                Ubicacion: '{"latitud":19.4440547,"longitud":-99.2156096}',
+                updatedAt: '2022-11-08T01:36:49.515Z',
+                createdAt: '2022-11-08T01:36:49.515Z'
+            }, 
+            mensaje: "Tengo una emergencia",
+            Voluntarias: [ 1, 18 ] 
+        }
+        
+        
+        
+        let canalEmitir = `Emergencias>1` ;//${req.session.usuaria.id}
+        
+        io.emit(canalEmitir, emicion);
+*/
+
+
+            res.json(usuaria);        
         }
 
 
     } catch (error) {
-
         res.status(400);
         res.json({ message: error.message.replace("Validation error: ", "") });
-
     }
 
 }
 
-appControler.logout = (req, res) => {
+    appControler.logout = (req, res) => {
     console.log("appControler.logout");
     console.log("usuaria deslogeada", req.session.usuaria)
     req.session.destroy();
     res.json({ message: "Sesión finalizada" });
-
 }
 
 
@@ -388,7 +475,7 @@ appControler.CambiarPassword = async (req, res) => {
 
 
 appControler.misTickets = async (req, res) => {
-    console.log("UsuariotControler.misTickets")
+    console.log("appControler.misTickets")
 
     try {
         const ticket = await TicketModel.findAll({
@@ -406,6 +493,31 @@ appControler.misTickets = async (req, res) => {
 
 
 }
+
+
+
+
+
+appControler.MisLogros = async (req, res) => {
+    console.log("appControler.MisLogros ");
+
+    try {
+        const ticket = await Premios_UsuariaModel.findAll({
+            where: { Usuaria:req.session.usuaria.id },
+            include: [
+                { association: relaciones.Premios_Usuaria.CatPremios }
+            ]
+        });
+
+        res.json(ticket);
+    } catch (error) {
+        res.status(400)
+        res.json({ message: error.message.replace("Validation error: ", "") });
+    }
+
+
+}
+
 
 
 

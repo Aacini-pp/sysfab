@@ -1,6 +1,7 @@
 import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
+import {TicketsLogros}  from "./hooks/logrosHooks.js"
 
 
 
@@ -45,6 +46,10 @@ const TicketModel = db.define("Ticket", {
   }
 
 
-}, { freezeTableName: true });
+},{ 
+     freezeTableName: true 
+    ,hooks: {  ...TicketsLogros}
+ }
+);
 
 export default TicketModel;

@@ -2,6 +2,9 @@
 import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
+import {EmergenciasLogros}  from "./hooks/logrosHooks.js"
+
+
 
 
 const EmergenciaModel = db.define("Emergencia", {
@@ -32,6 +35,9 @@ const EmergenciaModel = db.define("Emergencia", {
     },
 
 
-}, { freezeTableName: true });
+}, { 
+    freezeTableName: true 
+   ,hooks: {  ...EmergenciasLogros}
+  });
 
 export default EmergenciaModel;

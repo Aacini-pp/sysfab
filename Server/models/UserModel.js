@@ -2,6 +2,12 @@ import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
 
+import {UsuariasLogros}  from "./hooks/logrosHooks.js"
+
+
+
+
+
 /**
  //TODO Encontrar como mandar mensajes personalizados para  unique o quitarles el mensaje 
  */
@@ -151,6 +157,8 @@ const UsuarioModel = db.define("Usuaria", {
         }
       }
     }
+
+    ,hooks: {  ...UsuariasLogros   }
   }
 
 );

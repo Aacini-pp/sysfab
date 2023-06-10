@@ -1,6 +1,13 @@
 import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
+import {AsignacionesLogros}  from "./hooks/logrosHooks.js"
+
+
+
+
+
+
 
 const AsignacionCasoModel= db.define("AsignacionCaso",{
    Ticket:{
@@ -20,6 +27,9 @@ const AsignacionCasoModel= db.define("AsignacionCaso",{
         defaultValue: 1
       }
    
-}, { freezeTableName: true});
+}, { 
+  freezeTableName: true 
+ ,hooks: {  ...AsignacionesLogros}
+});
 
 export default AsignacionCasoModel;

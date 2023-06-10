@@ -60,7 +60,7 @@ const CompShowAsgCaso = () => {
                         <div className="alert alert-danger" role="alert">{msgError}</div>
                     </div>
 
-                    <Link to={'create'} className='btn btn-primary m-2'><i className="fas fa-plus"></i>Asignar caso</Link>
+                    <Link to={'/AsignacionCaso/create'} className='btn btn-primary m-2'><i className="fas fa-plus"></i>Asignar caso</Link>
 
 
                     <table className="table table-dark">
@@ -86,7 +86,7 @@ const CompShowAsgCaso = () => {
 
                                     <td>
                                         <div className="btn-group" role="group" >
-                                            <Link to={`edit/${AsgCaso.id}`} title="Editar Asignación" className='btn btn-info'><i className="fas fa-edit"></i></Link>
+                                            <Link to={`/AsignacionCaso/edit/${AsgCaso.id}`} title="Editar Asignación" className='btn btn-info'><i className="fas fa-edit"></i></Link>
                                             <button title="Eliminar Asignacion" onClick={() => deleteAsgCasos(AsgCaso.id)} className='btn btn-danger'><i className="fas fa-trash-alt"></i></button>
                                         </div>
                                     </td>

@@ -22,20 +22,14 @@ const CompMainMenu = () => {
   const navigate = useNavigate();
   const [Usuaria, setUsuaria] = useState("");
   let Coordenadas = useCoordenadas();
-
-
   let usuria
 
   useEffect(() => {
-
     if (useAuth()) {
       usuria = getUruaria()
       setUsuaria(usuria)
       // socket.emit('conectado', getUruaria())
     }
-
-
-
   }, [])
 
 
@@ -107,6 +101,14 @@ const CompMainMenu = () => {
                   <Link className="nav-link" to={'/'}>Home <span className="sr-only">(current)</span></Link>
                 </li>
 
+
+
+                
+                
+
+
+               
+
               </ul>
               {(!useAuth()) ?
                 <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center">
@@ -121,9 +123,13 @@ const CompMainMenu = () => {
 
                 </ul>
                 : <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center">
+                 
                   <li className="nav-item">
-                    <Link className="nav-link" to={'/Chat'}><i className="fa-solid fa-comment"></i>Chat</Link>
+                    <Link className="nav-link" to={'/MultiChat'}><i className="fa-solid fa-comment"></i>MultiChat</Link>
                   </li>
+
+                  
+            
                   <li className="nav-item">
                     <Link className="nav-link" to={'/MisTickets/'}> <i className="fa-solid fa-ticket-simple"></i> Mis Tickets</Link>
                   </li>
@@ -144,7 +150,16 @@ const CompMainMenu = () => {
                   {/* Solo Coordinadores */}
                   {(isCoordinadora()) ? (
                     <ul className="navbar-nav mr-auto mt-2 mt-lg-0 align-items-center">
+                      
+                      
                       <li className="nav-item">
+                        <Link className="nav-link" to={'/Administracion/'}> <i className="fa-solid fa-lock"></i> Administración</Link>
+                      </li>
+
+
+
+
+                      {/* <li className="nav-item">
                         <Link className="nav-link" to={'/Usuarios/'}> <i className="fa-solid fa-child-dress"></i> Usuarias</Link>
                       </li>
 
@@ -156,7 +171,7 @@ const CompMainMenu = () => {
 
                       <li className="nav-item">
                         <Link className="nav-link" to={'/AsignacionCaso/'}> <i className="fa-solid fa-clipboard-list"></i> Asignación de Casos</Link>
-                      </li>
+                      </li> */}
 
 
                     </ul>

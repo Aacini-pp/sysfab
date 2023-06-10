@@ -50,7 +50,7 @@ TicketControler.analisisCasos = analisisCasos
 
 
 TicketControler.listar = async (req, res) => {
-    console.log("UsuariotControler.listar");
+    console.log("TicketControler.listar");
     try {
         const tickets = await TicketModel.findAll({
             // Queremos que incluya la relación "Estado"
@@ -72,7 +72,7 @@ TicketControler.listar = async (req, res) => {
 }
 
 TicketControler.obtener = async (req, res) => {
-    console.log("UsuariotControler.obtener");
+    console.log("TicketControler.obtener");
 
     try {
         const ticket = await TicketModel.findAll({
@@ -95,7 +95,7 @@ TicketControler.obtener = async (req, res) => {
 
 
 TicketControler.crear = async (req, res) => {
-    console.log("UsuariotControler.crear ");
+    console.log("TicketControler.crear ");
 
     //analizar texto 
     const resp = await analisisCasos(req.body.Descripcion)
@@ -118,7 +118,7 @@ TicketControler.crear = async (req, res) => {
 
 
 TicketControler.actualizar = async (req, res) => {
-    console.log("UsuariotControler.actualizar");
+    console.log("TicketControler.actualizar");
     try {
         await TicketModel.update(req.body, {
             where: { id: req.params.id }
@@ -135,7 +135,7 @@ TicketControler.actualizar = async (req, res) => {
 
 
 TicketControler.eliminar = async (req, res) => {
-    console.log("UsuariotControler.eliminar")
+    console.log("TicketControler.eliminar")
 
     try {
         await TicketModel.destroy({

@@ -1,11 +1,15 @@
 import UsuarioModel from "./UserModel.js"
 import TicketModel from "./TicketModel.js"
 import AsignacionCasoModel from "./AsignacionCasoModel.js"
+import Premios_UsuariaModel from "./Premios_UsuariasModel.js"
+
 
 import EstadosModel from "./Catalogos/EstadosModel.js"
 import RolesModel from "./Catalogos/RolesModel.js"
 import EstatusModel from "./Catalogos/EstatusModel.js"
 import SemaforoModel from "./Catalogos/SemaforoModel.js"
+import CatPremios from "./Catalogos/CatPremios.js"
+
 
 import EmailRecuperacionModel from "./EmailRecuperacionModelModel.js"
 
@@ -41,6 +45,10 @@ const Relaciones={
     },
    EmailRecuperacion:{
         Usuaria: EmailRecuperacionModel.belongsTo(UsuarioModel,{as:"deUsuaria",foreignKey:"Usuaria"}),
+    },
+    Premios_Usuaria:{
+        Usuaria: Premios_UsuariaModel.belongsTo(UsuarioModel,{as:"perteneceUsuaria",foreignKey:"Usuaria"}),
+        CatPremios:Premios_UsuariaModel.belongsTo(CatPremios,{as:"descPremio",foreignKey:"Premio"})
     }   
 }
 export default Relaciones

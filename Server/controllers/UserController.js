@@ -71,9 +71,10 @@ UsuarioControler.crear = async (req, res) => {
 UsuarioControler.actualizar = async (req, res) => {
     console.log("UsuariotControler.actualizar");
     try {
-        await UsuarioModel.update(req.body, {
-            where: { id: req.params.id }
-        });
+       
+        const usuaria = await UsuarioModel.findByPk( req.params.id );
+        usuaria.update( {  ...req.body  });
+
 
         res.json({ message: "Registro actualizado correctamente" });
 

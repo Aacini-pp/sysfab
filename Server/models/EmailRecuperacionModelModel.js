@@ -1,7 +1,7 @@
 import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
-
+//TODO: EL DIAGRAMA LO NOMBRA COMO TOKEN
 
 const EmailRecuperacionModel= db.define("RecuperacionPassMail",{
    

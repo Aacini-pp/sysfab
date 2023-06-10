@@ -62,7 +62,7 @@ const CompShowUsuarios=  ()=>{
             <div className="alert alert-success" role="alert">{msgEstado}</div>
             <div className="alert alert-danger" role="alert">{msgError}</div>
 
-            <Link to={'create'} className='btn btn-primary m-2'><i className="fas fa-plus"></i> Registrar Usuaria</Link>
+            <Link to={'/Usuarios/create'} className='btn btn-primary m-2'><i className="fas fa-plus"></i> Registrar Usuaria</Link>
 
 
             <table className="table table-dark">
@@ -85,7 +85,7 @@ const CompShowUsuarios=  ()=>{
     
                                 <td> 
                                     <div className="btn-group" role="group" >
-                                        <Link to={`edit/${usuario.id}`}  title="Editar Usuaria" className='btn btn-info'><i className="fas fa-edit"></i></Link>
+                                        <Link to={`/Usuarios/edit/${usuario.id}`}  title="Editar Usuaria" className='btn btn-info'><i className="fas fa-edit"></i></Link>
                                         <button   title="Eliminar usuaria" onClick={ ()=>deleteUsuario( usuario.id)   } className='btn btn-danger'><i className="fas fa-trash-alt"></i></button>
                                     </div> 
                                 </td>

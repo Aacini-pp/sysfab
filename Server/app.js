@@ -107,9 +107,9 @@ io.use(function (socket, next) {
 
 
 
-
+let socketExport = null;
 io.on('connection', async (socket) => {
-
+    socketExport = socket;
     let coordinadoras = [] //cada cuanto volver a cargar las coordinadoras ? 
 
     try {
@@ -122,30 +122,57 @@ io.on('connection', async (socket) => {
     } catch (error) {
         console.log(error);
     }
-    console.log("Cordinadoras: ", coordinadoras)
+   // console.log("Cordinadoras: ", coordinadoras)
 
-    console.log("sessionSocket: ", socket.handshake.session)
+   // console.log("sessionSocket: ", socket.handshake.session)
+
+    //TODO :
     //si el usuario no esta seteado desconectar socket.disconnect(true)
 
-    //mandar todas las emergencias que tenga  atrasadas
+
+    
+
 
     socket.on("conectado", (arg) => {
-        console.info(`Usuario conectado: `, arg)
-        console.log("sessionSocket conectado: ", socket.handshake.session)
+        // console.clear();
+        // console.info(`------------------------------------------`);
+        // console.info(`Usuario conectado: `, arg)
+        // console.log("sessionSocket conectado: ", socket.handshake.session)
     })
 
-    socket.on("mensaje", (NickName, mensaje) => {
-        console.info(`mensaje recivido`, NickName, mensaje)
-        console.log("sessionSocket mensaje: ", socket.handshake.session)
-        io.emit('mensajes', { NickName, mensaje })
+
+
+
+
+    socket.on("mensaje", (  mensaje) => {
+   
+        let msgEnviar = {
+                        ...mensaje,
+                        createdAt:( new Date() ).toISOString() //agregamos la fecha de envio  del mensaje
+                        }
+
+
+ 
+       // console.info(`mensaje recivido`,  msgEnviar);
+       // console.log("sessionSocket mensaje: ", socket.handshake.session); // no disponible 
+
+        
+        let canalReceptor = "Mensajes>" +  mensaje.Receptor;
+
+        let canlEmisor =  "Mensajes>" +  mensaje.Emisor.id;  //TODO: en produccion usar  socket.handshake.session 
+
+        io.emit(canalReceptor, msgEnviar ); //enviar para el id que esta  reservado
+
+        io.emit(canlEmisor , msgEnviar ); //enviar  el que mando el mensaje
+
     })
+
+
+
 
     socket.on("Emergencia", async (mensaje) => {
-
-        let Usuaria = mensaje.Usuaria //conseguir esta info de la session   socket.handshake.session.Usuaria
-
-        console.info(`Emergencia recibida:`, mensaje)
-
+        let Usuaria =   mensaje.Usuaria // socket.handshake.session.usuaria; //      conseguir esta info de la session  
+        //console.info(`Emergencia recibida:`, mensaje);       
         //console.log("sessionSocket Emergencia: ", socket.handshake.session)
 
 
@@ -160,7 +187,7 @@ io.on('connection', async (socket) => {
                 Ubicacion: JSON.stringify(mensaje.Coordenadas) || ""
             }).then(function (reg) {
                 regEmergencia = reg.dataValues
-            });;
+            });
         } catch (error) {
             console.log(error.message)
         }
@@ -179,7 +206,6 @@ io.on('connection', async (socket) => {
         });
 
         casos.map((caso) => {
-
             if (!Voluntarias.includes(caso.Voluntaria) && !coordinadoras.includes(caso.Voluntaria)) {
                 Voluntarias.push(caso.Voluntaria)
             }
@@ -189,7 +215,7 @@ io.on('connection', async (socket) => {
         //emitir a las coordinadoras 
         //emitir a su voluntaria si tiene caso
         let coordAndVoluntarias = coordinadoras.concat(Voluntarias)
-        console.log("coordAndVoluntarias", coordAndVoluntarias)
+       // console.log("coordAndVoluntarias", coordAndVoluntarias)
         let emicion = { Usuaria,
               Coordenadas: mensaje.Coordenadas,
               Casos: casos, 
@@ -201,7 +227,9 @@ io.on('connection', async (socket) => {
 
         coordAndVoluntarias.map((vol) => {
             let canalEmitir = `Emergencias>${vol}`
-            console.info(canalEmitir, "EnviandoEmergencia")
+            // console.info("-----------------------------------");
+            // console.info(canalEmitir, "EnviandoEmergencia")
+            // console.info(emicion)
 
             io.emit(canalEmitir, emicion)
         })
@@ -217,7 +245,7 @@ io.on('connection', async (socket) => {
         if(mensaje.Voluntaria){
             param["Voluntaria_Atendio"]= mensaje.Voluntaria
         }
-        console.log("Actualizar estado",mensaje,param)
+       // console.log("Actualizar estado",mensaje,param)
             
         try {
             await EmergenciaModel.update(param,{
@@ -228,10 +256,57 @@ io.on('connection', async (socket) => {
         }
 
         //enviar mensaje de actualizacion
-
         io.emit("EstatusEmerg", mensaje)
        
         
+    })
+
+
+
+    //mandar los casos que siguen activos 
+    
+    socket.on("ConsultarDatosAtrazados", (arg) => {
+
+        console.log('Enviando datos atrasados  serv event',arg)
+                     
+        let emicion = { 
+            Usuaria: {
+                id: 42,
+                Nombre: 'voluntaria',
+                ApellidoPaterno: 'susi',
+                ApellidoMaterno: null,
+                NickName: 'a3',
+                Pass: '123',
+                FechaNacimiento: null,
+                Ciudad: null,
+                PerfilFB: null,
+                Email: 'aaacini@gmail.com',
+                Telefono: null,
+                Rol: 3,
+                EntidadFederativa: 9,
+                Estatus: 1,
+                createdAt: '2022-04-29T16:08:37.000Z',
+                updatedAt: '2022-05-26T17:25:23.000Z'
+              }, 
+            Coordenadas: { latitud: 19.4440547, longitud: -99.2156096 },
+            Casos: {}, 
+            Emergencia: {
+                id: 120,
+                Victima: 42,
+                Voluntaria_Atendio: null,
+                Estatus: 2,
+                Ubicacion: '{"latitud":19.4440547,"longitud":-99.2156096}',
+                updatedAt: '2022-11-08T01:36:49.515Z',
+                createdAt: '2022-11-08T01:36:49.515Z'
+            }, 
+            mensaje: "Tengo una emergencia",
+            Voluntarias: [ 1, 18 ] 
+        };
+        
+        
+        let canalEmitir = `Emergencias>1` ;//${req.session.usuaria.id}
+        io.emit(canalEmitir, emicion);
+                
     })
 
 
@@ -254,11 +329,15 @@ io.on('connection', async (socket) => {
 
 
 httpServer.listen(8080, () => {
-    console.log(process.env)
+   // console.log(process.env)
     console.log("Servidor corriendo")
 })
+
+
+
 
 /*
 app.listen(8080, () => {
     console.log("Servidor corriendo")
 })*/
+export default io;

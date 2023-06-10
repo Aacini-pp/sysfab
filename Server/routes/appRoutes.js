@@ -16,6 +16,8 @@ router.get("/logout", sessionMiddleware);
 router.get("/MisAsignaciones", sessionVoluntoria);
 router.get("/MisTickets", sessionMiddleware);
 
+router.get("/MisLogros", sessionVoluntoria);
+
 
 
 //acceder solo sin contraseña
@@ -30,11 +32,16 @@ router.post("/change-password", appControler.CambiarPassword);
 
 
 
+
+
 //acceder logeado
 router.get("/logout", appControler.logout); //cambiar a post para que sea mas dificik salir, no solo conun enlace
 
 router.get("/MisAsignaciones", appControler.misAsignaciones);
 router.get("/MisTickets", appControler.misTickets);
+
+
+router.get("/MisLogros", appControler.MisLogros);
 
 
 

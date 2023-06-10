@@ -1,11 +1,12 @@
 import  {Sequelize} from 'sequelize'
-const db =  new Sequelize("fab4","root","",{
+const db =  new Sequelize("sysFAB","root","",{
     host: 'localhost',
-    port: '3333',
-    dialect:"mysql"
+    port: '8696',
+    dialect:"mysql",
+    logging: false
 
 });
 
-
-
 export default db;
+
+
